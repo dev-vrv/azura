@@ -1,0 +1,32 @@
+$theme-colors-rgb: (
+  "primary": (100, 100, 250),
+  "secondary": (108, 117, 125),
+  "success": (40, 167, 69),
+  "info": (23, 162, 184),
+  "warning": (255, 193, 7),
+  "danger": (220, 53, 69),
+  "light": (210, 210, 210),
+  "dark": (52, 58, 64),
+  "glass-sm": (0, 0, 0, 0.1),
+  "glass-md": (0, 0, 0, 0.25),
+  "glass-lg": (0, 0, 0, 0.5),
+  "none": (255, 255, 255, 0),
+);
+$tmp: rgb(210, 210, 210);
+
+$theme-colors: ();
+
+@each $color-name, $color-rgb in $theme-colors-rgb {
+  $r: nth($color-rgb, 1);
+  $g: nth($color-rgb, 2);
+  $b: nth($color-rgb, 3);
+  $a: if(length($color-rgb) == 4, nth($color-rgb, 4), 1);
+  $color: rgba($r, $g, $b, $a);
+  $color-var-name: $color-name;
+  $color-map: ($color-var-name: $color);
+  $theme-colors: map-merge($theme-colors, $color-map);
+}
+
+* {
+  color: map-get($theme-colors, 'light');
+}
