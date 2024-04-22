@@ -1,0 +1,43 @@
+@import '../base/variables';
+
+.btn {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    background-color: map-get($theme-colors, 'none');
+    outline: none;
+    border: none;
+}
+
+.btn-aside {
+    @extend .btn;
+    font-size: 1.75rem;
+    &:hover {
+        & i {
+            color: map-get($theme-colors, 'primary');
+        }
+    }
+}
+
+.btn-info {
+    @extend .btn;
+    & i {
+        transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+        opacity: 0.25;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &:hover {
+        & i {
+            opacity: 1;
+            color: map-get($theme-colors, 'info');
+        }
+    }
+}
+

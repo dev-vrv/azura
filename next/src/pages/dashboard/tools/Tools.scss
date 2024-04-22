@@ -1,0 +1,27 @@
+@import '../../../assets/scss/base/variables';
+
+.tools-list {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-tools {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: none;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+    backdrop-filter: blur(10px);
+    &:hover {
+
+    }
+}
