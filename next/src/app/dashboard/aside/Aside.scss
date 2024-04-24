@@ -1,0 +1,24 @@
+@import '../../../assets/scss/base/variables';
+.aside {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: map-get($padding, 'md') 0;
+    
+    &__header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        color: map-get($theme-colors, 'light');
+    }
+    &__nav {
+        display: flex;
+    }
+}

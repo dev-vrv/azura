@@ -1,0 +1,19 @@
+@import '../../../assets/scss/base/variables';
+
+.header {
+    padding: 0 map-get($padding, 'xl');
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // &__left {
+    //     display: flex;
+
+    // }
+    &__right {
+        display: flex;
+        flex: 1 1 auto;
+        padding: 1rem;
+        justify-content: flex-end;
+    }
+}

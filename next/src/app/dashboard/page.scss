@@ -1,0 +1,36 @@
+@import '../../assets/scss/base/variables';
+
+.dashboard {
+    max-width: 100vw;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: auto 1fr;
+    padding: map-get($padding, 'md');
+}
+
+.aside {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+}
+
+.header {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    overflow: auto;
+    padding: map-get($padding, 'md');
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+}
+

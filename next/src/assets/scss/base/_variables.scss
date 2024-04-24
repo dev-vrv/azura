@@ -5,9 +5,22 @@
 @import './animations';
 
 
-$round-small: 0.25rem;
-$round-md: 0.5rem;
-$round-lg: 1rem;
-$round-xl: 1.5rem;
-$round-xxl: 2rem;
+$round: (
+    'none': 0,
+    'xs': 0.125rem,
+    'sm': 0.25rem,
+    'md': 0.5rem,
+    'lg': 1rem,
+    'xl': 2rem,
+    'xxl': 3rem,
+);
 
+$padding: (
+    'none': 0,
+    'xs': 0.25rem,
+    'sm': 0.5rem,
+    'md': 1rem,
+    'lg': 1.5rem,
+    'xl': 2rem,
+    'xxl': 3rem,
+);

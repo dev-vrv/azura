@@ -1,0 +1,9 @@
+.section {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: map-get($theme-colors, 'glass-lg');
+    border-radius: map-get($round, 'xl');
+    backdrop-filter: blur(10px);
+    padding: map-get($padding, 'md');
+}

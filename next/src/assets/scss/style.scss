@@ -8,9 +8,8 @@
 
 // -- UI
 @import './ui/buttons';
-@import './ui/links';
-@import './ui/inputs';
-
+@import './ui/icons';
+@import './ui/sections';
 
 // -- Main Components
 html,
@@ -18,5 +17,4 @@ body,
 main {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
 }
