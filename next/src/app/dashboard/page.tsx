@@ -14,7 +14,6 @@ import Celery from './content/celery/Celery';
 import Chat from './content/chat/Chat';
 import Aside from './aside/Aside';
 import Header from './header/Header';
-import useSocket from '@/hooks/socket';
 
 
 type PropsComponents = {
@@ -35,18 +34,7 @@ export default function Dashboard() {
 
     const CurrentComponent = components[activeSection];
 
-    const socket = useSocket('http://127.0.0.1:8000');
-    React.useEffect(() => {
-        if (socket == null) return;
 
-        socket.on('message', (message) => {
-            console.log('Получено сообщение от сервера:', message);
-        });
-
-        return () => {
-            socket.off('message');
-        };
-    }, [socket]);
     React.useEffect(() => {
         AOS.init();
     }, []);
