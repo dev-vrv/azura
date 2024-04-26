@@ -1,0 +1,41 @@
+@import '../../../assets/scss/base/variables';
+
+.label {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 !important;
+    cursor: pointer;
+    @extend .unselect;
+
+    & input[type="checkbox"] {
+        display: none;
+
+        &:checked+.checkbox-view {
+            color: $color-light;
+            background-color: $color-success;
+            border-color: $color-secondary;
+            transition: color 0.3s 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+    }
+
+    & .checkbox-view {
+        width: 24px;
+        height: 24px;
+        border-radius: $round-small;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-none;
+        background-color: $color-faded;
+        border: 1px solid $color-muted;
+        font-size: 0.8rem;;
+    }
+
+    &:hover .checkbox-view {
+        border-color: $color-success;
+        transition: color 0.3s ease-in-out, border-color 0.2s 0.3s ease-in-out, background-color 0.2s 0.3s ease-in-out;
+    }
+}

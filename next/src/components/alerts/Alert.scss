@@ -1,0 +1,29 @@
+@import '../../../assets/scss/base/variables.scss';
+
+.form-alert {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    height: fit-content;
+    padding: 0 1rem;
+    color: $color-dark;
+    border-radius: $round-medium;
+    box-shadow: $shadow-small;
+
+    &-success {
+        background-color: $color-success;
+    }
+    &-warning {
+        background-color: $color-warning;
+    }
+    &-danger {
+        background-color: $color-danger;
+    }
+
+    &.hide {
+        animation: hideAlert 0.5s ease-in-out forwards;
+    }
+    &.show {
+        animation: showAlert 0.5s ease-in-out forwards;
+    }
+}

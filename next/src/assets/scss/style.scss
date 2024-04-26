@@ -10,6 +10,7 @@
 @import './ui/buttons';
 @import './ui/icons';
 @import './ui/sections';
+@import './ui/list';
 
 // -- Main Components
 html,
@@ -17,4 +18,12 @@ body,
 main {
     width: 100vw;
     height: 100vh;
+}
+
+.h-fit {
+    height: fit-content;
+}
+
+.text-fade {
+    color: map-get($theme-colors, 'fade') !important;
 }
