@@ -10,6 +10,6 @@ urlpatterns = [
     path('registration/', UserRegistration.as_view({"post": "registration"})),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+    path('info/', UserInfo.as_view({"get": "user_info"})),
     path('controller/', UsersController.as_view({"get": "get_users", "post": "update_user", "delete": "delete_users"})),
 ]
