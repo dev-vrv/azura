@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: 100px 1fr;
     grid-template-rows: auto 1fr;
-    padding: map-get($padding, 'md');
+    padding: map-get($p, 'md');
 }
 
 .aside {
@@ -26,7 +26,7 @@
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     overflow: auto;
-    padding: map-get($padding, 'md');
+    padding: map-get($p, 'md');
 }
 
 .content {

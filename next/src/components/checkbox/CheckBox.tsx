@@ -10,8 +10,7 @@ interface checkboxProps {
     onChange?: (event: any) => void;
 }
 
-function CheckBox(props: checkboxProps) {
-    const { id, name, checked, text, className } = props;
+function CheckBox({ id, name, checked, text, className, onChange }: checkboxProps) {
     return (
         <label
         htmlFor={id}
@@ -22,7 +21,7 @@ function CheckBox(props: checkboxProps) {
             id={id} 
             name={name? name : id} 
             checked={checked} 
-            onChange={props.onChange}
+            onChange={onChange}
             />
 
             <i className='checkbox-view'>

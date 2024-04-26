@@ -4,31 +4,53 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem 0.75rem;
     outline: none;
     border: none;
     background-color: map-get($theme-colors, "none");
     cursor: pointer;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    & i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+    }
 }
 
 .btn-aside {
-    font-size: 2.5rem;
-    &:hover, &.active {
+    margin: 1rem 0;
+    & i {
+        font-size: 2.5rem;
+    }
+    &:hover,
+    &.active {
         color: map-get($theme-colors, "primary");
     }
 }
 
 .btn-header {
-    font-size: 2rem;
-    &:hover, &.active {
+    &:hover,
+    &.active {
         color: map-get($theme-colors, "primary");
     }
 }
 
 .btn-info {
-    font-size: 2rem;
-    &:hover, &.active {
+    &:hover,
+    &.active {
         color: map-get($theme-colors, "info");
+    }
+}
+
+.btn-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & i {
+        font-size: 1.5rem;
+    }
+    &:hover {
+        color: map-get($theme-colors, "primary");
     }
 }

@@ -5,6 +5,8 @@ import os
 # Constants
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DJANGO_DIR = BASE_DIR.parent
+
 
 SECRET_KEY = 'django-insecure-abg7t)ar8%1k#ibj#%dlpql%7w%li=5^x@v%yoecr)#gv7(5#e'
 
@@ -72,6 +74,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'silk',
     'channels',
+    'debug_toolbar',
 
     'users.apps.CustomUsersConfig',
     'mail.apps.MailConfig',
@@ -92,6 +95,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'silk.middleware.SilkyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
@@ -111,28 +115,51 @@ TEMPLATES = [
     },
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 
 # Database & Storages
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangocore',
+        'NAME': 'Azura',
         'USER': 'arcane',
         'PASSWORD': 'Gettog02!',
     }
 }
 
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(DJANGO_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Static storage
 STORAGES = {
     'SILKY_STORAGE': {
-        'BACKEND': 'django.app.files.storage.FileSystemStorage',
-        'LOCATION': os.path.join(BASE_DIR, '../silk/')
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'LOCATION': os.path.join(BASE_DIR, 'static')
     },
     'staticfiles': {
-        'BACKEND': 'django.app.files.storage.FileSystemStorage',
-        'LOCATION': '../static/',
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        'LOCATION': os.path.join(BASE_DIR, 'static')
     },
 }
+
+# Static files (CSS, JavaScript, Images)
+
+STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(DJANGO_DIR, 'static')
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app/static'),
+]
 
 
 # Password validation
@@ -164,20 +191,10 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-
-STATIC_URL = 'static/'
-
-STATIC_ROOT = f'{BASE_DIR}/../static'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # Logging

@@ -1,0 +1,26 @@
+@import '../../assets/scss/base/variables';
+
+.table {
+    width: 100%;
+    height: 100%;
+    & thead {
+        border-radius: map-get($r, 'xl'), 0;
+
+    }       
+    & th {
+        text-align: center;
+        vertical-align: middle;
+        background-color: map-get($theme-colors, 'dark');
+        padding: 0.5rem;
+        &:first-child {
+            border-radius: map-get($r, 'md') 0 0 map-get($r, 'md');
+        }
+        &:last-child {
+            border-radius: 0 map-get($r, 'md') map-get($r, 'md') 0;
+        }
+    }
+    & td {
+        text-align: center;
+        vertical-align: middle;
+    }
+}

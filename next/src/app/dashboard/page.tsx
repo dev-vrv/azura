@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import './page.scss';
 import 'aos/dist/aos.css';
 import AOS from 'aos';  
@@ -22,7 +20,7 @@ type PropsComponents = {
 
 
 export default function Dashboard() {
-    const [activeSection, setActiveSection] = useState('monitor');
+    const [activeSection, setActiveSection] = useState('users');
     const components: PropsComponents = {
         monitor: Monitor,
         stats: Stats,
@@ -43,7 +41,7 @@ export default function Dashboard() {
     return (
         <div className='dashboard'
             style={{
-                backgroundImage: `url(https://w.forfun.com/fetch/87/8716d1a0243fff0827bd0d66a0a8c066.jpeg)`,
+                backgroundImage: `url(https://www.hfbsinfo.com/infohub/wp-content/uploads/2018/09/background.jpg)`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

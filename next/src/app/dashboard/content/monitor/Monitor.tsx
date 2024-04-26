@@ -5,22 +5,22 @@ import useStats from "@/hooks/socketMonitor";
 import { RiTimeZoneFill, RiTimer2Line, RiShining2Line, RiUser3Line } from "react-icons/ri";
 import { CPUMonitor, DiskMonitor, MemoryMonitor, CombinedMonitor } from "./Widgets";
 import { InterfaceStats } from "@/hooks/socketMonitor";
-import Loader from "@/components/loader/Loader";
+import Spinner from "@/components/spinner/Spinner";
 
 function statsWidgets(stats: InterfaceStats) {
 	const { site, system } = stats || {};
 	return (
 		<div className="row h-100 w-100">
-			<div className="col-6" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="500"></div>
+			<div className="col-6 h-50" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="500"></div>
 			<div
-				className="col-6 d-flex flex-column justify-content-center"
+				className="col-6 h-50 d-flex flex-column justify-content-center"
 				data-aos="zoom-in"
 				data-aos-duration="500"
 				data-aos-delay="200"
 			></div>
 
 			<div
-				className="col-6 d-flex flex-column justify-content-center"
+				className="col-6 h-50 d-flex flex-column justify-content-center"
 				data-aos="zoom-in"
 				data-aos-duration="500"
 				data-aos-delay="600"
@@ -28,7 +28,7 @@ function statsWidgets(stats: InterfaceStats) {
 				<CombinedMonitor queries={site.queries} requests={site.requests} />
 			</div>
 			<div
-				className="col-2 d-flex flex-column justify-content-center gap-2"
+				className="col-2 h-50 d-flex flex-column justify-content-center gap-2"
 				data-aos="zoom-in"
 				data-aos-duration="500"
 				data-aos-delay="700"
@@ -37,7 +37,7 @@ function statsWidgets(stats: InterfaceStats) {
 				<MemoryMonitor {...system.memory} />
 			</div>
 			<div
-				className="col-2 d-flex flex-column justify-content-center gap-2"
+				className="col-2 h-50 d-flex flex-column justify-content-center gap-2"
 				data-aos="zoom-in"
 				data-aos-duration="500"
 				data-aos-delay="750"
@@ -46,7 +46,7 @@ function statsWidgets(stats: InterfaceStats) {
 				<DiskMonitor {...system.disk} />
 			</div>
 			<div
-				className="col-2 d-flex flex-column justify-content-center gap-2"
+				className="col-2 h-50 d-flex flex-column justify-content-center gap-2"
 				data-aos="zoom-in"
 				data-aos-duration="500"
 				data-aos-delay="800"
@@ -65,7 +65,7 @@ export default function Monitor() {
 		<div className="row h-100 g-3">
 			<div className="col-9">
 				<Section extraClass="section">
-					{stats?.site && stats?.system ? statsWidgets(stats) : <Loader />}
+					{stats?.site && stats?.system ? statsWidgets(stats) : <Spinner />}
 				</Section>
 			</div>
 			<div className="col-3 h-100 d-flex flex-column gap-3">
@@ -97,9 +97,21 @@ export default function Monitor() {
 								<span>Date Time</span>
 							</p>
 							<p>
-								
-								{stats?.site?.time ? <span data-aos="zoom-in" data-aos-duration="500">{stats.site.time}</span> : "--"} - {""}
-								{stats?.site?.date ? <span data-aos="zoom-in" data-aos-duration="500">{stats.site.date}</span> : "--"}
+								{stats?.site?.time ? (
+									<span data-aos="zoom-in" data-aos-duration="500">
+										{stats.site.time}
+									</span>
+								) : (
+									"--"
+								)}{" "}
+								- {""}
+								{stats?.site?.date ? (
+									<span data-aos="zoom-in" data-aos-duration="500">
+										{stats.site.date}
+									</span>
+								) : (
+									"--"
+								)}
 							</p>
 						</li>
 						<li>
@@ -109,12 +121,34 @@ export default function Monitor() {
 								</i>
 								<span>Time Zone</span>
 							</p>
-							<p>{stats?.site?.timezone ? <span data-aos="zoom-in" data-aos-duration="500">{stats.site.timezone}</span> : "--"}</p>
+							<p>
+								{stats?.site?.timezone ? (
+									<span data-aos="zoom-in" data-aos-duration="500">
+										{stats.site.timezone}
+									</span>
+								) : (
+									"--"
+								)}
+							</p>
 						</li>
 					</ul>
 				</Section>
-				<Section extraClass="section f-100">
-					<h2>actions</h2>
+				<Section extraClass="section flex-column gap-3">
+					<h2>History</h2>
+					<ul className="list py-2 justify-content-start">
+						<li>
+							<p>Admin</p>
+							<p>User same was changed</p>
+						</li>
+						<li>
+							<p>Admin</p>
+							<p>Celery task was changed</p>
+						</li>
+						<li>
+							<p>Admin</p>
+							<p>Mails was deleted</p>
+						</li>
+					</ul>
 				</Section>
 			</div>
 		</div>

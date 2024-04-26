@@ -1,7 +1,7 @@
 @import '../../../assets/scss/base/variables';
 
 .header {
-    padding: 0 map-get($padding, 'xl');
+    padding: 0 map-get($p, 'xl');
     display: flex;
     align-items: center;
     justify-content: space-between;
