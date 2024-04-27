@@ -1,10 +1,9 @@
 import Section from "@/components/section/Section";
 import axios from "axios";
 import React, { useEffect } from "react";
-import useStats from "@/hooks/socketMonitor";
 import { RiTimeZoneFill, RiTimer2Line, RiShining2Line, RiUser3Line } from "react-icons/ri";
 import { CPUMonitor, DiskMonitor, MemoryMonitor, CombinedMonitor } from "./Widgets";
-import { InterfaceStats } from "@/hooks/socketMonitor";
+import useStats, { InterfaceStats } from "@/hooks/useSocketMonitor";
 import Spinner from "@/components/spinner/Spinner";
 
 function statsWidgets(stats: InterfaceStats) {

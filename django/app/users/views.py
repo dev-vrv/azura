@@ -52,7 +52,6 @@ class UserLogin(ViewSet):
                 return response.Response(responseData, status=status.HTTP_400_BAD_REQUEST)
         return response.Response({'message': 'GET request not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-# TODO - Protect the following views with authentication
 class UsersController(ViewSet):
     def get_users(self, request, *args, **kwargs):
         users = User.objects.all()

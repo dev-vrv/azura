@@ -8,6 +8,7 @@
     grid-template-columns: 100px 1fr;
     grid-template-rows: auto 1fr;
     padding: map-get($p, 'md');
+    background-color: map-get($theme-colors, 'dark');
 }
 
 .aside {

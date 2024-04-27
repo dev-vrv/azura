@@ -40,12 +40,7 @@ export default function Dashboard() {
 
     return (
         <div className='dashboard'
-            style={{
-                backgroundImage: `url(https://www.hfbsinfo.com/infohub/wp-content/uploads/2018/09/background.jpg)`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-            }}
+            
         >
             <Header />
             <Aside activeSection={activeSection} setActiveSection={setActiveSection} />

@@ -1,60 +1,144 @@
 "use client";
 
-import React, { useEffect } from 'react';
-import Spinner from '@/components/spinner/Spinner';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Spinner from "../spinner/Spinner";
 import './Table.scss';
+import CheckBox from "../checkbox/CheckBox";
+import { CiEdit, CiCircleChevDown, CiCircleChevUp } from "react-icons/ci";
 
-
-interface ITableRow {
-    [key: string]: any;
+interface ResponseData {
+	id: string;
+	[key: string]: string | number | boolean | null;
 }
 
-interface ITableProps {
-    labels: React.ReactNode[];
-    data?: ITableRow[];
-}
-
-
-
-function TableHeader({labels}: {labels: React.ReactNode[]}) {
-    return (
-        <tr>
-            {labels.map((label, index) => (
-                <th key={index}>{label}</th>
-            ))}
-        </tr>
-    );
-
-}
-
-function TableRows({data}: {data: ITableRow[]}) {
-    return (
-        <>
-            {data.map((row, index) => (
-                <tr key={index}>
-                    {Object.values(row).map((value, index) => (
-                        <td key={index}>{value}</td>
-                    ))}
-                </tr>
-            ))}
-        </>
-    );
-
+interface PropsTableData {
+	endPoint: {
+		url: string;
+		method: string;
+		data?: any;
+	};
+	sort?: string[] | boolean;
+	select?: boolean;
+	listDisplay: string[]
+	listDisplayLink?: string;
 }
 
 
+const Spin = () => {
+	return (
+		<tr>
+			<td colSpan={100}>
+				<Spinner />
+			</td>
+		</tr>
+	);
+}
 
-function Table({labels, data}: ITableProps) {
-    return (
-        <table className='table'>
-            <thead>
-                <TableHeader labels={labels} />
-            </thead>
-            <tbody>
+const TH = ({ listDisplay, sort }: { listDisplay: string[], sort?: string[] | boolean }) => {
+	return (
+		<>
+			{listDisplay.map((label, index) => {
+				label = label.replace('_', ' ');
+				label = label.charAt(0).toUpperCase() + label.slice(1);
 
-            </tbody>
-        </table>
-    )
+				const sortLabel = () => {
+					return (
+						<p className="d-inline-flex flex-column align-items-center gap-1">
+							<span className="d-inline-flex">
+								<a className="btn btn-sort" href={`${label}-asc`}>
+									<i>
+										<CiCircleChevUp />
+									</i>
+								</a>
+								<a className="btn btn-sort" href={`${label}-desc`}>
+								<i>
+									<CiCircleChevDown />
+								</i>
+								</a>
+							</span>
+							<span>{label}</span>
+						</p>
+					);
+				}
+				return (
+					<th key={index}>
+						{sort == true || (sort && sort.includes(label.toLowerCase())) ? sortLabel() : label} 
+					</th>
+				);
+			})}
+		</>
+	);
 };
 
-export default Table;
+
+export default function TableData({endPoint, listDisplay, sort, select, listDisplayLink = 'id'}: PropsTableData) {
+
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		axios({
+			url: endPoint.url,
+			method: endPoint.method,
+			data: endPoint.data
+		})
+		.then((response) => {
+			setData(response.data);
+			setLoading(false);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+	}, [endPoint]);
+
+
+	const DataView = (data: ResponseData[]) => {
+		if (data) {
+			return data.map((item, index) => {
+				return (
+					<tr key={index}>
+						{select && <td>
+							<p className="td-content">
+							<CheckBox id={item.id} />
+							</p>
+							</td>}
+						{listDisplay.map((key, index) => {
+							return (
+								<td key={index}>
+									<p className="td-content">
+										{key == listDisplayLink ? (
+											<a href={item.id} className="link">
+												{item[key]}
+											</a>
+										) : (
+											<span>{item[key]}</span>
+										)}
+									</p>
+								</td>
+							);
+						})}
+					</tr>
+				);
+			});
+		}
+		return (
+			<tr>
+				<td colSpan={100}></td>
+			</tr>
+		);
+	}
+
+
+	return (
+		<table className="table">
+			<thead>
+				<tr>
+					{select && <th><CheckBox id="all" /></th>}
+					<TH listDisplay={listDisplay} sort={sort} />
+				</tr>
+			</thead>
+			<tbody>{loading ? <Spin /> : DataView(data)}</tbody>
+		</table>
+	);
+}

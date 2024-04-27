@@ -1,4 +1,4 @@
-import { CiSearch } from "react-icons/ci";
+import { CiSearch, CiFilter } from "react-icons/ci";
 
 interface IFormProps {
     onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -8,7 +8,7 @@ interface IFormProps {
 function FormSearch({onSubmit}: IFormProps) {
 	return (
 		<form className="form-search" onSubmit={onSubmit}>
-			<input type="search" className="field-search" placeholder="Search" />
+			<input type="text" className="field-search" placeholder="Search" name="search" />
 			<button type="submit" className="btn btn-search">
                 <i><CiSearch /></i>
             </button>
