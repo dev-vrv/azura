@@ -1,144 +1,196 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Spinner from "../spinner/Spinner";
-import './Table.scss';
+import { FormSearch } from "@/components/forms/Forms";
+import { CiCirclePlus, CiFilter, CiRedo } from "react-icons/ci";
+import Table from "react-bootstrap/Table";
 import CheckBox from "../checkbox/CheckBox";
-import { CiEdit, CiCircleChevDown, CiCircleChevUp } from "react-icons/ci";
+import Spinner from "../spinner/Spinner";
+import Alert from "../alerts/Alert";
+import React, { useEffect, useState, useCallback } from "react";
+import Dialog from "../dialog/Dialog";
 
-interface ResponseData {
-	id: string;
-	[key: string]: string | number | boolean | null;
-}
+import axios from "axios";
+import "./Table.scss";
 
-interface PropsTableData {
-	endPoint: {
-		url: string;
-		method: string;
-		data?: any;
-	};
-	sort?: string[] | boolean;
-	select?: boolean;
-	listDisplay: string[]
-	listDisplayLink?: string;
-}
-
-
-const Spin = () => {
-	return (
-		<tr>
-			<td colSpan={100}>
-				<Spinner />
-			</td>
-		</tr>
-	);
-}
-
-const TH = ({ listDisplay, sort }: { listDisplay: string[], sort?: string[] | boolean }) => {
-	return (
-		<>
-			{listDisplay.map((label, index) => {
-				label = label.replace('_', ' ');
-				label = label.charAt(0).toUpperCase() + label.slice(1);
-
-				const sortLabel = () => {
-					return (
-						<p className="d-inline-flex flex-column align-items-center gap-1">
-							<span className="d-inline-flex">
-								<a className="btn btn-sort" href={`${label}-asc`}>
-									<i>
-										<CiCircleChevUp />
-									</i>
-								</a>
-								<a className="btn btn-sort" href={`${label}-desc`}>
-								<i>
-									<CiCircleChevDown />
-								</i>
-								</a>
-							</span>
-							<span>{label}</span>
-						</p>
-					);
-				}
-				return (
-					<th key={index}>
-						{sort == true || (sort && sort.includes(label.toLowerCase())) ? sortLabel() : label} 
-					</th>
-				);
-			})}
-		</>
-	);
+type ModelActions = {
+	add?: boolean;
+	filter?: boolean;
+	refresh?: boolean;
+	search?: boolean;
 };
 
+interface TableProps {
+	listDisplay: string[];
+	endPoint: {
+		url: string;
+		data?: {
+			[key: string]: string;
+		};
+	};
+	selectable?: boolean;
+	enumerate?: boolean;
+	actions?: ModelActions;
+	name?: string;
+	refreshFlag?: boolean;
+}
 
-export default function TableData({endPoint, listDisplay, sort, select, listDisplayLink = 'id'}: PropsTableData) {
+function ModelView(props: TableProps) {
+	const [refreshFlag, setRefreshFlag] = useState(false);
 
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		axios({
-			url: endPoint.url,
-			method: endPoint.method,
-			data: endPoint.data
-		})
-		.then((response) => {
-			setData(response.data);
-			setLoading(false);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-	}, [endPoint]);
+	const [modalShow, setModalShow] = React.useState(false);
 
 
-	const DataView = (data: ResponseData[]) => {
-		if (data) {
-			return data.map((item, index) => {
-				return (
-					<tr key={index}>
-						{select && <td>
-							<p className="td-content">
-							<CheckBox id={item.id} />
-							</p>
-							</td>}
-						{listDisplay.map((key, index) => {
-							return (
-								<td key={index}>
-									<p className="td-content">
-										{key == listDisplayLink ? (
-											<a href={item.id} className="link">
-												{item[key]}
-											</a>
-										) : (
-											<span>{item[key]}</span>
-										)}
-									</p>
-								</td>
-							);
-						})}
-					</tr>
-				);
-			});
+	const triggerRefresh = () => {
+		setRefreshFlag((prev) => !prev);
+	};
+
+	const actions: ModelActions = {
+		add: true,
+		refresh: true,
+		filter: false,
+		search: false,
+	};
+
+	const actionButtons = (): React.ReactNode => {
+		if (props.actions) {
+			for (let key in props.actions) {
+				actions[key as keyof typeof actions] = props.actions[key as keyof typeof props.actions];
+			}
 		}
 		return (
-			<tr>
-				<td colSpan={100}></td>
-			</tr>
-		);
-	}
+			<>
+				{actions.search && <FormSearch />}
+				{actions.filter && (
+					<button className="btn btn-secondary" type="button">
+						<span>Filter</span>
+						<i>
+							<CiFilter />
+						</i>
+					</button>
+				)}
+				{actions.add && (
+					<>
+						<button className="btn btn-success" type="button" onClick={() => setModalShow(true)}>
+							<span>Add</span>
+							<i>
+								<CiCirclePlus />
+							</i>
+						</button>
+						<Dialog {...{
+							title:"Add User",
+							id:"add-user",
+							show: modalShow,
+							onHide: () => setModalShow(false),
+						}}> 
+							<div>
+								<FormSearch />
+							</div>
+						</Dialog>
 
+					</>
+				)}
+
+				{actions.refresh && (
+					<button className="btn btn-success" type="button" onClick={() => triggerRefresh()}>
+						<i>
+							<CiRedo />
+						</i>
+					</button>
+				)}
+			</>
+		);
+	};
 
 	return (
-		<table className="table">
-			<thead>
-				<tr>
-					{select && <th><CheckBox id="all" /></th>}
-					<TH listDisplay={listDisplay} sort={sort} />
-				</tr>
-			</thead>
-			<tbody>{loading ? <Spin /> : DataView(data)}</tbody>
-		</table>
+		<>
+			<div className="row section-model__header">
+				<div className="col">
+					<h3 className="h3">{props.name}</h3>
+				</div>
+				<div className="col d-flex justify-content-end gap-4">{actionButtons()}</div>
+			</div>
+			<div className="row section-model__body">
+				<ModelTable {...props} refreshFlag={refreshFlag} />
+			</div>
+			<div className="row section-model__footer"></div>
+		</>
 	);
 }
+
+function ModelTable(props: TableProps) {
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState("");
+
+	const fetchData = useCallback(() => {
+		setLoading(true);
+		setError("");
+		axios
+			.get(props.endPoint.url, { params: props.endPoint.data })
+			.then((response) => {
+				setData(response.data);
+			})
+			.catch((error) => {
+				setError(error.message);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [props.endPoint]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData, props.refreshFlag]);
+
+	return (
+		<Table responsive>
+			<thead>
+				<tr>
+					{props.enumerate && <th>#</th>}
+					{props.selectable && (
+						<th>
+							<CheckBox id="all" />
+						</th>
+					)}
+					{props.listDisplay.map((item, index) => (
+						<th key={index}>{item.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())}</th>
+					))}
+				</tr>
+			</thead>
+			<tbody>
+				{loading && (
+					<tr>
+						<td colSpan={props.listDisplay.length + (props.selectable ? 1 : 0) + (props.enumerate ? 1 : 0)}>
+							<Spinner />
+						</td>
+					</tr>
+				)}
+				{error && (
+					<tr>
+						<td colSpan={props.listDisplay.length + (props.selectable ? 1 : 0) + (props.enumerate ? 1 : 0)}>
+							<Alert type="danger" heading={error} />
+						</td>
+					</tr>
+				)}
+				{!loading &&
+					!error &&
+					data.length > 0 &&
+					data.map((item, index) => (
+						<tr key={index}>
+							{props.enumerate && <td>{index + 1}</td>}
+							{props.selectable && (
+								<td>
+									<CheckBox id={index.toString()} />
+								</td>
+							)}
+							{props.listDisplay.map((key, idx) => (
+								<td key={idx}>{item[key] || "--"}</td>
+							))}
+						</tr>
+					))}
+			</tbody>
+		</Table>
+	);
+}
+
+export default ModelView;

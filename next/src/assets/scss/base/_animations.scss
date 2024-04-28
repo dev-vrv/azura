@@ -6,3 +6,32 @@
         transform: rotate(360deg);
     }
 }
+
+@keyframes hideAlert {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    99% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+        display: none;
+    }
+}
+
+@keyframes showAlert {
+    0% {
+        display: flex;
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+}

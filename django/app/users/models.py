@@ -32,9 +32,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     tell = models.CharField(max_length=20, null=True, blank=True)
     
-    name = models.CharField(max_length=150, blank=True, null=True)
-    surname = models.CharField(max_length=150, blank=True, null=True)
-    
     birth_date = models.DateField(null=True, blank=True)
     photo = models.ImageField(upload_to='users/', null=True, blank=True)
 

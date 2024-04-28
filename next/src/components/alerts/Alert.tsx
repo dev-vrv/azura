@@ -7,8 +7,8 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 
 interface AlertMessage {
     type: 'success' | 'warning' | 'danger' | 'info';
-    text: string;
-    heading?: string;
+    heading: string;
+    text?: string;
 }
 
 function AlertDismissible(props: AlertMessage) {
@@ -31,17 +31,16 @@ function AlertDismissible(props: AlertMessage) {
   }
 
   return (
-    <div className={`form-alert form-alert-${type} ${show ? 'show' : 'hide'}`}>
-      <div className="d-flex flex-column justify-content-center align-items-start gap-2">
-        <h5 className='h5 fw-normal d-flex align-items-center gap-1'>{heading} {icon()}</h5>
-        <p>{text}</p>
-      </div>
-      <button 
-      type='button' 
-      className='btn-close'
-      onClick={() => setShow(false)}
-      ></button>
-    </div>
+		<div className={`alert alert-${type} ${show ? "show" : "hide"}`}>
+			<div className="alert--info">
+				<p className="">
+					{<i>{icon()}</i>}
+					{<span>{heading}</span>}
+				</p>
+				{text && <p>{text}</p>}
+			</div>
+			<button type="button" className="btn-close alert--button" onClick={() => setShow(false)}></button>
+		</div>
   );
 }
 

@@ -1,0 +1,21 @@
+@import '../../assets/scss/base/variables';
+
+.modal {
+
+    background-color: map-get($theme-colors, 'glass-xl');
+
+}
+
+.modal-content {
+    border-radius: map-get($r, 'lg');
+    background-color: map-get($theme-colors, 'dark');
+}
+
+.modal-header {
+    border-bottom: 1px solid map-get($theme-colors, 'fade');
+}
+
+.modal-footer {
+    border-top: 1px solid map-get($theme-colors, 'fade');
+}
+

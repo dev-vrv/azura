@@ -1,29 +1,55 @@
-@import '../../../assets/scss/base/variables.scss';
+@import '../../assets/scss//base/variables';
 
-.form-alert {
+.alert {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     overflow: hidden;
     height: fit-content;
-    padding: 0 1rem;
-    color: $color-dark;
-    border-radius: $r-medium;
-    box-shadow: $shadow-small;
+    padding: 0.5rem 2rem;
+    color: map-get($theme-colors, 'white');
+    border-radius: map-get($r, 'md');
+    box-shadow: map-get($shadow, 'sm');
+    margin: map-get($m, 'lg') 0;
+    position: relative;
+    &--info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        & p {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        & i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+    }
+    &--button {
+        position: absolute;
+        right: 1.5rem;
+    }
 
     &-success {
-        background-color: $color-success;
+        background-color: map-get($theme-colors, 'success');
     }
     &-warning {
-        background-color: $color-warning;
+        background-color: map-get($theme-colors, 'warning');;
     }
     &-danger {
-        background-color: $color-danger;
+        background-color: map-get($theme-colors, 'danger');;
     }
 
     &.hide {
-        animation: hideAlert 0.5s ease-in-out forwards;
+        animation: hideAlert 0.2s ease-in-out forwards;
     }
     &.show {
-        animation: showAlert 0.5s ease-in-out forwards;
+        animation: showAlert 0.2s ease-in-out forwards;
     }
 }
