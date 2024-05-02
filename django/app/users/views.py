@@ -1,66 +1,47 @@
-from django.shortcuts import render
-from rest_framework import response
-from rest_framework.viewsets import ViewSet
-from .serializers import UserSerializer
-from .forms import CustomUserCreationForm
-from .models import CustomUser as User
-from rest_framework import status
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
+from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer
+from .models import User
 
+import json
 
-class UserInfo(ViewSet):
-    def user_info(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            user = request.user
-            serializer = UserSerializer(user)
-            return response.Response(serializer.data)     
+class UserSessionSet(viewsets.ViewSet):
+
+    @action(methods=['get'], detail=False, url_path='info', permission_classes=[IsAuthenticated])
+    def info(self, request):
+        if not request.user.is_authenticated:
+            return Response({
+                'detail': 'Authentication credentials were not provided'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(UserInfoSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=False, url_path='sign-up')
+    def sign_up(self, request):
+        serializer = SignUpSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
         else:
-            return response.Response({'message': 'anonymous'})
-        
-class UserRegistration(ViewSet):
-    def registration(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.data)
-            if form.is_valid():
-                user = form.save()
-                serializer = UserSerializer(user)
-                return response.Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return response.Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
-        return response.Response({'message': 'GET request not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-class UserLogin(ViewSet):
-    def login(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            email = request.data.get('email')
-            password = request.data.get('password')
-            user = User.objects.filter(email=email).first()
-            if user and user.check_password(password):
-                refresh = RefreshToken.for_user(user)
-                return response.Response({
-                    'heading': 'Login successful',
-                    'message': 'You are now logged in as ' + user.email,
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                }, status=status.HTTP_200_OK)
-            else:
-                responseData = {
-                    'heading': 'Login Failed',
-                    'message': 'Invalid email or password',
-                    'type': 'danger'
-                }
-                return response.Response(responseData, status=status.HTTP_400_BAD_REQUEST)
-        return response.Response({'message': 'GET request not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UsersController(ViewSet):
-    def get_users(self, request, *args, **kwargs):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return response.Response(serializer.data)
-    def update_user(self, request, *args, **kwargs):
-        print(request.data)
-        return response.Response({})
-    def delete_users(self, request, *args, **kwargs):
-        print(request.data)
-        return response.Response({})
-    
+    @action(methods=['post'], detail=False, url_path='sign-in')
+    def sign_in(self, request):
+        serializer = SignInSerializer(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email=serializer.validated_data['email'])
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

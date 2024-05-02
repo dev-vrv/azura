@@ -47,9 +47,5 @@ class SiteInfoView(APIView):
         return Response(data=site_info.get_site_info())
     
 
-class SettingsUpdate(APIView):
-    def post(self, request):
-        data = request.data
-        print(data)
-        return Response(data)
+
     

@@ -1,0 +1,39 @@
+$colors: (
+  // Theme colors
+  "primary": #17a2b8,
+  "secondary": #6c757d,
+  "tertiary": #435669,
+  
+  // Additional colors
+  "success": #28a745,
+  "info": #17a2b8,
+  "warning": #ffc107,
+  "danger": #dc3545,
+  
+  // Grayscale colors
+  "light": #f8f9fa,
+  "dark": rgb(33, 37, 41),
+
+  // Custom colors
+  "none": rgba(0, 0, 0, 0),
+
+  // Text colors
+  "white": #fff,
+  "black": #000,
+  "gray": #6c757d,
+  "gray-dark": #343a40,
+  "muted": #6c757d,
+);
+
+$glass: (
+  sm: rgba(30, 30, 30, 0.1),
+  md: rgba(30, 30, 30, 0.2),
+  lg: rgba(30, 30, 30, 0.3),
+  xl: rgba(30, 30, 30, 0.5),
+);
+
+$shadow: (
+  sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075),
+  md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+  lg: 0 1rem 3rem rgba(0, 0, 0, 0.175),
+);

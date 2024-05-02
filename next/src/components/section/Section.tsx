@@ -1,19 +1,13 @@
-interface PropsSection {
-    children: any
-    extraClass?: string
-    dataAos?: string
-    dataAosDuration?: string
-    dataAosDelay?: string
+import './Section.scss';
+
+interface SectionProps {
+    children: React.ReactNode;
+    className?: string;
 }
 
-export default function Section({children, extraClass, dataAos, dataAosDelay, dataAosDuration}: PropsSection) {
+export default function Section({ children, className}: SectionProps) {
     return (
-        <section 
-        className={`section ${extraClass? extraClass : ''}`} 
-        data-aos={dataAos? dataAos : 'zoom-in'} 
-        data-aos-duration={dataAosDuration? dataAosDuration : '400'}
-        data-aos-delay={dataAosDelay? dataAosDelay : '0'}
-        >
+        <section className={`section ${className}`}>
             {children}
         </section>
     )

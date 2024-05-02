@@ -1,0 +1,54 @@
+@import '../../assets/scss/variables';
+
+.i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: map-get($colors, 'white');
+
+	// size
+	&--xs {
+		font-size: map-get($fs, 'xs');
+	}
+	&--sm {
+		font-size: map-get($fs, 'sm');
+	}
+	&--md {
+		font-size: map-get($fs, 'md');
+	}
+	&--lg {
+		font-size: map-get($fs, 'lg');
+	}
+	&--xl {
+		font-size: map-get($fs, 'xl');
+	}
+	&--xxl {
+		font-size: map-get($fs, 'xxl');
+	}
+
+	// color
+	&--primary {
+		color: map-get($colors, 'primary');
+	}
+	&--secondary {
+		color: map-get($colors, 'secondary');
+	}
+	&--success {
+		color: map-get($colors, 'success');
+	}
+	&--danger {
+		color: map-get($colors, 'danger');
+	}
+	&--warning {
+		color: map-get($colors, 'warning');
+	}
+	&--info {
+		color: map-get($colors, 'info');
+	}
+	&--white {
+		color: map-get($colors, 'white');
+	}
+	&--dark {
+		color: map-get($colors, 'dark');
+	}
+}

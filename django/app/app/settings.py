@@ -78,11 +78,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'users.apps.CustomUsersConfig',
-    'mail.apps.MailConfig',
-    'chat.apps.ChatConfig',
-    'cart.apps.CartConfig',
-    'api.apps.ApiConfig',
-    'content.apps.ContentConfig',
+    'command.apps.CommandConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -195,7 +192,7 @@ USE_TZ = True
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.User'
 
 
 # Logging

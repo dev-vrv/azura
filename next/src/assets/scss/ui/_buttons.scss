@@ -1,162 +1,27 @@
-@import "../base/variables";
+@import '../variables';
 
 .btn {
-    @extend .unselect;
-    cursor: pointer;
-    background-color: map-get($theme-colors, "none");
-    border-radius: map-get($r, "md");
-    outline: none;
-    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.25rem 1rem;
     gap: 0.25rem;
-    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
-
-    & i {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.75rem;
-        transition: color 0.3s ease-in-out
-    }
-}
-
-.btn-inline {
-    @extend .btn;
-    display: inline;
-    padding: 0.25rem;
-}
-
-.btn-sort {
-    padding: 0.25rem;
-    & i {
-        color: map-get($theme-colors, "fade");
-        font-size: 1.5rem;
-    }
-
+    width: fit-content;
+    height: fit-content;
+    padding: map-get($p, 'sm') map-get($p, 'lg');
+    border-radius: map-get($r, 'sm');
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out, transform 0.1s ease-in-out;
     &:hover {
-        & i {
-            color: map-get($theme-colors, "success");
-        }
+        opacity: 0.9;
     }
-}
-
-.btn-aside {
-    margin: 1rem 0;
-
-    & i {
-        font-size: 2.5rem;
-    }
-
-    &:hover,
-    &.active {
-        color: map-get($theme-colors, "primary");
-    }
-}
-
-.btn-header {
-    & i {
-        font-size: 2rem;
-    }
-
-    &:hover,
-    &.active {
-        color: map-get($theme-colors, "primary");
-    }
-}
-
-.btn-info {
-    & i {
-        font-size: 2rem;
-    }
-
-    &:hover,
-    &.active {
-        color: map-get($theme-colors, "info");
-    }
-}
-
-.btn-edit {
-    & i {
-        font-size: 1.75rem;
-    }
-
-    &:hover {
-        & i {
-            color: map-get($theme-colors, "secondary");
-        }
-    }
-}
-
-.btn-search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    & i {
-        font-size: 1.5rem;
-    }
-
-    &:hover {
-        color: map-get($theme-colors, "primary");
-    }
-}
-
-.btn-secondary {
-    background-color: map-get($theme-colors, "secondary");
-
-    &:hover {
-        background-color: darken(map-get($theme-colors, "secondary"), 5%);
+    &:active {
+        transform: scale(0.95);
     }
 }
 
 .btn-primary {
-    background-color: map-get($theme-colors, "primary");
-
-    &:hover {
-        background-color: darken(map-get($theme-colors, "primary"), 5%);
-    }
-}
-
-.btn-success {
-    background-color: map-get($theme-colors, "success");
-
-    &:hover {
-        background-color: darken(map-get($theme-colors, "success"), 5%);
-    }
-}
-
-.btn-danger {
-    background-color: map-get($theme-colors, "danger");
-
-    &:hover {
-        background-color: darken(map-get($theme-colors, "danger"), 5%);
-    }
-}
-
-.btn-close {
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: map-get($theme-colors, "none");
-    border: none;
-    outline: none;
-    position: relative;
-    &::before, &::after {
-        position: absolute;
-        background-color: map-get($theme-colors, "light");
-        content: "";
-        width: 100%;
-        height: 1px;
-    }
-    &::before {
-        transform: rotate(45deg);
-    }
-    &::after {
-        transform: rotate(-45deg);
-    }
+    background-color: map-get($colors, 'primary');
+    color: map-get($colors, 'white');
 }

@@ -1,7 +1,10 @@
-export default function Core() {
-    return (
-        <div>
-            <h1>Core</h1>
-        </div>
-    )
+import Image from "next/image";
+
+
+export default function Home() {
+  return (
+    <main>
+
+    </main>
+  );
 }

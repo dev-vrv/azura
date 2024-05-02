@@ -1,0 +1,9 @@
+@import '../../assets/scss/variables';
+
+.section {
+    padding: map-get($p, 'xl');
+    border-radius: map-get($r, 'lg');
+    background-color: map-get($glass, 'lg');
+    backdrop-filter: blur(15px);
+    box-shadow: map-get($shadow, 'md');
+}

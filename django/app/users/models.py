@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import Group, Permission
 
 
-class CustomUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
@@ -20,31 +20,16 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
     
 
-class CustomUser(AbstractUser):
-    
-    status_choices = (
+class User(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    STATUS_CHOICES = (
         ('new', 'New'),
         ('approved', 'Approved'),
         ('baned', 'Baned'),
     )
     
-    username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(unique=True)
-    tell = models.CharField(max_length=20, null=True, blank=True)
-    
-    birth_date = models.DateField(null=True, blank=True)
-    photo = models.ImageField(upload_to='users/', null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    status = models.CharField(max_length=10, choices=status_choices, default='new')
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
-    
+    objects = UserManager()
     groups = models.ManyToManyField(
         Group,
         verbose_name=('groups'),
@@ -53,20 +38,40 @@ class CustomUser(AbstractUser):
             'The groups this user belongs to. A user will get all permissions '
             'granted to each of their groups.'
         ),
-        related_name="customuser_groups",
-        related_query_name="customuser",
+        related_name="user_groups",
+        related_query_name="user",
     )
     user_permissions = models.ManyToManyField(
         Permission,
         verbose_name=('user permissions'),
         blank=True,
         help_text=('Specific permissions for this user.'),
-        related_name="customuser_user_permissions",
-        related_query_name="customuser",
+        related_name="user_user_permissions",
+        related_query_name="user",
     )
     
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    last_session_at = models.DateTimeField(blank=True, null=True)
+    
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    
+    photo = models.ImageField(upload_to='users/', null=True, blank=True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    
+    country = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    zip_code = models.CharField(max_length=10, null=True, blank=True)
+    
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
+
     def save(self, *args, **kwargs):
         self.username = self.email
+        if self.last_session_at:
+            status = 'approved'
         super().save(*args, **kwargs)
 
     def __str__(self):
