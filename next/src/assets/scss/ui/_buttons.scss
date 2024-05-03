@@ -4,15 +4,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem;
     width: fit-content;
     height: fit-content;
+    gap: 0.25rem;
     padding: map-get($p, 'sm') map-get($p, 'lg');
+    color: map-get($theme-colors, 'white');
+    background-color: map-get($theme-colors, 'none');
     border-radius: map-get($r, 'sm');
     border: none;
     outline: none;
+    transition: opacity 0.3s ease-in-out, transform 0.1s ease-in-out, background-color 0.3s ease-in-out color 0.3s ease-in-out;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out, transform 0.1s ease-in-out;
     &:hover {
         opacity: 0.9;
     }
@@ -22,6 +24,24 @@
 }
 
 .btn-primary {
-    background-color: map-get($colors, 'primary');
-    color: map-get($colors, 'white');
+    background-color: map-get($theme-colors, 'primary');
+    color: map-get($theme-colors, 'white');
+    &:hover {
+        background-color: darken(map-get($theme-colors, 'primary'), 10%);
+        color: map-get($theme-colors, 'white');
+    }
+}
+
+.btn-header {
+    padding: map-get($p, 'sm');
+    &:hover, &:focus, &:active {
+        color: map-get($theme-colors, 'primary');
+    }
+}
+
+.btn-aside {
+    padding: map-get($p, 'sm');
+    &:hover, &:focus, &:active, &.active {
+        color: map-get($theme-colors, 'primary');
+    }
 }

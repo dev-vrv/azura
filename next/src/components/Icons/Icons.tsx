@@ -1,87 +1,104 @@
-import { 
-    CiLight, // Light
-    CiDark, // Dark
-
-    CiUser, // User
-    CiCircleList, // List
-    CiMenuKebab, // Menu kebab
-    CiBeaker1, // Beaker *(Lab)*
-    CiLink, // Link
-    CiChat2, // Chat
-    CiMonitor, // Monitor
-    
-    CiCircleAlert, // Alert circle
-    CiCircleCheck, // Check circle
-    CiCircleInfo, // Info circle
-    CiCircleQuestion, // Question circle
-    CiCirclePlus, // Plus circle
-
-    CiCircleChevDown, // Arrow up
-    CiCircleChevUp, // Arrow down
-    CiCircleChevLeft, // Arrow left
-    CiCircleChevRight, // Arrow right
-
-    CiExport, // Export
-    CiImport, // Import
-    CiFilter, // Filter
-    CiZoomIn, // Zoom in
-    CiZoomOut, // Zoom out
-    CiSearch, // Search
-    CiRedo, // Redo
-    CiUndo, // Undo
-
-    CiLogin, // Login
-    CiLogout, // Logout
+import {
+	CiLight,
+	CiDark,
+	CiUser,
+	CiCircleList,
+	CiMenuKebab,
+	CiBeaker1,
+	CiLink,
+	CiChat2,
+	CiCircleAlert,
+	CiCircleCheck,
+	CiCircleInfo,
+	CiCircleQuestion,
+	CiCirclePlus,
+	CiCircleChevDown,
+	CiCircleChevUp,
+	CiCircleChevLeft,
+	CiCircleChevRight,
+	CiExport,
+	CiImport,
+	CiFilter,
+	CiZoomIn,
+	CiZoomOut,
+	CiSearch,
+	CiRedo,
+	CiUndo,
+	CiLogin,
+	CiLogout,
+    CiMail,
+    CiLaptop,
+    CiWavePulse1,
+    CiGrid42,
+    CiSettings,
+    CiBellOn,
 } from "react-icons/ci";
 
 import { FaConnectdevelop } from "react-icons/fa";
-import './Icons.scss';
+import "./Icons.scss";
 
-
-const icons = {
-    'light': <CiLight />,
-    'dark': <CiDark />,
-    'user': <CiUser />,
-    'list': <CiCircleList />,
-    'menu': <CiMenuKebab />,
-    'lab': <CiBeaker1 />,
-    'link': <CiLink />,
-    'chat': <CiChat2 />,
-    'monitor': <CiMonitor />,
-    'alert': <CiCircleAlert />,
-    'check': <CiCircleCheck />,
-    'info': <CiCircleInfo />,
-    'question': <CiCircleQuestion />,
-    'plus': <CiCirclePlus />,
-    'up': <CiCircleChevUp />,
-    'down': <CiCircleChevDown />,
-    'left': <CiCircleChevLeft />,
-    'right': <CiCircleChevRight />,
-    'export': <CiExport />,
-    'import': <CiImport />,
-    'filter': <CiFilter />,
-    'zoom-in': <CiZoomIn />,
-    'zoom-out': <CiZoomOut />,
-    'search': <CiSearch />,
-    'redo': <CiRedo />,
-    'undo': <CiUndo />,
-    'login': <CiLogin />,
-    'logout': <CiLogout />,
-
-    'logo': <FaConnectdevelop />,
+const interfaceIcons = {
+	light: <CiLight />,
+	dark: <CiDark />,
+	menu: <CiMenuKebab />,
+	lab: <CiBeaker1 />,
+	link: <CiLink />,
+	alert: <CiCircleAlert />,
+	check: <CiCircleCheck />,
+	info: <CiCircleInfo />,
+	question: <CiCircleQuestion />,
+	plus: <CiCirclePlus />,
+	redo: <CiRedo />,
+	undo: <CiUndo />,
+	logo: <FaConnectdevelop />,
 };
 
-export interface IPropsIcon {
-    name: keyof typeof icons;
-    size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'white' | 'dark';
-    onClick?: () => void;
+const actions = {
+	search: <CiSearch />,
+	export: <CiExport />,
+	import: <CiImport />,
+	filter: <CiFilter />,
+    bell: <CiBellOn />,
+    settings: <CiSettings />,
+	"zoom-in": <CiZoomIn />,
+	"zoom-out": <CiZoomOut />,
+};
+
+const userIcons = {
+	user: <CiUser />,
+	login: <CiLogin />,
+	logout: <CiLogout />,
+};
+
+const directionIcons = {
+	down: <CiCircleChevDown />,
+	up: <CiCircleChevUp />,
+	left: <CiCircleChevLeft />,
+	right: <CiCircleChevRight />,
+};
+
+const adminPages = {
+    main: <CiLaptop />,
+	posts: <CiGrid42 />,
+	monitor: <CiWavePulse1 />,
+	celery: <CiCircleList />,
+	chat: <CiChat2 />,
+    mail: <CiMail />,
+};
+
+const icons = {...interfaceIcons, ...actions, ...userIcons, ...directionIcons, ...adminPages};
+
+export interface PropsIcon {
+	name: keyof typeof icons;
+	size?: "sm" | "md" | "lg" | "xl" | "xxl";
+	color?: "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "white" | "dark";
+	onClick?: () => void;
 }
 
-export default function Icon({name, size = 'md', color = 'dark', onClick}: IPropsIcon) {
-    return (
-        <i className={`i i--${size} i--${color}`} onClick={onClick}>
-            {icons[name]}
-        </i>
-    )
+export default function Icon({ name, size = "md", onClick }: PropsIcon) {
+	return (
+		<i className={`i i--${size}`} onClick={onClick}>
+			{icons[name]}
+		</i>
+	);
 }

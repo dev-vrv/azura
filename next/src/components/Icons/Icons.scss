@@ -4,7 +4,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: map-get($colors, 'white');
 
 	// size
 	&--xs {
@@ -24,31 +23,5 @@
 	}
 	&--xxl {
 		font-size: map-get($fs, 'xxl');
-	}
-
-	// color
-	&--primary {
-		color: map-get($colors, 'primary');
-	}
-	&--secondary {
-		color: map-get($colors, 'secondary');
-	}
-	&--success {
-		color: map-get($colors, 'success');
-	}
-	&--danger {
-		color: map-get($colors, 'danger');
-	}
-	&--warning {
-		color: map-get($colors, 'warning');
-	}
-	&--info {
-		color: map-get($colors, 'info');
-	}
-	&--white {
-		color: map-get($colors, 'white');
-	}
-	&--dark {
-		color: map-get($colors, 'dark');
 	}
 }

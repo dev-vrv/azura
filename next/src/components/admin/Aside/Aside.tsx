@@ -1,46 +1,44 @@
+import './Aside.scss';
 import Link from "next/link";
+import Icon from "@/components/Icons/Icons";
+import { PropsIcon } from "@/components/Icons/Icons";
+import { usePathname } from 'next/navigation'
 
 interface LinkProps {
-	icon: React.ReactNode;
-	label: string;
 	href: string;
+	label?: string;
+	icon?: PropsIcon;
 };
-
 interface AsideProps {
 	links: LinkProps[];
-    header?: {
-        icon?: React.ReactNode;
-        title?: string;
-        subtitle?: string;
-    }
-    footer?: React.ReactNode;
 }
 
 export default function Aside(props: AsideProps) {
+	const pathname = usePathname()
 	return (
 		<aside className="aside">
-			<div className="aside--header">
-                {props.header?.icon && props.header.icon}
-                {props.header?.title && <h2 className="h2">{props.header.title}</h2>}
-                {props.header?.subtitle && <p>{props.header.subtitle}</p>}
+			<div className="aside--header" data-aos="zoom-in">
+				<Icon {...{ name: "logo", size: "xxl", color: "primary" }} />
             </div>
 			<div className="aside--body">
 				<nav>
-					<ul>
+					<ul className="d-flex flex-column align-content-center justify-content-center gap-4">
 						{props.links.map((link: LinkProps, index: number) => (
-							<li key={index}>
-								<Link href={link.href}>
-									<a>
-										{link.icon}
-										{link.label}
-									</a>
+							<li key={index} data-aos="zoom-in" data-aos-delay={`${300 + (index * 100)}`}>
+								<Link href={link.href} className={`btn btn-aside ${pathname === link.href? 'active' : ''}`}>
+									{link.icon && <Icon {...link.icon} />}
+									{link.label && link.label}
 								</Link>
 							</li>
 						))}
 					</ul>
 				</nav>
 			</div>
-			<div className="aside--footer">{props.footer}</div>
+			<div className="aside--footer">
+				<button className="btn" data-aos="zoom-in">
+					<Icon {...{ name: "info", size: "lg" }} />
+				</button>
+			</div>
 		</aside>
 	);
 }

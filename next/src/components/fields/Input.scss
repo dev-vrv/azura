@@ -1,7 +1,7 @@
 @import "../../assets/scss/variables";
 
 .form-label {
-    color: map-get($colors, "white");
+    color: map-get($theme-colors, "white");
     font-size: map-get($fs, "sm");
 }
 
@@ -9,22 +9,23 @@
     width: 100%;
     height: fit-content;
     outline: none;
-    border: 1px solid map-get($colors, "gray");
-    background-color: map-get($colors, "none");
+    border: 1px solid map-get($theme-colors, "gray");
+    background-color: map-get($theme-colors, "none");
     border-radius: map-get($r, "sm");
     padding: map-get($p, "sm") map-get($p, "md");
-    color: map-get($colors, "white");
+    color: map-get($theme-colors, "white");
     &::placeholder {
-        color: map-get($colors, "gray");
-        opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        color: map-get($theme-colors, "white");
+        opacity: 0.5;
+        transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
     }
     &:hover {
         &::placeholder {
-            opacity: 0.75;
+            opacity: 1;
         }
     }
     &:focus {
+        border-color: map-get($theme-colors, "primary");
         &::placeholder {
             opacity: 0;
         }
@@ -36,11 +37,11 @@
     &:checked {
         & + .form-checkbox--label {
             & i {
-                color: map-get($colors, 'white');
-                background-color: map-get($colors, 'primary');
-                border-color: map-get($colors, 'primary');
+                color: map-get($theme-colors, 'white');
+                background-color: map-get($theme-colors, 'primary');
+                border-color: map-get($theme-colors, 'primary');
                 & svg {
-                    color: map-get($colors, 'white');
+                    color: map-get($theme-colors, 'white');
                     transform: scale(1);
                 }
             }
@@ -53,7 +54,7 @@
         cursor: pointer;
         &:hover {
             & span {
-                color: map-get($colors, 'grey');
+                color: map-get($theme-colors, 'grey');
             }
         }
         & i {
@@ -62,12 +63,12 @@
             justify-content: center;
             width: 26px;
             height: 26px;
-            border: 1px solid map-get($colors, 'gray');
+            border: 1px solid map-get($theme-colors, 'gray');
             border-radius: map-get($r, 'sm');
             transition: all 0.3s ease-in-out;
             font-size: map-get($fs, 'xs');
             & svg {
-                color: map-get($colors, 'none');
+                color: map-get($theme-colors, 'none');
                 transform: scale(0.5);
                 transition: all 0.3s ease-in-out;
             }

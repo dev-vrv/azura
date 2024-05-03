@@ -1,9 +1,7 @@
-import Image from "next/image";
-import Section from "@/components/section/Section";
+import Section from '@/components/section/Section';
 
-
-export default function Home() {
-	return (
+export default function AdminPageMonitor() {
+    return (
 		<main className="main container-fluid">
 			<div className="row h-100">
 				<div className="col-9 h-100">

@@ -1,24 +1,23 @@
 @import './variables';
+
+@import '~/node_modules/bootstrap/scss/bootstrap';
+
+@import './null';
+
 @import './ui/buttons';
 
-@import '~/node_modules/bootstrap/scss/bootstrap-grid';
-@import '~/node_modules/bootstrap/scss/bootstrap-reboot';
-@import '~/node_modules/bootstrap/scss/bootstrap-utilities';
-
-
-html, body {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-
+body {
+    background-image: url('https://wallpapertag.com/wallpaper/full/2/3/a/191147-vertical-black-gradient-background-1920x1080-photos.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-main {
-  background-color: map-get($colors, 'dark');
+.main {
+    height: 100%;
+    width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, span, div, li, ul, ol, button, input, textarea {
-  color: map-get($colors, 'white');
-  margin: 0;
-  padding: 0;
+.w-fit {
+    width: fit-content;
 }
