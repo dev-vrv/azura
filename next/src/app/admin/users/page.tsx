@@ -1,20 +1,24 @@
 import Section from '@/components/section/Section';
+import ModelTable from '@/components/table/Table';
+import { endPointUser } from '@/api/endPoints';
 
-export default function AdminPageUsers() {
+console.log(endPointUser.controller.getUsers);
+export default function PageUsers() {
     return (
 		<main className="main container-fluid">
-			<div className="row h-100">
-				<div className="col-9 h-100">
-					<Section className="h-100">
-						<h2>Users</h2>
-					</Section>
-				</div>
-				<div className="col-3 h-100">
-					<Section className="h-100">
-						<h2>Users Filter</h2>
-					</Section>
-				</div>
-			</div>
+			<Section className="h-100">
+				<ModelTable {...{
+					title: 'User',
+					fields: ['id', 'email', 'first_name', 'last_name', 'role', 'status', 'created_at'],
+					selectable: true,
+					enumerate: true,
+					add: true,
+					edit: true,
+					actions: true,
+					variant: 'dark',
+					endpoint: endPointUser.controller.getUsers.path(),
+				}} />
+			</Section>
 		</main>
 	);
 }

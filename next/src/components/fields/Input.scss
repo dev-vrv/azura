@@ -3,6 +3,7 @@
 .form-label {
     color: map-get($theme-colors, "white");
     font-size: map-get($fs, "sm");
+    margin: 0;
 }
 
 .form-input {

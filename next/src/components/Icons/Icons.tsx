@@ -34,7 +34,8 @@ import {
     CiBellOn,
 } from "react-icons/ci";
 
-import { FaConnectdevelop } from "react-icons/fa";
+import { RiLoader2Line } from "react-icons/ri";
+import { FaConnectdevelop, FaPen } from "react-icons/fa";
 import "./Icons.scss";
 
 const interfaceIcons = {
@@ -51,6 +52,8 @@ const interfaceIcons = {
 	redo: <CiRedo />,
 	undo: <CiUndo />,
 	logo: <FaConnectdevelop />,
+	loading: <RiLoader2Line />,
+	change: <FaPen />,
 };
 
 const actions = {

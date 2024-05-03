@@ -15,16 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"
-    >
-      <body 
-          className={inter.className}
-          style={{ 
-            backgroundImage: "url('https://wallpapertag.com/wallpaper/full/2/3/a/191147-vertical-black-gradient-background-1920x1080-photos.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center"
-          }}
-      >{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

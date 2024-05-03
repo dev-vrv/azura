@@ -19,7 +19,7 @@ interface CheckboxProps {
 
 function Input({ id, name, placeholder, label, className, type = "text" }: InputProps) {
 	return (
-		<div className='d-flex flex-column gap-3'>  
+		<div className='d-flex flex-column gap-2'>  
             {label && <label htmlFor={id} className='form-label'>{label}</label>}
 			<input
 				id={id}
@@ -35,21 +35,21 @@ function Input({ id, name, placeholder, label, className, type = "text" }: Input
 
 function Checkbox({ id, name, label, className }: CheckboxProps	) {
 	return (
-		<div className='d-flex gap-2 py-3'> 
+		<div className='d-inline-flex align-items-center gap-2'> 
 			<input
 				id={id}
 				name={name || id}
 				type='checkbox'
 				className={`form-checkbox ${className || ""}`}
 			/>
-			{label && 
-				<label htmlFor={id} className='form-label form-checkbox--label'>
-					<i className='icon-checkbox'>
-						<FaCheck />
-					</i>
-					<span>{label}</span>
-				</label>
-			}
+
+			<label htmlFor={id} className='form-label form-checkbox--label'>
+				<i className='icon-checkbox'>
+					<FaCheck />
+				</i>
+
+				{label && <span>{label}</span>}
+			</label>
 		</div>
 	);
 }

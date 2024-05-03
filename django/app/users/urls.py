@@ -5,12 +5,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import (
-    UserSessionSet
+    UserSessionSet,
+    UserController
 )
 
 
 router = DefaultRouter()
 router.register(r'', UserSessionSet, basename='User')
+router.register(r'controller', UserController, basename='UserController')
 
 
 urlpatterns = [

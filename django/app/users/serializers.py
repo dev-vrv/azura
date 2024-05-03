@@ -77,6 +77,10 @@ class UserInfoSerializer(ModelSerializer):
             'city',
             'address',
             'zip_code',
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'status',
         )
         read_only_fields = ('email', 'id')
 

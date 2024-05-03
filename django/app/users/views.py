@@ -10,7 +10,7 @@ import json
 
 class UserSessionSet(viewsets.ViewSet):
 
-    @action(methods=['get'], detail=False, url_path='info', permission_classes=[IsAuthenticated])
+    @action(methods=['get'], detail=False, url_path='info')
     def info(self, request):
         if not request.user.is_authenticated:
             return Response({
@@ -45,3 +45,34 @@ class UserSessionSet(viewsets.ViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserController(viewsets.ViewSet):
+    
+    @action(methods=['get'], detail=False, url_path='retrieve/list')
+    def get_list(self, request):
+        users = User.objects.all()
+        return Response(UserInfoSerializer(users, many=True).data, status=status.HTTP_200_OK)
+    
+    @action(methods=['get'], detail=False, url_path='retrieve/(?P<pk>[^/.]+)')
+    def get_user(self, request, pk=None):
+        print(123123123)
+        user = User.objects.get(id=1)
+        return Response(UserInfoSerializer(user).data, status=status.HTTP_200_OK)
+    
+    @action(methods=['post'], detail=False, url_path='update')
+    def update_user(self, request):
+        data = json.loads(request.body)
+        user = User.objects.get(id=data['id'])
+        
+        user.first_name = data['first_name']
+        user.last_name = data['last_name']
+        user.phone = data['phone']
+        user.country = data['country']
+        user.city = data['city']
+        user.address = data['address']
+        user.zip_code = data['zip_code']
+        user.photo = data['photo']
+        user.status = data['status']
+        
+        user.save()
+        
+        return Response(UserInfoSerializer(user).data, status=status.HTTP_200_OK)

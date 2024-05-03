@@ -1,0 +1,11 @@
+.table {
+    & thead {
+        text-align: center;
+        & th {
+            text-transform: capitalize;
+        }
+    }
+    & tbody {
+        text-align: center;
+    }
+}
