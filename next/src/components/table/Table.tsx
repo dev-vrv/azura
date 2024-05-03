@@ -7,9 +7,10 @@ import "./Table.scss";
 import { Checkbox } from "../fields/Input";
 import Link from "next/link";
 import Icon from "../Icons/Icons";
-// import { IEndPoint } from "@/api/endPoints";
+import { IEndPoint } from "@/api/endPoints";
+import { error } from "console";
 
-interface ModelData {
+interface querySet {
 	id: string;
 	[key: string]: string;
 }
@@ -18,29 +19,37 @@ interface ModelTableHeadProps {
 	fields: string[];
 	enumerate?: boolean;
 	selectable?: boolean;
-	edit?: boolean;
+}
+
+interface ModelTableTDProps {
+	data: {
+		[key: string]: string;
+	};
+	field: string;
+	field_link: string;
 }
 
 interface ModelTableBodyProps extends ModelTableHeadProps {
-	modelData: ModelData[];
+	querySet: querySet[];
 	loading: boolean;
 	error: boolean;
-	endpoint: string;
+	endpoint: IEndPoint;
+	field_link?: string;
 }
 
 interface ModelTableProps {
-	title: string;
+	endpoint: IEndPoint;
 	fields: string[];
-	endpoint: string;
+	title: string;
+	field_link?: string;
 	selectable?: boolean;
 	enumerate?: boolean;
 	add?: boolean;
-	edit?: boolean;
 	actions?: boolean;
-	variant: "dark" | "light";
+	variant?: "dark" | "light";
 }
 
-function Head({ fields, enumerate, selectable, edit }: ModelTableHeadProps) {
+function Head({ fields, enumerate, selectable }: ModelTableHeadProps) {
 	return (
 		<thead>
 			<tr>
@@ -53,13 +62,25 @@ function Head({ fields, enumerate, selectable, edit }: ModelTableHeadProps) {
 				{fields.map((field, index) => (
 					<th key={index}>{field.replace("_", " ")}</th>
 				))}
-				{edit && <th>Actions</th>}
 			</tr>
 		</thead>
 	);
 }
 
-function Body({ modelData, loading, fields, enumerate, selectable, edit, endpoint }: ModelTableBodyProps) {
+function TD({ data, field, field_link }: ModelTableTDProps) {
+
+	if (field === field_link) {
+		return (
+			<td>
+				<Link href={`/admin/users/${data['id']}`}>{data[field]}</Link>
+			</td>
+		);
+	} else {
+		return <td>{data[field]}</td>;
+	}
+}
+
+function Body({ querySet, loading, fields, enumerate, selectable, error, field_link='id' }: ModelTableBodyProps) {
 	if (loading) {
 		return (
 			<tbody>
@@ -72,9 +93,19 @@ function Body({ modelData, loading, fields, enumerate, selectable, edit, endpoin
 		);
 	}
 
+	if (error) {
+		return (
+			<tbody>
+				<tr>
+					<td colSpan={100}>Error fetching data</td>
+				</tr>
+			</tbody>
+		);
+	}
+
 	return (
 		<tbody>
-			{modelData.map((data, index) => (
+			{querySet.map((data, index) => (
 				<tr key={data.id}>
 					{selectable && (
 						<td>
@@ -82,16 +113,9 @@ function Body({ modelData, loading, fields, enumerate, selectable, edit, endpoin
 						</td>
 					)}
 					{enumerate && <td>{index + 1}</td>}
-					{Object.values(fields).map((key, index) => (
-						<td key={index}>{data[key]}</td>
+					{Object.values(fields).map((field, index) => (
+						<TD key={index} {...{ data: data, field: field, field_link }} />
 					))}
-					{edit && (
-						<td>
-							<Link href={`users/${data.id}`} className="btn btn-icon w-100 d-inline-flex">
-								<Icon name="change" size="sm" />
-							</Link>
-						</td>
-					)}
 				</tr>
 			))}
 		</tbody>
@@ -105,19 +129,23 @@ export default function ModelTable({
 	selectable,
 	enumerate,
 	add,
-	edit,
 	actions,
-	variant,
+	field_link,
+	variant = "dark",
 }: ModelTableProps) {
-	const [data, setData] = useState<ModelData[]>([]);
+	const [data, setData] = useState<querySet[]>([]);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
 	useEffect(() => {
-        console.log(endpoint);
 		const fetchData = async () => {
 			try {
-				const response = await fetch(endpoint);
+				const response = await fetch(endpoint.path, {
+					method: endpoint.method,
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
 				const json = await response.json();
 				setData(json);
 				setLoading(false);
@@ -137,16 +165,16 @@ export default function ModelTable({
 				{add && <button className="btn btn-primary">Add</button>}
 			</div>
 			<Table striped bordered hover variant={variant}>
-				<Head fields={fields} enumerate={enumerate} selectable={selectable} edit={edit} />
+				<Head fields={fields} enumerate={enumerate} selectable={selectable} />
 				<Body
-					modelData={data}
+					querySet={data}
 					loading={isLoading}
 					fields={fields}
 					enumerate={enumerate}
-					edit={edit}
 					selectable={selectable}
 					error={error}
 					endpoint={endpoint}
+					field_link={field_link}
 				/>
 			</Table>
 		</div>

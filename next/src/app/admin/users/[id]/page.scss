@@ -4,6 +4,9 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    height: 100%;
+    max-height: 100%;
+
     &__header {
         height: fit-content;
         border-bottom: 1px solid map-get($theme-colors, 'grey');
@@ -16,6 +19,8 @@
         display: flex;
         flex-direction: column;
         flex: 1 1 auto;
+        overflow-y: scroll;
+        padding-right: map-get($p, 'sm');
     }
     &__footer {
         display: flex;

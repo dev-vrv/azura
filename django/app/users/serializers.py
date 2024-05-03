@@ -84,6 +84,41 @@ class UserInfoSerializer(ModelSerializer):
         )
         read_only_fields = ('email', 'id')
 
+class UserAdminSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+            'phone',
+            'country',
+            'city',
+            'address',
+            'zip_code',
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'status',
+        )
+        read_only_fields = ('email', 'id')
+        
     
-    
+    def get_field_types(self):
+        return {
+            'id': 'readonly',
+            'email': 'readonly',
+            'first_name': 'text',
+            'last_name': 'text',
+            'phone': 'text',
+            'country': 'text',
+            'city': 'text',
+            'address': 'text',
+            'zip_code': 'text',
+            'is_active': 'boolean',
+            'is_staff': 'boolean',
+            'is_superuser': 'boolean',
+            'status': 'select',
+        }
     

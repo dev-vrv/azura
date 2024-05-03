@@ -36,9 +36,7 @@ export default function AdminLayout({
 					</div>
 					<div className="h-100 w-100 d-flex flex-column">
 						<Header />
-						<div className="h-100 w-100 py-4">
-							{children}
-						</div>
+						{children}
 					</div>
 				</div>
 			</body>

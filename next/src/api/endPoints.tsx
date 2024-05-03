@@ -1,30 +1,30 @@
 const url = 'http://127.0.0.1:8000';
 
 export interface IEndPoint {
-    path: (...args: any[]) => string;
+    path: string;
     method: string;
 }
 
 const endPointUser = {
     controller: {
         updateUser: {
-            path: (id: number) => `${url}/user/controller/update/${id}`,
+            path: `${url}/user/controller/update/`,
             method: 'PUT',
         },
         deleteUser: {
-            path: (id: number) => `${url}/user/controller/delete/${id}`,
+            path: `${url}/user/controller/delete/`,
             method: 'DELETE',
         },
         getUser: {
-            path: (id: number) => `${url}/user/controller/retrieve/${id}`,
+            path: `${url}/user/controller/retrieve/`,
             method: 'GET',
         },
         getUsers: {
-            path: () => `${url}/user/controller/retrieve/list`,
+            path: `${url}/user/controller/retrieve/list`,
             method: 'GET',
         },
         createUser: {
-            path: () => `${url}/user/controller/create`,
+            path: `${url}/user/controller/create`,
             method: 'POST',
         },
     }

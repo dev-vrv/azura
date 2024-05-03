@@ -1,10 +1,3 @@
-html, body {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  color: map-get($theme-colors, 'white');
-}
-
 ul, ol {
   list-style-type: none;
   padding: 0;

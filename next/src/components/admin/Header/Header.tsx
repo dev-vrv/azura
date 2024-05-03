@@ -4,7 +4,7 @@ import "./Header.scss";
 
 export default function Header({ className }: { className?: string }) {
 	return (
-		<header className={`header ${className && className}`}>
+		<header className={`header ${className || ''}`}>
 			<h3 className="h3">
 				Next Admin
 			</h3>

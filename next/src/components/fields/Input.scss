@@ -4,6 +4,7 @@
     color: map-get($theme-colors, "white");
     font-size: map-get($fs, "sm");
     margin: 0;
+    text-transform: capitalize;
 }
 
 .form-input {
@@ -29,6 +30,14 @@
         border-color: map-get($theme-colors, "primary");
         &::placeholder {
             opacity: 0;
+        }
+    }
+    &:disabled {
+        background-color: map-get($glass, "xl");
+        border-color: map-get($theme-colors, "none");
+        color: map-get($theme-colors, "grey");
+        &::placeholder {
+            color: map-get($theme-colors, "grey");
         }
     }
 }

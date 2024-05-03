@@ -10,13 +10,11 @@ export default function PageUsers() {
 				<ModelTable {...{
 					title: 'User',
 					fields: ['id', 'email', 'first_name', 'last_name', 'role', 'status', 'created_at'],
+					field_link: 'email',
 					selectable: true,
-					enumerate: true,
 					add: true,
-					edit: true,
 					actions: true,
-					variant: 'dark',
-					endpoint: endPointUser.controller.getUsers.path(),
+					endpoint: endPointUser.controller.getUsers,
 				}} />
 			</Section>
 		</main>

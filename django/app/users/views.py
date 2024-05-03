@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer
+from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer, UserAdminSerializer
 from .models import User
 
 import json
@@ -52,11 +52,14 @@ class UserController(viewsets.ViewSet):
         users = User.objects.all()
         return Response(UserInfoSerializer(users, many=True).data, status=status.HTTP_200_OK)
     
-    @action(methods=['get'], detail=False, url_path='retrieve/(?P<pk>[^/.]+)')
-    def get_user(self, request, pk=None):
-        print(123123123)
-        user = User.objects.get(id=1)
-        return Response(UserInfoSerializer(user).data, status=status.HTTP_200_OK)
+    @action(methods=['get'], detail=False, url_path='retrieve/(?P<id>[^/.]+)')
+    def get_user(self, request, id=None):
+        user = User.objects.get(id=id)
+        serializer = UserAdminSerializer(user)
+        return Response({
+            'data': serializer.data,
+            'fields': serializer.get_field_types()
+            }, status=status.HTTP_200_OK)
     
     @action(methods=['post'], detail=False, url_path='update')
     def update_user(self, request):

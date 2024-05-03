@@ -5,8 +5,50 @@ import Icon from '@/components/Icons/Icons';
 import './page.scss';
 import { useEffect, useState } from 'react';
 import Spinner from '@/components/spinner/Spinner';
+import { IEndPoint, endPointUser } from '@/api/endPoints';
+import { Input, Checkbox } from '@/components/fields/Input';
 
+interface UserFieldProps {
+    field: string;
+    value: any;
+    type: string;
+}
 
+function UserField({field, value, type}: UserFieldProps) {
+    const input = () => {
+        return (
+            <Input id={field} value={value} label={field.replace('_', ' ')} />
+        )
+    }
+    const checkbox = () => {
+        return (
+            <Checkbox id={field} checked={value} label={field.replace('_', ' ')} />
+        )
+    }
+
+    const readOnly = () => {
+        return (
+            <Input id={field} value={value} label={field.replace('_', ' ')} disabled={true} />
+        )
+    }
+
+    let fieldItem = null;
+    if (type === 'boolean') {
+        fieldItem = checkbox();
+    }
+    else if (type === 'text') {
+        fieldItem = input();
+    }
+    else if (type === 'readonly') {
+        fieldItem = readOnly();
+    }
+    
+    return (
+        <>
+            {fieldItem}   
+        </>
+    )
+}
 
 function UserHeader({user_id, back}: {user_id: number; back: () => void}) {
     return (
@@ -26,16 +68,26 @@ function UserBody({user_id}: {user_id: number}) {
     const [error, setError] = useState<any>(null);
 
     useEffect(() => {
-        fetch(`/api/users/${user_id}`)
+        fetch(endPointUser.controller.getUser.path + `${user_id}/`)
             .then(response => response.json())
             .then(data => setUser(data))
             .catch(error => setError(error))
             .finally(() => setLoading(false));
     }, [user_id]);
+    
+
 
     return (
         <div className="user__body">
-
+            {loading && <Spinner />}
+            {error && <div>Error: {error.message}</div>}
+            {user && (
+                <div className='d-flex flex-column gap-3'>
+                    {Object.keys(user.data).map((key, index) =>  (
+                        <UserField key={index} {...{field: key, value: user.data[key], type: user.fields[key]}}  />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
@@ -54,7 +106,7 @@ export default function PageUser({ params }: { params: { id: string } }) {
     const id = parseInt(params.id);
 
     return (
-		<main className="main container-fluid">
+		<main className="main container-fluid py-4">
 			<Section className="h-100 user">
 				<UserHeader user_id={id} back={router.back} />
                 <UserBody user_id={id} />
