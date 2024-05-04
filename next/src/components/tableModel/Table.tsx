@@ -27,7 +27,7 @@ interface PropsBody {
 	fieldLink?: string;
 	enumerate?: boolean;
 	selectable?: boolean;
-	selected?: boolean;
+
 	reload: boolean;
 	onReload: (state: boolean) => void;
 }
@@ -50,7 +50,9 @@ const THead = (props: PropsHead) => {
 			<tr>
 				{selectable && (
 					<th>
-						<Checkbox id="all" />
+						<Checkbox id="all" onChecked={(checked: boolean) => {
+							console.log(checked);
+						}} />
 					</th>
 				)}
 				{enumerate && <th>#</th>}
@@ -66,7 +68,7 @@ const TBody = (props: PropsBody) => {
 	const [data, setData] = useState<IData | null>(null);
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
-
+	const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
@@ -88,7 +90,6 @@ const TBody = (props: PropsBody) => {
 			fetchData();
 		}
 	}, [reload, fetchData]);
-
 
 	const loadingData = () => {
 		return (
@@ -117,7 +118,7 @@ const TBody = (props: PropsBody) => {
 			</tr>
 		);
 	}
-	const viewData = () => {
+	const resultData = () => {
 		return (
 			<>
 				{data?.results.map((row, index) => (
@@ -132,7 +133,7 @@ const TBody = (props: PropsBody) => {
 							if (field === fieldLink) {
 								return (
 									<td key={index}>
-										<Link href={`/admin/users/${row[field]}`}>
+										<Link className="link" href={`/admin/users/${row['id']}`}>
 											{row[field]}
 										</Link>
 									</td>
@@ -145,7 +146,7 @@ const TBody = (props: PropsBody) => {
 			</>
 		);
 	}
-	const content = () => {
+	const resultComponent = () => {
 		if (loading) {
 			return loadingData();
 		}
@@ -156,13 +157,13 @@ const TBody = (props: PropsBody) => {
 			return noData();
 		}
 		if (data?.results) {
-			return viewData();
+			return resultData();
 		}
 	}
 
 	return (
 		<tbody>
-			{content()}
+			{resultComponent()}
 		</tbody>
 	);
 
@@ -172,8 +173,8 @@ function TModel(props: PropsTable) {
 	const { options, fields, url } = props;
 
 	const [reload, setReload] = useState(true);
+	const [selectedAll, setSelectedAll] = useState(false);
 	
-
 	return (
 		<div className="table-model">
 			<div className="table-model--header">
