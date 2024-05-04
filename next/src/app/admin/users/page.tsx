@@ -1,21 +1,37 @@
-import Section from '@/components/section/Section';
-import ModelTable from '@/components/table/Table';
-import { endPointUser } from '@/api/endPoints';
+import Section from "@/components/section/Section";
+import TModel from "@/components/tableModel/Table";
+import { EndPoints, IEndPoint } from "@/api/endPoints";
 
-console.log(endPointUser.controller.getUsers);
 export default function PageUsers() {
-    return (
-		<main className="main container-fluid">
+	const endPointUsers = new EndPoints().getPointUser("getUsers") as IEndPoint;
+
+	
+	return (
+		<main className="main">
 			<Section className="h-100">
-				<ModelTable {...{
-					title: 'User',
-					fields: ['id', 'email', 'first_name', 'last_name', 'role', 'status', 'created_at'],
-					field_link: 'email',
-					selectable: true,
-					add: true,
-					actions: true,
-					endpoint: endPointUser.controller.getUsers,
-				}} />
+				<TModel
+					{...{
+						fields: [
+							"id",
+							"email",
+							"role",
+							"phone",
+							"first_name",
+							"last_name",
+							"status",
+							"country",
+							"city",
+							"address",
+							"created_at",
+						],
+						options: {
+							add: true,
+							selectable: true,
+							title: "Users",
+						},
+						url: endPointUsers.path,
+					}}
+				/>
 			</Section>
 		</main>
 	);

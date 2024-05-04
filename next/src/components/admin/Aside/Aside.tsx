@@ -1,15 +1,14 @@
-import './Aside.scss';
+import "./Aside.scss";
 import Link from "next/link";
 import Icon from "@/components/Icons/Icons";
 import { PropsIcon } from "@/components/Icons/Icons";
-import { usePathname } from 'next/navigation'
-
+import { usePathname } from "next/navigation";
 
 interface LinkProps {
 	href: string;
 	label?: string;
 	icon?: PropsIcon;
-};
+}
 interface AsideProps {
 	links: LinkProps[];
 }
@@ -17,9 +16,9 @@ interface AsideProps {
 export default function Aside(props: AsideProps) {
 	const pathname = usePathname();
 	const activeLink = [...props.links]
-	.sort((a, b) => b.href.length - a.href.length)
-	.find(link => pathname.includes(link.href));
- 
+		.sort((a, b) => b.href.length - a.href.length)
+		.find((link) => pathname.includes(link.href));
+
 	return (
 		<aside className="aside">
 			<div className="aside--header" data-aos="zoom-in">

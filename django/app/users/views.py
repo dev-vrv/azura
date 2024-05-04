@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer, UserAdminSerializer
 from .models import User
 
@@ -49,8 +50,14 @@ class UserController(viewsets.ViewSet):
     
     @action(methods=['get'], detail=False, url_path='retrieve/list')
     def get_list(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+
         users = User.objects.all()
-        return Response(UserInfoSerializer(users, many=True).data, status=status.HTTP_200_OK)
+        context = paginator.paginate_queryset(users, request)
+        serializer = UserInfoSerializer(context, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
     
     @action(methods=['get'], detail=False, url_path='retrieve/(?P<id>[^/.]+)')
     def get_user(self, request, id=None):

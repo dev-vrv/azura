@@ -83,6 +83,8 @@ class UserInfoSerializer(ModelSerializer):
         )
         read_only_fields = ('email', 'id')
 
+
+
 class UserAdminSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -110,19 +112,61 @@ class UserAdminSerializer(ModelSerializer):
     
     def get_field_types(self):
         return {
-            'id': 'readonly',
-            'email': 'readonly',
-            'first_name': 'text',
-            'last_name': 'text',
-            'phone': 'text',
-            'country': 'text',
-            'city': 'text',
-            'address': 'text',
-            'zip_code': 'text',
-            'is_active': 'boolean',
-            'is_staff': 'boolean',
-            'is_superuser': 'boolean',
-            'created_at': 'readonly',
-            'status': 'select',
+            'id': {
+                'type': 'number',
+                'readonly': True,
+            },
+            'email': {
+                'type': 'email',
+                'readonly': True,
+            },
+            'first_name': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'last_name': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'phone': {
+                'type': 'number',
+                'readonly': False,
+            },
+            'country': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'city': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'address': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'zip_code': {
+                'type': 'text',
+                'readonly': False,
+            },
+            'is_active': {
+                'type': 'checkbox',
+                'readonly': False,
+            },
+            'is_staff': {
+                'type': 'checkbox',
+                'readonly': False,
+            },
+            'is_superuser': {
+                'type': 'checkbox',
+                'readonly': False,
+            },
+            'created_at': {
+                'type': 'datetime',
+                'readonly': False,
+            },
+            'status': {
+                'type': 'select',
+                'readonly': False,
+            },
         }
     
