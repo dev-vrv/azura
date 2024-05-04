@@ -5,7 +5,7 @@ import Icon from '@/components/Icons/Icons';
 import './page.scss';
 import { useEffect, useState } from 'react';
 import Spinner from '@/components/spinner/Spinner';
-import { IEndPoint, endPointUser } from '@/api/endPoints';
+import { endPointUser } from '@/api/endPoints';
 import { Input, Checkbox } from '@/components/fields/Input';
 
 interface UserFieldProps {
@@ -15,39 +15,18 @@ interface UserFieldProps {
 }
 
 function UserField({field, value, type}: UserFieldProps) {
-    const input = () => {
-        return (
-            <Input id={field} value={value} label={field.replace('_', ' ')} />
-        )
-    }
-    const checkbox = () => {
-        return (
-            <Checkbox id={field} checked={value} label={field.replace('_', ' ')} />
-        )
-    }
-
-    const readOnly = () => {
-        return (
-            <Input id={field} value={value} label={field.replace('_', ' ')} disabled={true} />
-        )
-    }
-
     let fieldItem = null;
     if (type === 'boolean') {
-        fieldItem = checkbox();
+        return <Checkbox id={field} checked={value} label={field.replace('_', ' ')} />
     }
     else if (type === 'text') {
-        fieldItem = input();
+        return <Input id={field} value={value} label={field.replace('_', ' ')} />
     }
     else if (type === 'readonly') {
-        fieldItem = readOnly();
+        return <Input id={field} value={value} label={field.replace('_', ' ')} disabled={true} />
     }
     
-    return (
-        <>
-            {fieldItem}   
-        </>
-    )
+
 }
 
 function UserHeader({user_id, back}: {user_id: number; back: () => void}) {
@@ -82,11 +61,11 @@ function UserBody({user_id}: {user_id: number}) {
             {loading && <Spinner />}
             {error && <div>Error: {error.message}</div>}
             {user && (
-                <div className='d-flex flex-column gap-3'>
+                <form className='d-flex flex-column gap-3'>
                     {Object.keys(user.data).map((key, index) =>  (
                         <UserField key={index} {...{field: key, value: user.data[key], type: user.fields[key]}}  />
                     ))}
-                </div>
+                </form>
             )}
         </div>
     )

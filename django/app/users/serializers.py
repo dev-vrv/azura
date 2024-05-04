@@ -28,7 +28,6 @@ class SignInSerializer(ModelSerializer):
         
         return data
     
-
 class SignUpSerializer(ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -63,7 +62,6 @@ class SignUpSerializer(ModelSerializer):
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
         
-        
 class UserInfoSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -80,6 +78,7 @@ class UserInfoSerializer(ModelSerializer):
             'is_active',
             'is_staff',
             'is_superuser',
+            'created_at',
             'status',
         )
         read_only_fields = ('email', 'id')
@@ -87,6 +86,7 @@ class UserInfoSerializer(ModelSerializer):
 class UserAdminSerializer(ModelSerializer):
     class Meta:
         model = User
+        created_at = serializers.SerializerMethodField()
         fields = (
             'id',
             'email',
@@ -100,10 +100,13 @@ class UserAdminSerializer(ModelSerializer):
             'is_active',
             'is_staff',
             'is_superuser',
+            'created_at',
             'status',
         )
         read_only_fields = ('email', 'id')
         
+    def created_at(self, obj):
+        return obj.created_at.strftime('%Y-%m-%d %H:%M:%S')
     
     def get_field_types(self):
         return {
@@ -119,6 +122,7 @@ class UserAdminSerializer(ModelSerializer):
             'is_active': 'boolean',
             'is_staff': 'boolean',
             'is_superuser': 'boolean',
+            'created_at': 'readonly',
             'status': 'select',
         }
     

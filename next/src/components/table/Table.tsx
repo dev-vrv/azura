@@ -72,7 +72,7 @@ function TD({ data, field, field_link }: ModelTableTDProps) {
 	if (field === field_link) {
 		return (
 			<td>
-				<Link href={`/admin/users/${data['id']}`}>{data[field]}</Link>
+				<Link href={`/admin/users/${data['id']}`} className="link">{data[field]}</Link>
 			</td>
 		);
 	} else {

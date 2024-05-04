@@ -54,3 +54,12 @@
         color: map-get($theme-colors, 'primary');
     }
 }
+
+.link {
+    color: map-get($theme-colors, 'primary');
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+        color: darken(map-get($theme-colors, 'primary'), 5%);
+    }
+}

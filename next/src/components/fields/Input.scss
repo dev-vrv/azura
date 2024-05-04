@@ -1,10 +1,29 @@
 @import "../../assets/scss/variables";
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    gap: map-get($m, "sm");
+
+    &.disabled {
+        flex-direction: row;
+        padding: map-get($p, "md");
+        border-bottom: 1px solid map-get($theme-colors, "gray");
+
+        & .form-label {
+            color: map-get($theme-colors, "gray");
+        }
+    }
+}
+
 .form-label {
     color: map-get($theme-colors, "white");
     font-size: map-get($fs, "sm");
     margin: 0;
     text-transform: capitalize;
+    white-space: nowrap;
 }
 
 .form-input {
@@ -33,8 +52,11 @@
         }
     }
     &:disabled {
-        background-color: map-get($glass, "xl");
-        border-color: map-get($theme-colors, "none");
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background-color: map-get($theme-colors, "none");
+
         color: map-get($theme-colors, "grey");
         &::placeholder {
             color: map-get($theme-colors, "grey");

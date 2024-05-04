@@ -23,7 +23,7 @@ interface CheckboxProps {
 
 function Input({ id, name, placeholder, label, className, type = "text", value='', disabled=false }: InputProps) {
 	return (
-		<div className='d-flex flex-column gap-2'>  
+		<div className={`form-group ${disabled && 'disabled'}`}>  
             {label && <label htmlFor={id} className='form-label'>{label}</label>}
 			<input
 				id={id}

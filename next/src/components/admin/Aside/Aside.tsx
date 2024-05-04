@@ -16,7 +16,7 @@ interface AsideProps {
 
 export default function Aside(props: AsideProps) {
 	const pathname = usePathname();
-	const activeLink = props.links
+	const activeLink = [...props.links]
 	.sort((a, b) => b.href.length - a.href.length)
 	.find(link => pathname.includes(link.href));
  
