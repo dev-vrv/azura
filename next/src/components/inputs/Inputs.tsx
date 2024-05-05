@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 import Checkbox from "./checkbox/Checkbox";
 import Input from "./input/Input";
+import DateTime from "./date/DateTime";
 
 interface IField {
 	id: string;
@@ -10,7 +11,6 @@ interface IField {
 	label?: string;
 	className?: string;
 	disabled?: boolean;
-	readonly?: boolean;
 	required?: boolean;
 }
 
@@ -25,5 +25,9 @@ export interface PropsCheckbox extends IField {
 	onChecked?: (checked: boolean) => void;
 }
 
+export interface PropsDateTime extends IField {
+	value?: string;
+}
 
-export { Input, Checkbox };
+
+export { Input, Checkbox, DateTime };

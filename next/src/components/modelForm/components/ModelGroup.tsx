@@ -50,9 +50,6 @@ export default function Group({fields, fieldsNames, description, title, colSize=
 							</div>
 						);
 					}
-					else {
-						console.log(`Field ${k} not found`);
-					}
 				});
 			}
             return (

@@ -1,4 +1,4 @@
-import { Checkbox, Input } from "@/components/inputs/Inputs";
+import { Checkbox, Input, DateTime } from "@/components/inputs/Inputs";
 
 interface PropsField {
 	id: string;
@@ -37,7 +37,12 @@ export default function MField({type, id, value, required, disabled}: PropsField
 	}
 	else if (type === 'datetime') {
 		return (
-			'datetime'
+			<DateTime 
+				id={id}
+				value={value as string}
+				required={required}
+				disabled={disabled}
+			/>
 		)
 	}
 }

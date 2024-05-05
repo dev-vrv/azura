@@ -43,23 +43,22 @@
             opacity: 0;
         }
     }
-    &:disabled {
-        padding: 0;
-        border: none;
-        border-radius: 0;
-        background-color: map-get($theme-colors, "none");
-
-        color: map-get($theme-colors, "grey");
-        &::placeholder {
-            color: map-get($theme-colors, "grey");
-        }
-    }
-    &--label {
+    &--label{
         color: map-get($theme-colors, "white");
         font-size: map-get($fs, "sm");
         margin: 0;
         text-transform: capitalize;
         white-space: nowrap;
+    }
+    &:disabled {
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background-color: map-get($theme-colors, "none");
+        color: map-get($theme-colors, "grey");
+        &::placeholder {
+            color: map-get($theme-colors, "grey");
+        }
     }
 }
 
