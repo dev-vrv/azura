@@ -36,7 +36,7 @@ import {
 } from "react-icons/ci";
 
 import { RiLoader2Line } from "react-icons/ri";
-import { FaConnectdevelop, FaPen } from "react-icons/fa";
+import { FaConnectdevelop, FaPen, FaCheck } from "react-icons/fa";
 import "./Icons.scss";
 
 const iconsUI = {
@@ -46,7 +46,7 @@ const iconsUI = {
 	lab: <CiBeaker1 />,
 	link: <CiLink />,
 	alert: <CiCircleAlert />,
-	check: <CiCircleCheck />,
+	check: <FaCheck />,
 	info: <CiCircleInfo />,
 	question: <CiCircleQuestion />,
 	plus: <CiCirclePlus />,
@@ -91,11 +91,12 @@ export interface PropsIcon {
 	name: keyof typeof icons;
 	size?: "sm" | "md" | "lg" | "xl" | "xxl";
 	color?: "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "white" | "dark";
+	className?: string;
 }
 
-export default function Icon({ name, size = "md" }: PropsIcon) {
+export default function Icon({ name, className, size = "md" }: PropsIcon) {
 	return (
-		<i className={`i i--${size}`}>
+		<i className={`i i--${size} ${className || ''}`}>
 			{icons[name]}
 		</i>
 	);

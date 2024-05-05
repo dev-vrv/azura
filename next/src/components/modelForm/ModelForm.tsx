@@ -1,93 +1,16 @@
 import "./ModelForm.scss";
-import Icon from "../Icons/Icons";
-import { Input, Checkbox } from "@/components/fields/Input";
 
-interface IFields {
-	[key: string]: {
-		type: string;
-		value: string | boolean;
-		required: boolean;
-		readonly?: boolean;
-	};
-}
-interface IGroup {
-	fields: IFields
-	fieldsNames: string[];
-	description?: string;
-	title?: string;
-	colSize?: number;
-}
+import MField from "./components/ModelFields";
+import Group from "./components/ModelGroup";
+import { IGroup, IFields } from "./components/ModelGroup";
 
 interface PropsForm {
-    className?: string;
 	fields: IFields;
-	endpoint?: string;
 	groups?: IGroup[];
+    className?: string;
+	endpoint?: string;
 }
 
-interface PropsField {
-	id: string;
-	type: string;
-	value: string | boolean;
-	required: boolean;
-	disabled?: boolean;
-}
-
-function MField({type, id, value, required, disabled}: PropsField ) {
-	const label_display = id.replace('_', ' '); 
-	if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
-		return (
-			<Input 
-				id={id}
-				type={type}
-				value={value as string}
-				required={required}
-				label={label_display}
-				disabled={disabled}
-			/>
-		);
-	}
-	else if (type === 'checkbox') {
-		return (
-			<Checkbox 
-				id={id}
-				label={label_display}
-				checked={value as boolean}
-				required={required}
-				disabled={disabled}
-			/>
-		);
-	}
-}
-
-
-function Group({fields, fieldsNames, description, title, colSize=6}: IGroup) {
-	const group = fieldsNames.map((key) => {
-		if (Object.keys(fields).includes(key)) {
-			return (
-				<div className={`col-${colSize.toString()} d-flex flex-column`} key={key}>
-					<MField 
-						id={key}
-						type={fields[key].type}
-						value={fields[key].value}
-						required={fields[key].required}
-						disabled={fields[key].readonly}
-					/>
-				</div>
-			);
-		}
-	});
-
-	return (
-		<>
-			<div className="col-12 py-3">
-				<h4 className="h4 py-3">{title}</h4>
-				<p>{description}</p>
-			</div>
-			{group}
-		</>
-	);
-}
 
 export default function MForm({fields, className, endpoint, groups}: PropsForm) {
 
@@ -100,13 +23,14 @@ export default function MForm({fields, className, endpoint, groups}: PropsForm) 
 				title={group.title}
 				description={group.description}
 				colSize={group.colSize}
+				rowSize={group.rowSize}
 			/>
 		);
 	});
 
 	const notGrouped = Object.keys(fields).map((key) => {
 		return (
-			<div className="col-12" key={key}>
+			<div className="col-6" key={key}>
 				<MField 
 					id={key}
 					type={fields[key].type}

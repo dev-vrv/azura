@@ -27,7 +27,7 @@ body {
     height: 100%;
     width: 100%;
     overflow: hidden;
-    padding: map-get($p, 'md');
+    padding: map-get($p, 'sm');
 }
 
 .w-fit {
@@ -58,7 +58,7 @@ body {
     color: map-get($theme-colors, 'danger');
 }
 
-.page {
+.model-page {
     height: 100%;
     display: flex;
     flex-direction: column;

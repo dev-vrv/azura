@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/fields/Input";
+import { Checkbox } from "@/components/inputs/Inputs";
 
 interface PropsHead {
 	fields: string[];

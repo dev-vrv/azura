@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormState, useFormStatus } from "react-dom";
-import { Input, Checkbox } from "../fields/Input";
+import { Input, Checkbox } from "@/components/inputs/Inputs";
 import Icon from "../Icons/Icons";
 
 

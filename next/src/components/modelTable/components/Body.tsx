@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox } from "@/components/fields/Input";
+import { Checkbox } from "@/components/inputs/Inputs";
 import { Alert } from "react-bootstrap";
 import React, { useState, useEffect, useCallback } from "react";
 import Spinner from "@/components/spinner/Spinner";
