@@ -27,7 +27,7 @@ class EndPoints {
                 method: 'GET',
             },
             getUsers: {
-                path: `${this.url}/user/controller/retrieve/list`,
+                path: `${this.url}/user/controller/retrieve/list/`,
                 method: 'GET',
             },
             update: {
@@ -39,7 +39,7 @@ class EndPoints {
                 method: 'DELETE',
             },
             createUser: {
-                path: `${this.url}/user/controller/create`,
+                path: `${this.url}/user/controller/create/`,
                 method: 'POST',
             },
         }

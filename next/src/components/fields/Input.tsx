@@ -12,18 +12,18 @@ interface IField {
 	required?: boolean;
 }
 
-interface InputProps extends IField {
+export interface PropsInput extends IField {
 	type?: "text" | "password" | "email" | "number";
 	placeholder?: string;
 	value?: string;
 }
 
-interface CheckboxProps extends IField {
+export interface PropsCheckbox extends IField {
 	checked?: boolean;
 	onChecked?: (checked: boolean) => void;
 }
 
-function Input(props: InputProps) {
+function Input(props: PropsInput) {
 	const { 
 		id, 
 		name, 
@@ -56,7 +56,7 @@ function Input(props: InputProps) {
 	);
 }
 
-function Checkbox(props: CheckboxProps) {
+function Checkbox(props: PropsCheckbox) {
     const { id, name, label, className, checked = false, disabled = false, required } = props;
     const [isChecked, setIsChecked] = useState(checked);
 

@@ -1,5 +1,5 @@
 import Section from "@/components/section/Section";
-import TModel from "@/components/tableModel/Table";
+import TModel from "@/components/modelTable/Table";
 import { EndPoints, IEndPoint } from "@/api/endPoints";
 
 export default function PageUsers() {

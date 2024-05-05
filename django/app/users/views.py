@@ -63,10 +63,7 @@ class UserController(viewsets.ViewSet):
     def get_user(self, request, id=None):
         user = User.objects.get(id=id)
         serializer = UserAdminSerializer(user)
-        return Response({
-            'data': serializer.data,
-            'fields': serializer.get_field_types()
-            }, status=status.HTTP_200_OK)
+        return Response(serializer.get_field_types(user), status=status.HTTP_200_OK)
     
     @action(methods=['post'], detail=False, url_path='update')
     def update_user(self, request):

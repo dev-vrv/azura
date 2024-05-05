@@ -3,7 +3,7 @@ import Icon from "@/components/Icons/Icons";
 
 interface PropsButton {
 	onClick?: () => void;
-	children?: string;
+	children?: React.ReactNode;
 	className?: string;
 	icon?: PropsIcon;
 	type?: "submit" | "reset" | "button";

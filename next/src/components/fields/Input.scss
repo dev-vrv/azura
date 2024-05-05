@@ -9,11 +9,11 @@
 
     &.disabled {
         flex-direction: row;
-        padding: map-get($p, "md");
+        padding: map-get($p, "sm") 0;
         border-bottom: 1px solid map-get($theme-colors, "gray");
 
         & .form-label {
-            color: map-get($theme-colors, "gray");
+            color: map-get($theme-colors, "muted");
         }
     }
 }

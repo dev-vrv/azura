@@ -108,63 +108,77 @@ class UserAdminSerializer(ModelSerializer):
         read_only_fields = ('email', 'id')
         
     def created_at(self, obj):
-        return obj.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        return obj.created_at.strftime('%Y-%m-%d %H:%M')
     
-    def get_field_types(self):
+    def get_field_types(self, obj):
         return {
             'id': {
+                'value': obj.id,
                 'type': 'number',
                 'readonly': True,
             },
             'email': {
+                'value': obj.email,
                 'type': 'email',
                 'readonly': True,
             },
             'first_name': {
+                'value': obj.first_name,
                 'type': 'text',
                 'readonly': False,
             },
             'last_name': {
+                'value': obj.last_name,
                 'type': 'text',
                 'readonly': False,
             },
             'phone': {
+                'value': obj.phone,
                 'type': 'number',
                 'readonly': False,
             },
             'country': {
+                'value': obj.country,
                 'type': 'text',
                 'readonly': False,
             },
             'city': {
+                'value': obj.city,
                 'type': 'text',
                 'readonly': False,
             },
             'address': {
+                'value': obj.address,
                 'type': 'text',
                 'readonly': False,
             },
             'zip_code': {
+                'value': obj.zip_code,
                 'type': 'text',
                 'readonly': False,
             },
             'is_active': {
+                'value': obj.is_active,
                 'type': 'checkbox',
                 'readonly': False,
             },
             'is_staff': {
+                'value': obj.is_staff,
                 'type': 'checkbox',
                 'readonly': False,
             },
             'is_superuser': {
+                'value': obj.is_superuser,
                 'type': 'checkbox',
                 'readonly': False,
             },
             'created_at': {
+                'value': obj.created_at.strftime('%Y-%m-%d %H:%M'),
                 'type': 'datetime',
                 'readonly': False,
             },
             'status': {
+                'value': obj.status,
                 'type': 'select',
                 'readonly': False,
             },
