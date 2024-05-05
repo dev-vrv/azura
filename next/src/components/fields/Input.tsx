@@ -1,6 +1,6 @@
 import "./Input.scss";
 import { FaCheck } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface IField {
 	id: string;
@@ -57,8 +57,13 @@ function Input(props: InputProps) {
 }
 
 function Checkbox(props: CheckboxProps) {
-	const { id, name, label, className, checked = false, disabled = false, required } = props;
-	const [isChecked, setIsChecked] = useState(checked);
+    const { id, name, label, className, checked = false, disabled = false, required } = props;
+    const [isChecked, setIsChecked] = useState(checked);
+
+    useEffect(() => {
+        setIsChecked(checked);
+    }, [checked]);
+	
 	return (
 		<div className="d-inline-flex align-items-center gap-2">
 			<input
@@ -66,13 +71,13 @@ function Checkbox(props: CheckboxProps) {
 				name={name || id}
 				type="checkbox"
 				className={`form-checkbox ${className || ""}`}
-				defaultChecked={checked}
+				checked={isChecked}
 				disabled={disabled}
 				required={required}
-				onClick={() => {
-					setIsChecked(!isChecked);
-					props.onChecked && props.onChecked(!isChecked);
-				}}
+                onChange={() => {
+                    setIsChecked(!isChecked);
+                    props.onChecked && props.onChecked(!isChecked);
+                }}
 			/>
 
 			<label htmlFor={id} className="form-label form-checkbox--label">

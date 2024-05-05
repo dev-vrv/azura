@@ -39,7 +39,7 @@ import { RiLoader2Line } from "react-icons/ri";
 import { FaConnectdevelop, FaPen } from "react-icons/fa";
 import "./Icons.scss";
 
-const interfaceIcons = {
+const iconsUI = {
 	light: <CiLight />,
 	dark: <CiDark />,
 	menu: <CiMenuKebab />,
@@ -56,8 +56,7 @@ const interfaceIcons = {
 	loading: <RiLoader2Line />,
 	change: <FaPen />,
 };
-
-const actions = {
+const iconsActions = {
 	search: <CiSearch />,
 	export: <CiExport />,
 	import: <CiImport />,
@@ -67,21 +66,18 @@ const actions = {
 	"zoom-in": <CiZoomIn />,
 	"zoom-out": <CiZoomOut />,
 };
-
-const userIcons = {
+const iconsUser = {
 	user: <CiUser />,
 	login: <CiLogin />,
 	logout: <CiLogout />,
 };
-
-const directionIcons = {
+const iconsDirection = {
 	down: <CiCircleChevDown />,
 	up: <CiCircleChevUp />,
 	left: <CiCircleChevLeft />,
 	right: <CiCircleChevRight />,
 };
-
-const adminPages = {
+const iconsAdmin = {
     main: <CiLaptop />,
 	posts: <CiGrid42 />,
 	monitor: <CiWavePulse1 />,
@@ -89,19 +85,17 @@ const adminPages = {
 	chat: <CiChat2 />,
     mail: <CiMail />,
 };
-
-const icons = {...interfaceIcons, ...actions, ...userIcons, ...directionIcons, ...adminPages};
+const icons = {...iconsUI, ...iconsActions, ...iconsUser, ...iconsDirection, ...iconsAdmin};
 
 export interface PropsIcon {
 	name: keyof typeof icons;
 	size?: "sm" | "md" | "lg" | "xl" | "xxl";
 	color?: "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "white" | "dark";
-	onClick?: () => void;
 }
 
-export default function Icon({ name, size = "md", onClick }: PropsIcon) {
+export default function Icon({ name, size = "md" }: PropsIcon) {
 	return (
-		<i className={`i i--${size}`} onClick={onClick}>
+		<i className={`i i--${size}`}>
 			{icons[name]}
 		</i>
 	);
