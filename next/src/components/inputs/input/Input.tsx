@@ -1,4 +1,11 @@
-import { PropsInput } from "../Inputs";
+import { IField } from "../Inputs";
+import Icon from "@/components/Icons/Icons";
+
+export interface PropsInput extends IField {
+	type?: "text" | "password" | "email" | "number";
+	placeholder?: string;
+	value?: string;
+}
 
 export default function Input(props: PropsInput) {
 	const { 
@@ -6,14 +13,14 @@ export default function Input(props: PropsInput) {
 		name, 
 		type = "text", 
 		value = "", 
-		disabled = false, 
+		readOnly = false, 
 		placeholder, 
 		label, 
 		className, 
 		required,
 	} = props;
 	return (
-		<div className={`form-group ${disabled && "disabled"}`}>
+		<div className={`form-group ${readOnly? 'disabled' : ''}`}>
 			{label && (
 				<label htmlFor={id} className="form-input--label">
 					{label}
@@ -23,12 +30,15 @@ export default function Input(props: PropsInput) {
 				id={id}
 				name={name || id}
 				type={type}
-				className={`form-input ${className || ""}`}
+				className={`form-input ${className || ""} ${readOnly? 'disabled' : ''}`}
 				placeholder={placeholder || ""}
 				defaultValue={value}
-				disabled={disabled}
+				readOnly={readOnly}
 				required={required}
 			/>
+			{readOnly && (
+				<Icon name="lock" size="md" color="dark" className="form-input--icon" />
+			)}
 		</div>
 	);
 }

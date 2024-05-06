@@ -1,12 +1,17 @@
 import MField from './ModelFields';
 
 
+interface IAltSize {
+	[key: string]: number;
+}
+
+
 export interface IFields {
 	[key: string]: {
 		type: string;
 		value: string | boolean;
 		required: boolean;
-		readonly?: boolean;
+		readOnly?: boolean;
 	};
 }
 
@@ -15,52 +20,75 @@ export interface IGroup {
 	fieldsNames: (string | string[])[];
 	description?: string;
 	title?: string;
-	colSize?: 'auto' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-	rowSize?: 'auto' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+	colSize?: IAltSize | 'auto' | string | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+	rowSize?: IAltSize | 'auto' | string | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 
-export default function Group({fields, fieldsNames, description, title, colSize=6, rowSize=12}: IGroup) {
-	const group = fieldsNames.map((key) => {
-		if (typeof key === 'string' && Object.keys(fields).includes(key)) {
-			return (
-				<div className={`col-${colSize}`} key={key}>
-					<MField 
-						id={key}
-						type={fields[key].type}
-						value={fields[key].value}
-						required={fields[key].required}
-						disabled={fields[key].readonly}
-					/>
-				</div>
-			);
-		}
-        else if (Array.isArray(key)) {
-			const list = () => {
-				return key.map((k) => {
-					if (Object.keys(fields).includes(k)) {
-						return (
-							<div className={`col-${colSize}`} key={k}>
-								<MField 
-									id={k}
-									type={fields[k].type}
-									value={fields[k].value}
-									required={fields[k].required}
-									disabled={fields[k].readonly}
-								/>
-							</div>
-						);
-					}
-				});
+
+const Field = ({fields, fieldName}: {fields: IFields, fieldName: string}) => {
+	if (fields[fieldName]) {
+		return (
+			<MField 
+				id={fieldName}
+				type={fields[fieldName].type}
+				value={fields[fieldName].value}
+				required={fields[fieldName].required}
+				readOnly={fields[fieldName].readOnly}
+			/>
+		)
+	}
+}
+
+const Fields = ({fields, fieldName}: {fields: IFields, fieldName: string | string[]}) => {
+	if (typeof fieldName === 'string' && Object.keys(fields).includes(fieldName)) {
+		return (
+			<Field fieldName={fieldName} fields={fields} />
+		);
+	}
+	else if (Array.isArray(fieldName)) {
+		return fieldName.map((name) => {
+			if (Object.keys(fields).includes(name)) {
+				return (
+					<Field key={name} fieldName={name} fields={fields} />
+				);
 			}
-            return (
-                <div className={`col-${colSize.toString()} d-flex flex-column gap-3`} key={key[0]}>
-                    {list()}
-                </div>
-            );
-        }
+		});
+	}
+}
+
+
+export default function Group({fields, fieldsNames, description, title, colSize=6, rowSize=12}: IGroup) {
+	if (typeof colSize === 'object') {
+		const obj = colSize;
+		const result = Object.entries(obj)
+			.map(([key, value]) => `col-${key}-${value}`)
+			.join(' ');
+
+		colSize = result;
+	}
+	else {
+		colSize = `col-${colSize}`;
+	}
+	if (typeof rowSize === 'object') {
+		const obj = rowSize;
+		const result = Object.entries(obj)
+			.map(([key, value]) => `col-${key}-${value}`)
+			.join(' ');
+		rowSize = result;
+	}
+	else {
+		rowSize = `col-${rowSize}`;
+	}
+
+	const group = fieldsNames.map((value, index) => {
+		return (
+			<div className={`${colSize} d-flex flex-column gap-3`} key={index}>
+				<Fields fieldName={value} fields={fields} />
+			</div>
+		);
 	});
 	return (
-		<div className={`col-${rowSize} row g-3`}>
+		<div className={`${rowSize} row g-3`}>
 			<div className="col-12">
 				<h4 className="h4 py-3">{title}</h4>
 				<p>{description}</p>

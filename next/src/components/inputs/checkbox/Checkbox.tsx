@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { PropsCheckbox } from "../Inputs";
+import { IField } from "../Inputs";
 import Icon from "@/components/Icons/Icons";
+
+export interface PropsCheckbox extends IField {
+	checked?: boolean;
+	onChecked?: (checked: boolean) => void;
+}
 
 export default function Checkbox(props: PropsCheckbox) {
     const { id, name, label, className, checked = false, disabled = false, required } = props;

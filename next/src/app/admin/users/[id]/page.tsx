@@ -7,6 +7,7 @@ import { Button } from "@/components/buttons/Buttons";
 import MForm from "@/components/modelForm/ModelForm";
 import { EndPoints } from "@/api/endPoints";
 import './page.scss';
+import { IGroup } from "@/components/modelForm/components/ModelGroup";
 
 
 
@@ -41,38 +42,54 @@ export default function PageUser({ params }: { params: { id: string }}) {
     }, [fetchData]);
 
 
-    const fields_groups = [
+    const fields_groups: IGroup[] = [
         {
             fields: user,
             fieldsNames: ["id", "email", "first_name", 'last_name'],
             title: "Base information",
-            colSize: 6 as const,
-            rowSize: 12 as const
+            colSize: {
+                lg: 6,
+                md: 6,
+                sm: 12,
+            },
+            rowSize: 12
         },
         {
             fields: user,
-            fieldsNames: ["phone", "address", "city", "country", "zip_code"],
+            fieldsNames: ["phone", "address", "city", "country", "zip_code", "birthday"],
             title: "Contact information",
-            colSize: 6 as const,
-            rowSize: 12 as const
+            colSize: {
+                lg: 6,
+                md: 6,
+                sm: 12,
+            },
+            rowSize: 12
         },
         {
             fields: user,
             fieldsNames: [["is_active", "is_staff", "is_superuser"], "status"],
             title: "Base Permissions",
-            colSize: 12 as const,
-            rowSize: 6 as const
+            colSize: {
+                lg: 6,
+                md: 6,
+                sm: 12,
+            },
+            rowSize: 6
         },
         {
             fields: user,
-            fieldsNames: ["created_at"],
+            fieldsNames: ["created_at", "updated_at", "last_session"],
             title: "Dates",
-            colSize: 6 as const,
-            rowSize: 6 as const
+            colSize: {
+                lg: 6,
+                md: 6,
+                sm: 12,
+            },
+            rowSize: 6
         }
     ]
     
-
+    
     return (
         <main className="main">
             <Section className="model-page">

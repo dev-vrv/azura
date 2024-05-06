@@ -13,7 +13,6 @@ interface PropsForm {
 
 
 export default function MForm({fields, className, endpoint, groups}: PropsForm) {
-
 	const grouped = groups?.map((group) => {
 		return (
 			<Group 
@@ -36,6 +35,7 @@ export default function MForm({fields, className, endpoint, groups}: PropsForm) 
 					type={fields[key].type}
 					value={fields[key].value}
 					required={fields[key].required}
+					readOnly={fields[key].readOnly}
 				/>
 			</div>
 		);

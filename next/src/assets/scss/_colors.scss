@@ -37,3 +37,7 @@ $shadow: (
   md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15),
   lg: 0 1rem 3rem rgba(0, 0, 0, 0.175),
 );
+
+.text-muted {
+  color: map-get($theme-colors, "muted") !important;
+}

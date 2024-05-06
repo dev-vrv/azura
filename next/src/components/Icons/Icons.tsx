@@ -32,7 +32,9 @@ import {
     CiGrid42,
     CiSettings,
     CiBellOn,
-	
+	CiLock,
+	CiCalendar
+
 } from "react-icons/ci";
 
 import { RiLoader2Line } from "react-icons/ri";
@@ -55,6 +57,8 @@ const iconsUI = {
 	logo: <FaConnectdevelop />,
 	loading: <RiLoader2Line />,
 	change: <FaPen />,
+	calendar: <CiCalendar />,
+	lock: <CiLock />,
 };
 const iconsActions = {
 	search: <CiSearch />,

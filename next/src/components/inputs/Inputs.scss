@@ -1,15 +1,15 @@
 @import "../../assets/scss/variables";
 
+
 .form-group {
     display: flex;
     flex-direction: column;
-    padding: 0;
     margin: 0;
     gap: map-get($m, "sm");
 
     &.disabled {
         flex-direction: row;
-        padding: map-get($p, "sm") 0;
+        padding: map-get($p, "md") 0;
         border-bottom: 1px solid map-get($theme-colors, "gray");
 
         & .form-label {
@@ -50,7 +50,10 @@
         text-transform: capitalize;
         white-space: nowrap;
     }
-    &:disabled {
+    &--icon {
+        color: map-get($theme-colors, "muted");
+    }
+    &:read-only {
         padding: 0;
         border: none;
         border-radius: 0;
@@ -59,6 +62,11 @@
         &::placeholder {
             color: map-get($theme-colors, "grey");
         }
+    }
+    &--datetime {
+        padding-left: map-get($p, 'xl') !important;
+        border: none;
+        cursor: pointer;
     }
 }
 
@@ -104,4 +112,48 @@
             }
         }
     }
+}
+
+.react-datepicker__input-container {
+    display: inline-flex !important;
+    align-items: center;
+    padding: map-get($p, 'sm') 0;
+    border-bottom: 1px solid map-get($theme-colors, 'gray');
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+
+.react-datepicker-popper {
+    & .react-datepicker__triangle {
+        & path {
+            fill: map-get($theme-colors, 'grey');
+            color: map-get($theme-colors, 'grey');
+        }
+    }
+
+    & .react-datepicker, & .react-datepicker__time {
+        background-color: map-get($theme-colors, 'dark') !important;
+        color: map-get($theme-colors, 'white') !important;
+    }
+    & .react-datepicker__header, & .react-datepicker-time__header {
+        background-color: map-get($theme-colors, 'dark');
+        color: map-get($theme-colors, 'white') !important;
+    }
+    & .react-datepicker__day-name, & .react-datepicker__current-month {
+        color: map-get($theme-colors, 'white') !important;
+    }
+    & .react-datepicker__day, & .react-datepicker__time-list-item  {
+        color: map-get($theme-colors, 'white') !important;
+        &:hover {
+            background-color: map-get($theme-colors, 'dark') !important;
+            color: map-get($theme-colors, 'primary') !important;
+        }
+    }
+    & .react-datepicker__day--selected {
+        background-color: map-get($theme-colors, 'primary') !important;
+        color: map-get($theme-colors, 'white') !important;
+    }
+
+
 }

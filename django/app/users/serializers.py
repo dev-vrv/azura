@@ -115,72 +115,87 @@ class UserAdminSerializer(ModelSerializer):
             'id': {
                 'value': obj.id,
                 'type': 'number',
-                'readonly': True,
+                'readOnly': True,
             },
             'email': {
                 'value': obj.email,
                 'type': 'email',
-                'readonly': True,
+                'readOnly': True,
             },
             'first_name': {
                 'value': obj.first_name,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
             },
             'last_name': {
                 'value': obj.last_name,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
+            },
+            'birthday': {
+                'value': obj.birthday.strftime('%Y-%m-%d') if obj.birthday else '',
+                'type': 'date',
+                'readOnly': False,
             },
             'phone': {
                 'value': obj.phone,
                 'type': 'number',
-                'readonly': False,
+                'readOnly': False,
             },
             'country': {
                 'value': obj.country,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
             },
             'city': {
                 'value': obj.city,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
             },
             'address': {
                 'value': obj.address,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
             },
             'zip_code': {
                 'value': obj.zip_code,
                 'type': 'text',
-                'readonly': False,
+                'readOnly': False,
             },
             'is_active': {
                 'value': obj.is_active,
                 'type': 'checkbox',
-                'readonly': False,
+                'readOnly': False,
             },
             'is_staff': {
                 'value': obj.is_staff,
                 'type': 'checkbox',
-                'readonly': False,
+                'readOnly': False,
             },
             'is_superuser': {
                 'value': obj.is_superuser,
                 'type': 'checkbox',
-                'readonly': False,
+                'readOnly': False,
             },
             'created_at': {
                 'value': obj.created_at.strftime('%Y-%m-%d %H:%M'),
                 'type': 'datetime',
-                'readonly': False,
+                'readOnly': True,
+            },
+            'updated_at': {
+                'value': obj.updated_at.strftime('%Y-%m-%d %H:%M'),
+                'type': 'datetime',
+                'readOnly': True,  
+            },
+            'last_session': {
+                'value': obj.last_session.strftime('%Y-%m-%d %H:%M') if obj.last_session else '',
+                'type': 'datetime',
+                'readOnly': True,
             },
             'status': {
                 'value': obj.status,
                 'type': 'select',
-                'readonly': False,
+                'readOnly': False,
             },
         }
     

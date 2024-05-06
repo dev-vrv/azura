@@ -1,16 +1,14 @@
-import { Checkbox, Input, DateTime } from "@/components/inputs/Inputs";
+import { Checkbox, Input, InputDateTime, InputDate } from "@/components/inputs/Inputs";
 
 interface PropsField {
 	id: string;
 	type: string;
 	value?: string | boolean;
 	required?: boolean;
-	disabled?: boolean;
+	readOnly?: boolean;
 }
 
-
-
-export default function MField({type, id, value, required, disabled}: PropsField ) {
+export default function MField({type, id, value, required, readOnly}: PropsField ) {
 	const label_display = id.replace('_', ' '); 
 	if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
 		return (
@@ -20,7 +18,7 @@ export default function MField({type, id, value, required, disabled}: PropsField
 				value={value as string}
 				required={required}
 				label={label_display}
-				disabled={disabled}
+				readOnly={readOnly}
 			/>
 		);
 	}
@@ -31,17 +29,30 @@ export default function MField({type, id, value, required, disabled}: PropsField
 				label={label_display}
 				checked={value as boolean}
 				required={required}
-				disabled={disabled}
+				readOnly={readOnly}
 			/>
 		);
 	}
 	else if (type === 'datetime') {
 		return (
-			<DateTime 
+			<InputDateTime 
 				id={id}
 				value={value as string}
 				required={required}
-				disabled={disabled}
+				readOnly={readOnly}
+				label={label_display}
+			/>
+		)
+	}
+	else if (type === 'date') {
+		console.log(value);
+		return (
+			<InputDate 
+				id={id}
+				value={value as string}
+				required={required}
+				readOnly={readOnly}
+				label={label_display}
 			/>
 		)
 	}

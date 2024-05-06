@@ -52,7 +52,7 @@ class User(AbstractUser):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    last_session_at = models.DateTimeField(blank=True, null=True)
+    last_session = models.DateTimeField(blank=True, null=True)
     
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
@@ -60,6 +60,7 @@ class User(AbstractUser):
     photo = models.ImageField(upload_to='users/', null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     
     country = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
