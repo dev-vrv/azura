@@ -12,7 +12,7 @@ interface PropsDateTime extends IFormInput {
 
 
 function InputDateTime({ id, name, label, required, value, readOnly }: PropsDateTime) {
-	const [date, setDate] = useState(value ? new Date(value) : new Date());
+	const [date, setDate] = useState(value ? new Date(value) : null);
 	const [startDate, setStartDate] = useState(date);
 
 	return (
@@ -27,6 +27,7 @@ function InputDateTime({ id, name, label, required, value, readOnly }: PropsDate
 				showIcon={true}
 				selected={startDate}
 				onChange={(date) => setStartDate(date as Date)}
+				placeholderText='Select a date'
 				showTimeSelect
 				timeFormat="p"
 				timeIntervals={15}
@@ -40,7 +41,7 @@ function InputDateTime({ id, name, label, required, value, readOnly }: PropsDate
 }
 
 function InputDate({ id, name, label, required, value, readOnly }: PropsDateTime) {
-	const [date, setDate] = useState(value ? new Date(value) : new Date());
+	const [date, setDate] = useState(value ? new Date(value) : null);
 	const [startDate, setStartDate] = useState(date);
 
 	return (
@@ -53,6 +54,7 @@ function InputDate({ id, name, label, required, value, readOnly }: PropsDateTime
 			<DatePicker
 				icon={<Icon name={readOnly? 'lock' : 'calendar'} size="md" className="text-muted" />}
 				showIcon={true}
+				placeholderText='Select a date'
 				selected={startDate}
 				onChange={(date) => setStartDate(date as Date)}
 				readOnly={readOnly}

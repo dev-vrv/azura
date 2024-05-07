@@ -26,6 +26,13 @@
 .btn-primary, .btn-secondary, .btn-danger, .btn-header, .btn-aside, .btn-icon, .btn-select, .link {
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
+.btn-primary, .btn-secondary, .btn-danger {
+    &:disabled {
+        background-color: map-get($theme-colors, 'dark') !important;
+        color: map-get($theme-colors, 'white') !important;
+        cursor:wait !important;
+    }
+}
 
 .btn-primary {
     background-color: map-get($theme-colors, 'primary');
@@ -94,6 +101,37 @@
         color: map-get($theme-colors, 'white');
         background-color: darken(map-get($theme-colors, 'primary'), 10%);
     }
+}
+
+.btn-close {
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width: 26px;
+    padding: map-get($p, 'sm');
+    background-color: map-get($theme-colors, 'none');
+    color: map-get($theme-colors, 'light');
+    position: relative;
+    &:hover {
+        color: map-get($theme-colors, 'danger');
+    }
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: map-get($theme-colors, 'white');
+    }
+    &::before {
+        transform: rotate(45deg);
+    }
+    &::after {
+        transform: rotate(-45deg);
+    }
+
 }
 
 .link {

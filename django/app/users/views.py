@@ -68,11 +68,18 @@ class UserController(viewsets.ViewSet):
     @action(methods=['put'], detail=False, url_path='update')
     def update_user(self, request):
         data = json.loads(request.body)
-        
         user = User.objects.get(id=data['id'])
         user_serializer = UserUpdateSerializer(user, data=data)
         if user_serializer.is_valid():
-            print(user_serializer.validated_data)
+            user = user_serializer.save()
+        else: 
+            print(user_serializer.errors)
+            
+    @action(methods=['delete'], detail=False, url_path='delete/(?P<id>[^/.]+)')
+    def delete_user(self, request, id=None):
+        user = User.objects.get(id=id)
+        user.delete()
+        return Response(status=status.HTTP_200_OK)
         
         
         

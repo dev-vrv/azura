@@ -41,3 +41,15 @@ $shadow: (
 .text-muted {
   color: map-get($theme-colors, "muted") !important;
 }
+.text-light {
+  color: map-get($theme-colors, "light") !important;
+}
+.text-dark {
+  color: map-get($theme-colors, "dark") !important;
+}
+.text-white {
+  color: map-get($theme-colors, "white") !important;
+}
+.text-gray {
+  color: map-get($theme-colors, "gray") !important;
+}

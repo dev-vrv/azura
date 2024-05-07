@@ -6,8 +6,11 @@
     align-items: center;
     padding: 1rem;
     width: 100%;
-    color: map-get($theme-colors, 'primary');
     & .i {
         animation: rotate 2s linear infinite;
+    }
+    &--inline {
+
+        padding: 0 !important;
     }
 }

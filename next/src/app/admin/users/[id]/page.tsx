@@ -93,6 +93,7 @@ export default function PageUser({ params }: { params: { id: string } }) {
 		<main className="main">
 			<Section className="model-page">
 				<MForm
+					objectId={id}
 					fields={user}
                     formTitle={username}
 					groups={fields_groups}

@@ -5,7 +5,6 @@ import { EndPoints, IEndPoint } from "@/api/endPoints";
 export default function PageUsers() {
 	const endPointUsers = new EndPoints().getPointUser("getUsers") as IEndPoint;
 
-	
 	return (
 		<main className="main">
 			<Section className="h-100">

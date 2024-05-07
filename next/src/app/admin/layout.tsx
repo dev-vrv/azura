@@ -1,12 +1,15 @@
+"use client";
 
-'use client';
-
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import Aside from "@/components/admin/Aside/Aside";
 import Header from "@/components/admin/Header/Header";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "@/assets/scss/style.scss";
+import { AppContextProvider } from "@/context/AppContext";
+import { AppContext, IAppContext } from "@/context/AppContext";
+import AlertView from "@/components/alert/AlertView";
+
 
 export default function AdminLayout({
 	children,
@@ -15,8 +18,31 @@ export default function AdminLayout({
 }>) {
 
 	useEffect(() => {
-		AOS.init({ duration: 300, easing: 'ease-in-out', once: true, });
+		AOS.init({ duration: 300, easing: "ease-in-out", once: true });
 	}, []);
+
+	const NotificationElements = () =>{
+		const { notifications, setNotifications } = useContext<IAppContext>(AppContext);
+
+
+		const notSeenNotifications = notifications;
+
+		return (
+			<div className={`alert-list ${notSeenNotifications.length > 1? 'show' : ''}`}>
+				{notSeenNotifications.map((notification, index) => (
+				<AlertView 
+					key={index + notification.id}
+					text={notification.message || ''}
+					type={notification.type}
+					onClose={() => {
+
+					}}
+				/>
+				))}
+			</div>
+		  
+		);
+	}
 
 	return (
 		<html lang="en">
@@ -35,8 +61,11 @@ export default function AdminLayout({
 						/>
 					</div>
 					<div className="h-100 w-100 d-flex flex-column">
-						<Header />
-						{children}
+						<AppContextProvider>
+							<Header />
+							{children}
+							<NotificationElements />
+						</AppContextProvider>
 					</div>
 				</div>
 			</body>

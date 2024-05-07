@@ -2,6 +2,8 @@ from rest_framework.serializers import ModelSerializer
 from .models import User
 from rest_framework import serializers
 
+READ_ONLY_FIELDS = ('email', 'id', 'created_at', 'updated_at', 'last_session')
+
 
 class SignInSerializer(ModelSerializer):
     email = serializers.EmailField()
@@ -27,6 +29,7 @@ class SignInSerializer(ModelSerializer):
             raise serializers.ValidationError('Invalid email or password')
         
         return data
+
     
 class SignUpSerializer(ModelSerializer):
     email = serializers.EmailField()
@@ -61,8 +64,10 @@ class SignUpSerializer(ModelSerializer):
     
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
         
 class UserInfoSerializer(ModelSerializer):
+    created_at = serializers.DateTimeField(format='%d.%m.%Y %H:%M')
     class Meta:
         model = User
         fields = (
@@ -82,6 +87,7 @@ class UserInfoSerializer(ModelSerializer):
             'status',
         )
         read_only_fields = ('email', 'id')
+
 
 class UserAdminSerializer(ModelSerializer):
     class Meta:
@@ -106,7 +112,7 @@ class UserAdminSerializer(ModelSerializer):
         read_only_fields = ('email', 'id')
         
     def created_at(self, obj):
-        return obj.created_at.strftime('%Y-%m-%d %H:%M')
+        return obj.created_at.strftime('%d.%m.%Y %H:%M')
     
     def get_field_types(self, obj):
         return {
@@ -210,10 +216,20 @@ class UserAdminSerializer(ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
+    birthday = serializers.DateField(input_formats=['%Y-%m-%d'], required=False, allow_null=True)
+    password = serializers.CharField(style={'input_type': 'password'}, write_only=True, allow_null=True, required=False)
+    username = serializers.CharField(allow_null=True, required=False)    
     class Meta:
         model = User
         fields = '__all__'
 
     def to_internal_value(self, data):
-        invalid_fields = ['id', 'email', 'password']
-        return {field: value for field, value in data.items() if field not in invalid_fields}
+        invalid_fields = READ_ONLY_FIELDS
+        if 'birthday' in data and data['birthday'] == '':
+            data['birthday'] = None
+        for field in invalid_fields:
+            if field in data and not data[field]:
+                data[field] = None
+        return super().to_internal_value(data)
+    
+    

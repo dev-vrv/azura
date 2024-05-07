@@ -3,13 +3,23 @@ import './Spinner.scss';
 
 interface ISpinner {
     size?: 'sm' | 'md' | 'lg' | 'xl';
+    type?: 'block' | 'inline';
     className?: string;
+    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+    aos?: {
+        animation: string;
+        delay: string;
+        duration: string;
+    }
 }
 
-export default function Spinner({className, size='lg'}: ISpinner) {
+export default function Spinner({className='', size='lg', type='block', color='light'}: ISpinner) {
     return (
-        <div className={`spinner ${className}`} role="status" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="500">
-            <Icon name="loading" size={size} />
-        </div>
+        <span 
+            className={`spinner ${type == 'inline' ? 'spinner--inline' : ''} ${className}`} 
+            role="status" 
+        >
+            <Icon name="loading" size={size} className={`text-${color}`} />
+        </span>
     );
 }
