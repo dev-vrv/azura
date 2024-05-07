@@ -33,7 +33,8 @@ import {
     CiSettings,
     CiBellOn,
 	CiLock,
-	CiCalendar
+	CiCalendar,
+	CiTrash
 
 } from "react-icons/ci";
 
@@ -59,6 +60,7 @@ const iconsUI = {
 	change: <FaPen />,
 	calendar: <CiCalendar />,
 	lock: <CiLock />,
+	trash: <CiTrash />,
 };
 const iconsActions = {
 	search: <CiSearch />,

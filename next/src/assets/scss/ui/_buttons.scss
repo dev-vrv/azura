@@ -13,7 +13,7 @@
     border-radius: map-get($r, 'sm');
     border: none;
     outline: none;
-    transition: opacity 0.3s ease-in-out, transform 0.1s ease-in-out, background-color 0.3s ease-in-out color 0.3s ease-in-out;
+    text-transform: capitalize;
     cursor: pointer;
     &:hover {
         opacity: 0.9;
@@ -23,11 +23,33 @@
     }
 }
 
+.btn-primary, .btn-secondary, .btn-danger, .btn-header, .btn-aside, .btn-icon, .btn-select, .link {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
 .btn-primary {
     background-color: map-get($theme-colors, 'primary');
     color: map-get($theme-colors, 'white');
     &:hover {
         background-color: darken(map-get($theme-colors, 'primary'), 10%);
+        color: map-get($theme-colors, 'white');
+    }
+}
+
+.btn-secondary {
+    background-color: map-get($theme-colors, 'secondary');
+    color: map-get($theme-colors, 'white');
+    &:hover {
+        background-color: darken(map-get($theme-colors, 'secondary'), 10%);
+        color: map-get($theme-colors, 'white');
+    }
+}
+
+.btn-danger {
+    background-color: map-get($theme-colors, 'danger');
+    color: map-get($theme-colors, 'white');
+    &:hover {
+        background-color: darken(map-get($theme-colors, 'danger'), 10%);
         color: map-get($theme-colors, 'white');
     }
 }
@@ -55,10 +77,28 @@
     }
 }
 
+.btn-select {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: map-get($p, 'xs') map-get($p, 'sm');
+    color: map-get($theme-colors, 'muted');
+    border-radius: 0;
+    background-color: map-get($theme-colors, 'none');
+    &:hover {
+        color: map-get($theme-colors, 'white');
+        background-color: map-get($theme-colors, 'primary');
+    }
+    &.active {
+        color: map-get($theme-colors, 'white');
+        background-color: darken(map-get($theme-colors, 'primary'), 10%);
+    }
+}
+
 .link {
     color: map-get($theme-colors, 'primary');
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
     &:hover {
         color: darken(map-get($theme-colors, 'primary'), 5%);
     }

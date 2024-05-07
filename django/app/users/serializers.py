@@ -83,8 +83,6 @@ class UserInfoSerializer(ModelSerializer):
         )
         read_only_fields = ('email', 'id')
 
-
-
 class UserAdminSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -139,7 +137,7 @@ class UserAdminSerializer(ModelSerializer):
             },
             'phone': {
                 'value': obj.phone,
-                'type': 'number',
+                'type': 'tel',
                 'readOnly': False,
             },
             'country': {
@@ -194,8 +192,28 @@ class UserAdminSerializer(ModelSerializer):
             },
             'status': {
                 'value': obj.status,
+                'options': [choice[0] for choice in obj.STATUS_CHOICES],
                 'type': 'select',
                 'readOnly': False,
             },
+            'subscribe': {
+                'value': obj.subscribe,
+                'type': 'checkbox',
+                'readOnly': False,
+            },
+            'protect_2fa': {
+                'value': obj.protect_2fa,
+                'type': 'checkbox',
+                'readOnly': False,
+            },
         }
-    
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def to_internal_value(self, data):
+        invalid_fields = ['id', 'email', 'password']
+        return {field: value for field, value in data.items() if field not in invalid_fields}

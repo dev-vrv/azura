@@ -15,7 +15,7 @@ const Button = ({ onClick, icon, children, className, variant, type = "button" }
 		variant = "icon";
 	}
     else {
-        variant = "primary";
+        variant = variant || "primary";
     }
 
 	return (

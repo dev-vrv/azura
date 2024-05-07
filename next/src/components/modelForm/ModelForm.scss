@@ -21,6 +21,8 @@
         padding-right: map-get($p, 'sm');
     }
     &--footer {
+        gap: 1rem;
+        padding-top: map-get($p, 'sm');
         display: flex;
         justify-content: flex-end;
         align-items: center;

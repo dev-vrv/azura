@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
-from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer, UserAdminSerializer
+from .serializers import SignInSerializer, SignUpSerializer, UserInfoSerializer, UserAdminSerializer, UserUpdateSerializer
 from .models import User
 
 import json
@@ -65,21 +65,15 @@ class UserController(viewsets.ViewSet):
         serializer = UserAdminSerializer(user)
         return Response(serializer.get_field_types(user), status=status.HTTP_200_OK)
     
-    @action(methods=['post'], detail=False, url_path='update')
+    @action(methods=['put'], detail=False, url_path='update')
     def update_user(self, request):
         data = json.loads(request.body)
+        
         user = User.objects.get(id=data['id'])
+        user_serializer = UserUpdateSerializer(user, data=data)
+        if user_serializer.is_valid():
+            print(user_serializer.validated_data)
         
-        user.first_name = data['first_name']
-        user.last_name = data['last_name']
-        user.phone = data['phone']
-        user.country = data['country']
-        user.city = data['city']
-        user.address = data['address']
-        user.zip_code = data['zip_code']
-        user.photo = data['photo']
-        user.status = data['status']
         
-        user.save()
         
-        return Response(UserInfoSerializer(user).data, status=status.HTTP_200_OK)
+        return Response(UserInfoSerializer().data, status=status.HTTP_200_OK)

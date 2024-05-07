@@ -1,12 +1,12 @@
 
-import { IField } from "../Inputs";
+import { IFormInput } from "../Inputs";
 
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Icon from "@/components/Icons/Icons";
 
-interface PropsDateTime extends IField {
+interface PropsDateTime extends IFormInput {
 	value?: string;
 }
 

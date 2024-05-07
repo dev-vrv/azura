@@ -90,6 +90,7 @@
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
+        text-transform: capitalize;
         &:hover {
             & span {
                 color: map-get($theme-colors, 'grey');

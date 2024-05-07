@@ -20,7 +20,7 @@ class EndPoints {
         this.points = {};
     }
 
-    public getPointUser(key?: UserPoints) {
+    public getPointUser(key: UserPoints): IEndPoint {
         const userManageEndPoints:IEndPoints = {
             getUser: {
                 path: `${this.url}/user/controller/retrieve/`,
@@ -44,7 +44,7 @@ class EndPoints {
             },
         }
         this.points['user'] = userManageEndPoints;
-        return key? this.points['user'][key] : this.points['user'];
+        return this.points['user'][key];
     }
 }
 

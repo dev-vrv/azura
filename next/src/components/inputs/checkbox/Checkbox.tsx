@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { IField } from "../Inputs";
+import { IFormInput } from "../Inputs";
 import Icon from "@/components/Icons/Icons";
 
-export interface PropsCheckbox extends IField {
+export interface PropsCheckbox extends IFormInput {
 	checked?: boolean;
 	onChecked?: (checked: boolean) => void;
 }
 
-export default function Checkbox(props: PropsCheckbox) {
-    const { id, name, label, className, checked = false, disabled = false, required } = props;
+export default function Checkbox({ id, name, label, className, checked = false, readOnly = false, required, onChange, onChecked } : PropsCheckbox) {
     const [isChecked, setIsChecked] = useState(checked);
 
     useEffect(() => {
@@ -23,11 +22,12 @@ export default function Checkbox(props: PropsCheckbox) {
 				type="checkbox"
 				className={`form-checkbox ${className || ""}`}
 				checked={isChecked}
-				disabled={disabled}
+				readOnly={readOnly}
 				required={required}
-                onChange={() => {
+                onChange={(e) => {
                     setIsChecked(!isChecked);
-                    props.onChecked && props.onChecked(!isChecked);
+                    onChecked && onChecked(!isChecked);
+					onChange && onChange(e);
                 }}
 			/>
 

@@ -67,6 +67,9 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, null=True, blank=True)
     zip_code = models.CharField(max_length=10, null=True, blank=True)
     
+    subscribe = models.BooleanField(default=False)
+    protect_2fa = models.BooleanField(default=False)
+    
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
 
     def save(self, *args, **kwargs):
