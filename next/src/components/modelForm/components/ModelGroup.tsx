@@ -1,10 +1,8 @@
 import MField from './ModelFields';
 
-
 interface IAltSize {
 	[key: string]: number;
 }
-
 
 export interface ISelect {
 	[key: string]: string[]
@@ -19,7 +17,6 @@ export interface IFields {
 		options?: string[];
 	};
 }
-
 export interface IGroup {
 	fields: IFields
 	fieldsNames: (string | string[])[];

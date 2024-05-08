@@ -1,140 +1,25 @@
 from rest_framework.serializers import ModelSerializer
 from .models import User
 from rest_framework import serializers
+from command.serializers import BaseAdminFieldsSerializer, BaseAdminSerializer
 
-READ_ONLY_FIELDS = ('email', 'id', 'created_at', 'updated_at', 'last_session')
 
 
-class UserAdminSerializer(ModelSerializer):
 
+class UserAdminFormSerializer(BaseAdminFieldsSerializer):
     class Meta:
         model = User
-        created_at = serializers.SerializerMethodField()
-        fields = (
+        fields = '__all__'
+        read_only_fields = (
             'id',
             'email',
-            'first_name',
-            'last_name',
-            'phone',
-            'country',
-            'city',
-            'address',
-            'zip_code',
-            'is_active',
-            'is_staff',
-            'is_superuser',
             'created_at',
+            'updated_at',
             'last_session',
-            'status',
-            'birthday',
-            'subscribe',
-            'protect_2fa',
             'password',
+            'groups',
+            'user_permissions',
         )
-        read_only_fields = ('email', 'id', 'password')
-        
-    def created_at(self, obj):
-        return obj.created_at.strftime('%d.%m.%Y %H:%M')
-    
-    def get_field_types(self, obj):
-        return {
-            'id': {
-                'value': obj.id,
-                'type': 'number',
-                'readOnly': True,
-            },
-            'email': {
-                'value': obj.email,
-                'type': 'email',
-                'readOnly': True,
-            },
-            'first_name': {
-                'value': obj.first_name,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'last_name': {
-                'value': obj.last_name,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'birthday': {
-                'value': obj.birthday.strftime('%Y-%m-%d') if obj.birthday else '',
-                'type': 'date',
-                'readOnly': False,
-            },
-            'phone': {
-                'value': obj.phone,
-                'type': 'tel',
-                'readOnly': False,
-            },
-            'country': {
-                'value': obj.country,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'city': {
-                'value': obj.city,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'address': {
-                'value': obj.address,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'zip_code': {
-                'value': obj.zip_code,
-                'type': 'text',
-                'readOnly': False,
-            },
-            'is_active': {
-                'value': obj.is_active,
-                'type': 'checkbox',
-                'readOnly': False,
-            },
-            'is_staff': {
-                'value': obj.is_staff,
-                'type': 'checkbox',
-                'readOnly': False,
-            },
-            'is_superuser': {
-                'value': obj.is_superuser,
-                'type': 'checkbox',
-                'readOnly': False,
-            },
-            'created_at': {
-                'value': obj.created_at.strftime('%Y-%m-%d %H:%M'),
-                'type': 'datetime',
-                'readOnly': True,
-            },
-            'updated_at': {
-                'value': obj.updated_at.strftime('%Y-%m-%d %H:%M'),
-                'type': 'datetime',
-                'readOnly': True,  
-            },
-            'last_session': {
-                'value': obj.last_session.strftime('%Y-%m-%d %H:%M') if obj.last_session else '',
-                'type': 'datetime',
-                'readOnly': True,
-            },
-            'status': {
-                'value': obj.status,
-                'options': [choice[0] for choice in obj.STATUS_CHOICES],
-                'type': 'select',
-                'readOnly': False,
-            },
-            'subscribe': {
-                'value': obj.subscribe,
-                'type': 'checkbox',
-                'readOnly': False,
-            },
-            'protect_2fa': {
-                'value': obj.protect_2fa,
-                'type': 'checkbox',
-                'readOnly': False,
-            },
-        }
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -143,8 +28,23 @@ class UserAdminSerializer(ModelSerializer):
             instance.set_password(password)
             instance.save()
         return instance
+    
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        instance = super().update(instance, validated_data)
+        if password is not None:
+            instance.set_password(password)
+            instance.save()
+        return instance
+    
+class UserAdminViewSerializer(BaseAdminSerializer):
+    class Meta:
+        model = User
+        exclude = ('password', 'groups', 'user_permissions')
+        
 
-   
+
+
 class SignInSerializer(ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -206,56 +106,3 @@ class SignUpSerializer(ModelSerializer):
         return User.objects.create_user(**validated_data)
 
         
-class UserInfoSerializer(ModelSerializer):
-    created_at = serializers.DateTimeField(format='%d.%m.%Y %H:%M')
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'email',
-            'first_name',
-            'last_name',
-            'phone',
-            'country',
-            'city',
-            'address',
-            'zip_code',
-            'is_active',
-            'is_staff',
-            'is_superuser',
-            'created_at',
-            'status',
-        )
-        read_only_fields = ('email', 'id')
-
-
-class UserUpdateSerializer(ModelSerializer):
-    birthday = serializers.DateField(input_formats=['%Y-%m-%d'], required=False, allow_null=True)
-    password = serializers.CharField(style={'input_type': 'password'}, write_only=True, allow_null=True, required=False)
-    username = serializers.CharField(allow_null=True, required=False)    
-    class Meta:
-        model = User
-        fields = '__all__'
-
-    
-    
-    def to_internal_value(self, data):
-        invalid_fields = READ_ONLY_FIELDS
-        if 'birthday' in data and data['birthday'] == '':
-            data['birthday'] = None
-        for field in invalid_fields:
-            if field in data and not data[field]:
-                data[field] = None
-        return super().to_internal_value(data)
-    
-    
-class UserAdminSerializerFull(UserAdminSerializer):
-    
-    def get_field_types(self, obj):
-        fields = super().get_field_types(obj)
-        fields['password'] = {
-            'value': '',
-            'type': 'password',
-            'readOnly': False,
-        }
-        return fields

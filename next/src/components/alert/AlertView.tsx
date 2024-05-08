@@ -1,7 +1,8 @@
 import { Alert } from "react-bootstrap";
 import Icon from "../Icons/Icons";
+import "./AlertView.scss";
 
-interface PropsAlertView {
+export interface PropsAlertView {
     type: string;
     text: string;
     onClose?: () => void;

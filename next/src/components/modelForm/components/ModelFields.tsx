@@ -12,6 +12,17 @@ interface PropsField {
 
 export default function MField({ type, id, value, required, readOnly, handleChange, options }: PropsField) {
 	const label_display = id.replace("_", " ");
+	const inputs = {
+		text: 'text',
+		email: 'email',
+		password: 'password',
+		number: 'number',
+		tel: 'tel',
+		checkbox: 'checkbox',
+		datetime: 'datetime',
+		date: 'date',
+		select: 'select'
+	}
 	if (type === "text" || type === "email" || type === "password" || type === "number" || type === 'tel') {
 		return (
 			<Input

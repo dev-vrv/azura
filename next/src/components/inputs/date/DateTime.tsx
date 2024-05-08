@@ -25,6 +25,7 @@ function InputDateTime({ id, name, label, required, value, readOnly }: PropsDate
 			<DatePicker
 				icon={<Icon name={readOnly? 'lock' : 'calendar'} size="md" className="text-muted" />}
 				showIcon={true}
+				name={name}
 				selected={startDate}
 				onChange={(date) => setStartDate(date as Date)}
 				placeholderText='Select a date'
@@ -33,6 +34,7 @@ function InputDateTime({ id, name, label, required, value, readOnly }: PropsDate
 				timeIntervals={15}
 				dateFormat="Pp"
 				readOnly={readOnly}
+				required={required}
 				className={`form-input form-input--datetime ${readOnly? 'disabled' : ''}`}
 			/>
 		</div>

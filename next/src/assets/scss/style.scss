@@ -37,8 +37,6 @@ body {
     width: fit-content;
 }
 
-
-
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -51,57 +49,7 @@ body {
     border-radius: map-get($r, 'sm');
 }
 
-// 
 
-.alert {
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: 0;
-    padding: map-get($p, 'sm') map-get($p, 'lg');
-    color: map-get($theme-colors, 'white');
-    background-color: map-get($theme-colors, 'dark');
-    border: 1px solid map-get($theme-colors, 'none');
-    border-radius: map-get($r, 'md');
-    & .btn-close {
-        position: absolute;
-        top: auto;
-        right: 1rem;
-    }
-
-}
-.alert-danger {
-
-    border-color: map-get($theme-colors, 'danger');
-    & i {
-        color: map-get($theme-colors, 'danger');
-    }
-}
-.alert-success {
-    & i {
-        color: map-get($theme-colors, 'danger');
-    }
-}
-.alert-list {
-    width: 400px;
-    height: 200px;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-
-
-    right: 2.5rem;
-    bottom: 2rem;
-    z-index: 1;
-
-    position: fixed;
-    background-color: map-get($theme-colors, 'none');
-}
-
-// 
 
 .model-page {
     height: 100%;
