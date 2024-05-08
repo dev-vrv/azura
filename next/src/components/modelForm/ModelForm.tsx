@@ -23,6 +23,12 @@ interface PropsForm {
 	back?: () => void;
 }
 
+
+interface FormValues {
+	[key: string]: string | boolean | { [key: string]: string[] };
+}
+
+
 function GroupedFields(groups: IGroup[], handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void) {
 	return groups?.map((group) => {
 		return (
@@ -57,15 +63,12 @@ function NotGroupedFields(fields: IFields, handleChange: (event: React.ChangeEve
 	});
 }
 
-interface FormValues {
-	[key: string]: string | boolean | { [key: string]: string[] };
-}
-
 function MForm({ fields, groups, back, endPointUpdate, endPointDelete, formTitle, objectId }: PropsForm) {
 	const [formValues, setFormValues] = useState<FormValues>({});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const { notifications, setNotifications } = useContext(AppContext);
+	const [alerts, setAlerts] = useState<INotification[]>([]);
 
 	const initialFormValues = useCallback(() => {
 		const values: FormValues = {};
@@ -99,7 +102,8 @@ function MForm({ fields, groups, back, endPointUpdate, endPointDelete, formTitle
 				method: endPointDelete?.method,
 			});
 			const newData = await response.json();
-		} catch (err: any) {
+		} 
+		catch (err: any) {
 			setError(err);
 		}
 		if (!error) {

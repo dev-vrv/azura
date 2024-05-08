@@ -98,8 +98,8 @@ export default function PageUser({ params }: { params: { id: string } }) {
                     formTitle={username}
 					groups={fields_groups}
 					back={router.back}
-					endPointUpdate={endPoints.getPointUser("update")}
 					endPointDelete={endPoints.getPointUser("delete")}
+					endPointUpdate={endPoints.getPointUser("update")}
 				/>
 			</Section>
 		</main>

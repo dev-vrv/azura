@@ -45,11 +45,10 @@ class UserSessionSet(viewsets.ViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class UserController(viewsets.ViewSet):
     
-    @action(methods=['get'], detail=False, url_path='retrieve/list')
-    def get_list(self, request):
+    @action(methods=['get'], detail=False, url_path='list')
+    def get_users(self, request):
         paginator = PageNumberPagination()
         paginator.page_size = 20
 
@@ -65,6 +64,8 @@ class UserController(viewsets.ViewSet):
         serializer = UserAdminSerializer(user)
         return Response(serializer.get_field_types(user), status=status.HTTP_200_OK)
     
+
+    
     @action(methods=['put'], detail=False, url_path='update')
     def update_user(self, request):
         data = json.loads(request.body)
@@ -72,15 +73,26 @@ class UserController(viewsets.ViewSet):
         user_serializer = UserUpdateSerializer(user, data=data)
         if user_serializer.is_valid():
             user = user_serializer.save()
-        else: 
-            print(user_serializer.errors)
+            return Response(UserAdminSerializer(user).data, status=status.HTTP_200_OK)
+        else:
+            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
     @action(methods=['delete'], detail=False, url_path='delete/(?P<id>[^/.]+)')
     def delete_user(self, request, id=None):
-        user = User.objects.get(id=id)
-        user.delete()
-        return Response(status=status.HTTP_200_OK)
-        
-        
-        
-        return Response(UserInfoSerializer().data, status=status.HTTP_200_OK)
+        try:
+            user = User.objects.get(id=id)
+            user.delete()
+            return Response(status=status.HTTP_200_OK)
+        except:
+            return Response({
+                'detail': 'User not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+    
+    @action(methods=['post'], detail=False, url_path='create')
+    def create_user(self, request):
+        serializer = UserAdminSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(UserAdminSerializer(user).data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

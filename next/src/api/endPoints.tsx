@@ -6,7 +6,7 @@ export interface IEndPoints {
     [key: string]: IEndPoint;
 }
 
-type UserPoints = 'getUser' | 'getUsers' | 'update' | 'delete' | 'createUser';
+type UserPoints = 'getUser' | 'getUsers' | 'update' | 'delete' | 'create';
 
 
 class EndPoints {
@@ -27,7 +27,7 @@ class EndPoints {
                 method: 'GET',
             },
             getUsers: {
-                path: `${this.url}user/controller/retrieve/list/`,
+                path: `${this.url}user/controller/list/`,
                 method: 'GET',
             },
             update: {
@@ -38,7 +38,7 @@ class EndPoints {
                 path: `${this.url}user/controller/delete/`,
                 method: 'DELETE',
             },
-            createUser: {
+            create: {
                 path: `${this.url}user/controller/create/`,
                 method: 'POST',
             },
