@@ -23,23 +23,23 @@ class EndPoints {
     public getPointUser(key: UserPoints): IEndPoint {
         const userManageEndPoints:IEndPoints = {
             getUser: {
-                path: `${this.url}user/controller/retrieve/`,
+                path: `${this.url}admin/users/`,
                 method: 'GET',
             },
             getUsers: {
-                path: `${this.url}user/controller/list/`,
+                path: `${this.url}admin/users/list/`,
                 method: 'GET',
             },
             update: {
-                path: `${this.url}user/controller/update/`,
+                path: `${this.url}admin/users/update/`,
                 method: 'PUT',
             },
             delete: {
-                path: `${this.url}user/controller/delete/`,
+                path: `${this.url}admin/users/delete/`,
                 method: 'DELETE',
             },
             create: {
-                path: `${this.url}user/controller/create/`,
+                path: `${this.url}admin/users/create/`,
                 method: 'POST',
             },
         }
