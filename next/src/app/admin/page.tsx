@@ -1,7 +1,5 @@
-
-
 export default function PageAdmin() {
-    return (
+	return (
 		<main className="main container-fluid">
 
 		</main>

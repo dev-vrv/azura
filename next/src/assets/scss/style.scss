@@ -1,14 +1,35 @@
 @import './variables';
 @import './animations';
 @import './null';
+// @import './ui/_link';
 
-@import '~/node_modules/bootstrap/scss/bootstrap-grid';
-@import '~/node_modules/bootstrap/scss/bootstrap-reboot';
-@import '~/node_modules/bootstrap/scss/bootstrap-utilities';
-@import '~/node_modules/bootstrap/scss/_tables';
-@import '~/node_modules/bootstrap/scss/_dropdown';
-@import '~/node_modules/bootstrap/scss/_modal';
-@import '~/node_modules/bootstrap/scss/_alert';
+// @import '~/node_modules/bootstrap/scss/bootstrap-grid';
+// @import '~/node_modules/bootstrap/scss/bootstrap-reboot';
+// @import '~/node_modules/bootstrap/scss/bootstrap-utilities';
+// @import '~/node_modules/bootstrap/scss/_tables';
+// @import '~/node_modules/bootstrap/scss/_dropdown';
+// @import '~/node_modules/bootstrap/scss/_modal';
+// @import '~/node_modules/bootstrap/scss/_alert';
+@import '~/node_modules/bootstrap/scss/bootstrap';
 
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+    width: 100%;
+    overflow-y: scroll;
+ 
+}
+
+.main {
+    height: 10000px;
+}
 

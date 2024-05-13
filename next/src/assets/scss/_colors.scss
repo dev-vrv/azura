@@ -1,55 +1,29 @@
 $theme-colors: (
-  // Theme colors
-  "primary": #17a2b8,
-  "secondary": #43505b,
-  "tertiary": #435669,
-  
-  // Additional colors
-  "success": #28a745,
-  "info": #17a2b8,
-  "warning": #ffc107,
-  "danger": #af3c47,
-  
-  // Grayscale colors
-  "light": #f8f9fa,
-  "dark": rgb(33, 37, 41),
-
-  // Custom colors
-  "none": rgba(0, 0, 0, 0),
-
-  // Text colors
-  "white": #fff,
-  "black": #000,
-  "gray": #6c757d,
-  "gray-dark": #343a40,
-  "muted": #9aa2a8,
+  "primary": rgb(23, 184, 179),
+  "secondary": rgb(67, 80, 91),
+  "tertiary": rgb(67, 86, 105),
+  "success": rgb(40, 167, 69),
+  "info": rgb(23, 162, 184),
+  "warning": rgb(255, 193, 7),
+  "danger": rgb(175, 60, 71),
+  "light": rgb(248, 249, 250),
+  "grey": rgb(167, 49, 49),
+  "dark": rgb(29, 31, 34),
+  "muted": #6c757d,
 );
 
-$glass: (
-  sm: rgba(30, 30, 30, 0.1),
-  md: rgba(30, 30, 30, 0.2),
-  lg: rgba(30, 30, 30, 0.3),
-  xl: rgba(30, 30, 30, 0.5),
-);
+$primary: map-get($theme-colors, "primary");
+$secondary: map-get($theme-colors, "secondary");
+$tertiary: map-get($theme-colors, "tertiary");
+$success: map-get($theme-colors, "success");
+$info: map-get($theme-colors, "info");
+$warning: map-get($theme-colors, "warning");
+$danger: map-get($theme-colors, "danger");
+$light: map-get($theme-colors, "light");
+$grey: map-get($theme-colors, "grey");
+$dark: map-get($theme-colors, "dark");
+$none: map-get($theme-colors, "none");
+$text-muted: map-get($theme-colors, "muted");
 
-$shadow: (
-  sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075),
-  md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15),
-  lg: 0 1rem 3rem rgba(0, 0, 0, 0.175),
-);
-
-.text-muted {
-  color: map-get($theme-colors, "muted") !important;
-}
-.text-light {
-  color: map-get($theme-colors, "light") !important;
-}
-.text-dark {
-  color: map-get($theme-colors, "dark") !important;
-}
-.text-white {
-  color: map-get($theme-colors, "white") !important;
-}
-.text-gray {
-  color: map-get($theme-colors, "gray") !important;
-}
+$body-bg-dark: #171b1f;
+$body-bg: #f2f2f2;

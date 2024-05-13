@@ -5,17 +5,19 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 router = DefaultRouter()
-router.register(r'users', UserAdminController, basename='UserAdminController')
-
+router.register(r'users', UserAdminController, basename='Users')
 
 class APIRootView(APIView):
     def get(self, request, *args, **kwargs):
         routes = {}
-        for url in router.urls:
+        for url in router.urls:          
+            if '(?P<format>' in str(url.pattern):
+                continue
             if hasattr(url, 'name') and url.name:
                 app_name = url.name.split('-')[0]
                 methods = [method for method in getattr(url.callback, 'actions', {}).keys()]
                 route_info = {
+                    'name': '-'.join(url.name.split('-')[1:]) if '-' in url.name else url.name,
                     'path': str(url.pattern),
                     'methods': methods
                 }

@@ -42,4 +42,3 @@ class BaseAdminController(viewsets.ViewSet):
         serializer = self.serializer_class(context, many=True)
         return paginator.get_paginated_response(serializer.data)
     
-
