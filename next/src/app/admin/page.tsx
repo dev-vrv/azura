@@ -1,7 +1,13 @@
+import { Row, Col, Container } from "react-bootstrap";
+
 export default function PageAdmin() {
 	return (
-		<main className="main container-fluid">
-			monitor
-		</main>
+		<Container fluid className="h-100 p-0">
+			<Row className="h-100 pe-3 pb-3">
+				<Col xs={12}>
+					<section className="section">content</section>
+				</Col>
+			</Row>
+		</Container>
 	);
 }

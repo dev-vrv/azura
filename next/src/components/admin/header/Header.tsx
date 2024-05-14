@@ -22,12 +22,12 @@ export default function Header() {
 							</li>
 							<li>
 								<Button variant="icon">
-									<Icon name="bell" size="3" />
+									<Icon name="settings" size="3" />
 								</Button>
 							</li>
 							<li>
 								<Button variant="icon">
-									<Icon name="bell" size="3" />
+									<Icon name="logout" size="3" />
 								</Button>
 							</li>
 						</ul>

@@ -6,7 +6,13 @@ import {
 	CiFilter,
 	CiMonitor,
 	CiUser,
-	CiWavePulse1
+	CiWavePulse1,
+	CiLogout,
+	CiLogin,
+	CiBellOn,
+	CiCircleInfo,
+	CiMail,
+	CiSettings,
 } from "react-icons/ci";
 
 
@@ -21,13 +27,19 @@ const IElse = {
 };
 
 const IUI = {
-	filter: CiFilter
+	filter: CiFilter,
+	logout: CiLogout,
+	login: CiLogin,
+	bell: CiBellOn,
+	info: CiCircleInfo,
+	settings: CiSettings
 };
 
 const Apps = {
-	'monitor': CiMonitor,
-	'users': CiUser,
-	'stats': CiWavePulse1
+	monitor: CiMonitor,
+	users: CiUser,
+	stats: CiWavePulse1,
+	mails: CiMail
 }
 
 export const IBundle = {
