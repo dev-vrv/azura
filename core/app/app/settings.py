@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users.apps.CustomUsersConfig',
     'admin.apps.AdminConfig',
+    'mail.apps.MailConfig',
 ]
 
 MIDDLEWARE = [
@@ -240,3 +241,11 @@ LOGGING = {
         },
     }
 }
+
+
+# Mails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dev.vrv@gmail.com'

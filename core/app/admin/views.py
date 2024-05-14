@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from .serializers import BaseAdminSerializer
 from rest_framework.pagination import PageNumberPagination
 
+
 class BaseAdminController(viewsets.ViewSet):
     model = None
     serializer_class = BaseAdminSerializer
@@ -23,7 +24,7 @@ class BaseAdminController(viewsets.ViewSet):
         except self.model.DoesNotExist:
             return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)
         except:
-            return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Anв error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.get_form_fields(), status=status.HTTP_200_OK)
 
 

@@ -3,7 +3,10 @@ import {
     CiAt,
 	CiDark,
 	CiLight,
-	CiFilter
+	CiFilter,
+	CiMonitor,
+	CiUser,
+	CiWavePulse1
 } from "react-icons/ci";
 
 
@@ -21,15 +24,21 @@ const IUI = {
 	filter: CiFilter
 };
 
-const IBundle = {
-	...ITheme, ...IUI, ...IElse,
+const Apps = {
+	'monitor': CiMonitor,
+	'users': CiUser,
+	'stats': CiWavePulse1
+}
+
+export const IBundle = {
+	...ITheme, ...IUI, ...Apps, ...IElse,
 };
 
 type TVariant = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark";
 type TSize = "6" | "5" | "4" | "3" | "2" | "1";
 
 export interface PropsIcon {
-	name: keyof typeof IBundle;
+	name: string;
 	inline?: boolean;
 	size?: TSize;
 	variant?: TVariant;
@@ -37,7 +46,13 @@ export interface PropsIcon {
 
 export default function Icon({ variant, size, inline, name }: PropsIcon) {
 	const classNames = `${variant ? `text-${variant}` : ""} ${size ? `fs-${size}` : ""} ${inline ? "d-inline" : ""}`;
-	const SvgIcon = IBundle[name];
+	let SvgIcon;
+	if (Object.keys(IBundle).includes(name)) {
+		SvgIcon = IBundle[name as keyof typeof IBundle];
+	}
+	else {
+		SvgIcon = IBundle['at'];
+	}
 	return (
         <i className={classNames}>
 			<SvgIcon />

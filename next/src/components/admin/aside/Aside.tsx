@@ -1,9 +1,7 @@
 import Icon from "@/components/icons/Icon";
-import Link from "next/link";
+import AsideNav from "@/components/admin/aside/AsideNav";
 
-interface PropsAside {
-    Apps: {[key: string]: any};
-}
+interface PropsAside {}
 
 export default function Aside({}: PropsAside) {
     return (
@@ -12,16 +10,7 @@ export default function Aside({}: PropsAside) {
 				<Icon name="at"/>
 				<span>Azura</span>
 			</h5>
-			<nav className="d-flex flex-column h-100">
-				<ul className="aside__menu">
-					<li className="aside__item">
-						<Link href="/admin" className="aside__link">
-							<i className="aside__icon"></i>
-							<span className="aside__text">Monitor</span>
-						</Link>
-					</li>
-				</ul>
-			</nav>
+			<AsideNav />
 		</aside>
 	);
 }
