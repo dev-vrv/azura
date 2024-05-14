@@ -1,5 +1,6 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Icon from "@/components/icons/Icon";
+import ThemeButton from "@/components/admin/header/ThemeButton";
 
 export default function Header() {
 	return (
@@ -12,16 +13,22 @@ export default function Header() {
 					<Col xs={{span: 6, offset: 4}}>
 						<ul className="d-flex justify-content-end gap-3">
 							<li>
-								<Button variant="primary">Alerts</Button>
+								<Button variant="icon">
+									<Icon name="bell" size="3" />
+								</Button>
 							</li>
 							<li>
-								<Button variant="primary">Theme</Button>
+								<ThemeButton />
 							</li>
 							<li>
-								<Button variant="primary">Settings</Button>
+								<Button variant="icon">
+									<Icon name="bell" size="3" />
+								</Button>
 							</li>
 							<li>
-								<Button variant="primary">Log Out</Button>
+								<Button variant="icon">
+									<Icon name="bell" size="3" />
+								</Button>
 							</li>
 						</ul>
 					</Col>

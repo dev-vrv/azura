@@ -1,0 +1,13 @@
+@import '@/assets/scss/_variables';
+
+.section {
+    height: 100%;
+    width: 100%;
+    background-color: $glass-md;
+    padding: $p-sm;
+    border-radius: $r-md;
+    backdrop-filter: blur(10px);
+    transition: background-color 0.2s ease-in-out;
+    animation: zoom-in 0.3s ease-in-out;
+    @extend .shadow;
+}

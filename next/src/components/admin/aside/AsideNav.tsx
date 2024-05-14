@@ -27,7 +27,7 @@ export default function AsideNav() {
     }, []);
 
     return (
-        <nav className="d-flex flex-column h-100">
+        <nav className="d-flex flex-column justify-content-center h-100">
             <ul className="aside__menu">
                 <li className="aside__item">
                     <Link href="/admin" className="aside__link">

@@ -27,3 +27,22 @@ $text-muted: map-get($theme-colors, "muted");
 
 $body-bg-dark: #171b1f;
 $body-bg: #f2f2f2;
+
+
+:root {
+  --glass-rgb: 255, 255, 255;
+}
+
+html[data-bs-theme="dark"] {
+  --glass-rgb: 0, 0, 0;
+}
+$glass: (
+  'sm': rgba(var(--glass-rgb), 0.1),
+  'md': rgba(var(--glass-rgb), 0.25),
+  'lg': rgba(var(--glass-rgb), 0.5),
+  'xl': rgba(var(--glass-rgb), 0.75),
+);
+$glass-sm: map-get($glass, 'sm');
+$glass-md: map-get($glass, 'md');
+$glass-lg: map-get($glass, 'lg');
+$glass-xl: map-get($glass, 'xl');

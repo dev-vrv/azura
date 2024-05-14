@@ -1,7 +1,7 @@
 @import './variables';
 @import './animations';
 @import './null';
-
+@import './ui/section';
 @import '~/node_modules/bootstrap/scss/bootstrap';
 
 html,
@@ -10,6 +10,18 @@ body {
     height: 100vh;
     overflow: hidden;
 
+}
+
+
+[data-overlay-container] {
+    height: 100%;
+}
+
+html[data-bs-theme="dark"] > body {
+    background-image: url("../img/bg-1.png");
+}
+html[data-bs-theme="light"] > body {
+    background-image: url("../img/bg-light.jpeg");
 }
 
 .wrapper {
@@ -25,3 +37,16 @@ body {
     height: 10000px;
 }
 
+
+.btn-icon {
+    padding: 0 $p-sm;
+    border: none;
+    transition: color 0.2s ease-in-out;
+    &:active {
+        outline: none;
+        transform: scale(0.9);
+    }
+    &:hover {
+        color: $primary;
+    }
+}

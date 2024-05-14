@@ -1,9 +1,0 @@
-@import '../variables';
-
-.link {
-    // color: primary;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-        color: darken($primary, 10%);
-    }
-}
