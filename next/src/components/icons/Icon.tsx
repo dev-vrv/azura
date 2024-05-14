@@ -1,4 +1,5 @@
 import React from "react";
+import { RiInfinityLine } from "react-icons/ri";
 import {
     CiAt,
 	CiDark,
@@ -36,6 +37,7 @@ const IUI = {
 };
 
 const Apps = {
+	logo: RiInfinityLine,
 	monitor: CiMonitor,
 	users: CiUser,
 	stats: CiWavePulse1,
@@ -57,7 +59,7 @@ export interface PropsIcon {
 }
 
 export default function Icon({ variant, size, inline, name }: PropsIcon) {
-	const classNames = `${variant ? `text-${variant}` : ""} ${size ? `fs-${size}` : ""} ${inline ? "d-inline" : ""}`;
+	const classNames = `i ${variant ? `text-${variant}` : ""} ${size ? `fs-${size}` : ""} ${inline ? "d-inline" : ""}`;
 	let SvgIcon;
 	if (Object.keys(IBundle).includes(name)) {
 		SvgIcon = IBundle[name as keyof typeof IBundle];

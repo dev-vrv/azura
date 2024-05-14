@@ -24,6 +24,18 @@ html[data-bs-theme="light"] > body {
     background-image: url("../img/bg-light.jpeg");
 }
 
+::-webkit-scrollbar-thumb {
+    background-color: $primary;
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background-color: $glass-lg;
+    border-radius: 10px;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -49,4 +61,9 @@ html[data-bs-theme="light"] > body {
     &:hover {
         color: $primary;
     }
+}
+.i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

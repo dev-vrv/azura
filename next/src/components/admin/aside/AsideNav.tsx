@@ -2,8 +2,9 @@
 
 import Icon from "@/components/icons/Icon";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { usePathname, useSearchParams } from 'next/navigation'
+import { Context } from "@/context/context";
 
 interface FetchData {
     [key: string]: {
@@ -21,11 +22,17 @@ export default function AsideNav() {
     const [apps, setApps] = useState<FetchData>({});
 
     const pathname = usePathname()
-    
-    console.log(pathname);
-    useEffect(() => {
+
+    const { context, setContext } = useContext(Context);
+
+    const contextCallback = useCallback(() => {
         FetchApps().then(data => setApps(data));
-    }, []);
+        setContext({ ...apps });
+    }, [apps, setContext]);
+    // ERROR REQUESTS
+    useEffect(() => {
+        contextCallback()
+    }, [contextCallback]);
 
     const AsideLink = ({icon, url}: {icon: string, url: string}) => {
         return (
@@ -37,7 +44,7 @@ export default function AsideNav() {
 
     return (
         <nav className="d-flex flex-column justify-content-center h-100">
-            <ul className="aside__menu d-flex flex-column gap-2">
+            <ul className="aside__menu d-flex flex-column gap-3">
                 <li className="aside__item">
                     <AsideLink icon="monitor" url="/admin" />
                 </li>

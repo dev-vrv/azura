@@ -1,16 +1,31 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
+
+interface IContext {
+    endpoints?: {};
+    app?: string;
+    theme?: string;
+}
+
+interface ContextType {
+    context: IContext;
+    setContext: React.Dispatch<React.SetStateAction<IContext>>;
+}
 
 
-export const Context = createContext({
-
+export const Context = createContext<ContextType>({
+    context: {},
+    setContext: () => {},
 });
 
-export const ContextProvider = ({ children }: {children: React.ReactNode}) => {
-    const [state, setState] = useState({});
+
+const ContextProvider = ({ children }: {children: React.ReactNode}) => {
+    const [context, setContext] = useState<IContext>({});
 
     return (
-        <Context.Provider value={{ state, setState }}>
+        <Context.Provider value={{ context, setContext }}>
             {children}
         </Context.Provider>
     );
 };
+
+export default ContextProvider;

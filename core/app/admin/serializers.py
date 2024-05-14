@@ -92,6 +92,6 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                     'options': field.choices if hasattr(field, 'choices') else [],
                 })
         return fields
-            
+ 
     class Meta:
         abstract = True
