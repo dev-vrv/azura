@@ -32,7 +32,11 @@ FIELDS_SYSTEM = [
 ]
 
 class BaseAdminSerializer(serializers.ModelSerializer):
-    exclude_list = ['id']
+    exclude_list = []
+    readonly_fields = ['id', 'created_at', 'updated_at']
+    display_fields = ['id', 'created_at', 'updated_at']
+    form_groups = []
+    
     
     def __init__(self, *args, **kwargs):
         super(BaseAdminSerializer, self).__init__(*args, **kwargs)
@@ -92,6 +96,12 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                     'options': field.choices if hasattr(field, 'choices') else [],
                 })
         return fields
- 
+    
+    def get_form_groups(self):
+        return self.form_groups
+    
+    def get_display_fields(self):
+        return self.display_fields
+    
     class Meta:
         abstract = True

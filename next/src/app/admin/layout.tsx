@@ -1,11 +1,10 @@
-'use client';
-
 import "@/assets/scss/style.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "@/components/admin/header/Header";
 import Aside from "@/components/admin/aside/Aside";
 import ThemeProvider from "@/context/theme";
 import ContextProvider from "@/context/context";
+
 
 export default function AdminLayout({
 	children,

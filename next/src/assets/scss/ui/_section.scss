@@ -8,6 +8,5 @@
     border-radius: $r-md;
     backdrop-filter: blur(10px);
     transition: background-color 0.2s ease-in-out;
-    animation: zoom-in 0.3s ease-in-out;
     @extend .shadow;
 }

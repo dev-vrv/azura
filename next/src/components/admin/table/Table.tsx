@@ -14,7 +14,7 @@ interface PropsTableBody {
 	selectable?: boolean;
 }
 
-interface PropsTable {
+export interface PropsTable {
 	endPoint: string;
 	fields: string[];
 	title: string;

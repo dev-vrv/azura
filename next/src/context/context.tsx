@@ -1,9 +1,11 @@
+'use client';
+
 import { createContext, useState } from 'react';
 
-interface IContext {
-    endpoints?: {};
-    app?: string;
-    theme?: string;
+export interface IContext {
+    [key: string]: {
+        [key: string]: any
+    }
 }
 
 interface ContextType {

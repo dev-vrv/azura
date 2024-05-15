@@ -1,8 +1,7 @@
 from admin.serializers import BaseAdminSerializer
-from .models import User
-from rest_framework import serializers
+from .models import Mails
 
 class MailsAdminSerializer(BaseAdminSerializer):
     class Meta:
-        model = User
+        model = Mails
         fields = '__all__'

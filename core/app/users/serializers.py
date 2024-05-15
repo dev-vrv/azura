@@ -3,6 +3,7 @@ from .models import User
 from rest_framework import serializers
 
 class UserAdminSerializer(BaseAdminSerializer):
+    display_fields = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'last_login']
     class Meta:
         model = User
         fields = '__all__'
@@ -22,3 +23,5 @@ class UserAdminSerializer(BaseAdminSerializer):
                 setattr(instance, attr, value)
         instance.save()
         return instance
+    
+    
