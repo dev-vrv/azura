@@ -32,7 +32,7 @@ export default function PageAdmin() {
 					<>
 						<Col xs={12} className="d-flex justify-content-center align-items-center">
 							<section className="section">
-								<AppTable fields={context.apps[appFound]['display_fields']} title={appFound} endPoint="" />
+								<AppTable fields={context.apps[appFound]['fields_display']} title={appFound} endPoint="" />
 							</section>
 						</Col>
 					</>

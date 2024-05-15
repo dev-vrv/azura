@@ -100,7 +100,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
     def get_form_groups(self):
         return self.form_groups
     
-    def get_display_fields(self):
+    def get_fields_display(self):
         return self.display_fields
     
     class Meta:

@@ -1,4 +1,4 @@
-from admin.views import BaseAdminController
+from admin.admin import BaseAdminController
 from .models import User
 from .serializers import UserAdminSerializer
 

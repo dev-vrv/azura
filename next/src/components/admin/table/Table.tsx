@@ -53,8 +53,8 @@ export default function AppTable({fields, endPoint, title, selectable}: PropsTab
             </div>
             <div className="h-100 overflow-y-scroll pe-2">
                 <Table striped bordered hover size="sm">
-                    <TableHead selectable={selectable} fields={fields} />
-					<TableBody />
+                    {/* <TableHead selectable={selectable} fields={fields} /> */}
+					{/* <TableBody /> */}
                 </Table>
             </div>
         </div>

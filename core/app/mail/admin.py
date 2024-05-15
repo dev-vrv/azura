@@ -1,4 +1,4 @@
-from admin.views import BaseAdminController
+from admin.admin import BaseAdminController
 from .models import Mails
 from .serializers import MailsAdminSerializer
 
