@@ -7,7 +7,7 @@ export default function PageAdminApp() {
 			<Row className="h-100 pe-3 pb-3">
 				<Col xs={12} className="d-flex justify-content-center align-items-center">
 					<section className="section">
-						<AppTable />
+						Action
 					</section>
 				</Col>
 			</Row>

@@ -46,3 +46,8 @@ $glass-sm: map-get($glass, 'sm');
 $glass-md: map-get($glass, 'md');
 $glass-lg: map-get($glass, 'lg');
 $glass-xl: map-get($glass, 'xl');
+
+
+.bg-none {
+  background-color: $none !important;
+}

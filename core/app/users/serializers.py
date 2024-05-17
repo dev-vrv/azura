@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 class UserAdminSerializer(BaseAdminSerializer):
     display_fields = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'last_login']
+    display_link = 'email'
     class Meta:
         model = User
         fields = '__all__'

@@ -36,6 +36,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
     readonly_fields = ['id', 'created_at', 'updated_at']
     display_fields = ['id', 'created_at', 'updated_at']
     form_groups = []
+    display_link = 'id'
     
     
     def __init__(self, *args, **kwargs):

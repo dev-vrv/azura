@@ -21,7 +21,12 @@ export const Context = createContext<ContextType>({
 
 
 const ContextProvider = ({ children }: {children: React.ReactNode}) => {
-    const [context, setContext] = useState<IContext>({});
+    const [context, setContext] = useState<IContext>({
+        api: {
+            url: 'http://127.0.0.1:8000/admin/',
+            headers: {}
+        },
+    });
 
     return (
         <Context.Provider value={{ context, setContext }}>
