@@ -38,7 +38,7 @@ class BaseAdminController(viewsets.ViewSet):
     @action(detail=False, methods=['get'], url_path='retrieve')
     def get_objects(self, request):
         paginator = PageNumberPagination()
-        paginator.page_size = 20
+        paginator.page_size = 50
         context = paginator.paginate_queryset(self.model.objects.all(), request)
         serializer = self.serializer_class(context, many=True)
         return paginator.get_paginated_response(serializer.data)

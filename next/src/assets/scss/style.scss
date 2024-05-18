@@ -30,10 +30,14 @@ html[data-bs-theme="light"] > body {
 }
 ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 ::-webkit-scrollbar-track {
-    background-color: $glass-lg;
+    background-color: $glass-md;
     border-radius: 10px;
+}
+::-webkit-scrollbar-corner {
+    background-color: $glass-md;
 }
 
 .wrapper {
@@ -51,9 +55,12 @@ html[data-bs-theme="light"] > body {
 
 
 .btn-icon {
-    padding: 0 $p-sm;
+    padding: $p-xs;
     border: none;
     transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:active {
         outline: none;
         transform: scale(0.9);

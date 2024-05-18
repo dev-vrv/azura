@@ -17,3 +17,6 @@ class UserController(viewsets.ViewSet):
         context = paginator.paginate_queryset(request.user, request)
         return paginator.get_paginated_response({})
     
+
+
+

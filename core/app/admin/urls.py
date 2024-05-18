@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from mail.admin import MailsAdminController
 import re
+from users.models import User
 
 router = DefaultRouter()
 router.register(r'users', UserAdminController, basename='Users')

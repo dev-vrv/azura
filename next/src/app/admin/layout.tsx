@@ -18,7 +18,7 @@ export default function AdminLayout({
 					<ContextProvider>
 						<div className="d-flex w-100 h-100">
 							<Aside />
-							<div className="d-flex flex-column w-100 h-100">
+							<div className="d-flex flex-column w-100 vh-100">
 								<Header />
 								{children}
 							</div>

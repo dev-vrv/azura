@@ -14,7 +14,17 @@ import {
 	CiCircleInfo,
 	CiMail,
 	CiSettings,
+	CiUndo,
+	CiTrash,
+	CiShare2,
+	CiImport,
+	CiLink,
+	CiRedo,
+	CiCirclePlus,
+	CiSquareChevRight,
+	CiSquareChevLeft,
 } from "react-icons/ci";
+
 
 
 const ITheme = {
@@ -23,8 +33,8 @@ const ITheme = {
 };
 
 const IElse = {
-	at: CiAt
-
+	at: CiAt,
+	
 };
 
 const IUI = {
@@ -33,7 +43,16 @@ const IUI = {
 	login: CiLogin,
 	bell: CiBellOn,
 	info: CiCircleInfo,
-	settings: CiSettings
+	settings: CiSettings,
+	undo: CiUndo,
+	redo: CiRedo,
+	this: CiTrash,
+	share: CiShare2,
+	import: CiImport,
+	link: CiLink,
+	plus: CiCirclePlus,
+	left: CiSquareChevLeft,
+	right: CiSquareChevRight
 };
 
 const Apps = {
