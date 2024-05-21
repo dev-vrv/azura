@@ -92,11 +92,13 @@ const TBody = ({ fields, selectable, endPointTable, fieldLink, appName, reload, 
 	return (
 		<tbody>
 			{loading && (
-				<td className="text-center" colSpan={fields.length + 1}>
+				<tr>
+					<td className="text-center" colSpan={fields.length + 1}>
 					<p className="py-2">
 						<Spinner variant="primary" className="d-inline-flex bg-none" />
 					</p>
 				</td>
+				</tr>
 			)}
 			{error && (
 				<tr>
@@ -127,7 +129,7 @@ const TBody = ({ fields, selectable, endPointTable, fieldLink, appName, reload, 
 
 const TDItem = ({ item, fields, fieldLink, appName }: PropsTDItem) => {
 	return (
-		<>
+		<tr>
 			{fields.map((field, index) => {
 				return (
 					<td key={index}>
@@ -141,7 +143,7 @@ const TDItem = ({ item, fields, fieldLink, appName }: PropsTDItem) => {
 					</td>
 				);
 			})}
-		</>
+		</tr>
 	);
 };
 
@@ -160,80 +162,80 @@ export default function AppTable() {
 	}
 
 	// found
-	if (appName && Object.keys(context.apps).length > 0) {
-		const urlTable = context.api.url + context.apps[appName].get_objects.url;
-		const urlForm = context.api.url + context.apps[appName].get_form_object.url;
-		const fields = context.apps[appName].display_fields;
-		return (
-			<div className="w-100 h-100 d-flex flex-column gap-2">
-				<div className="d-flex justify-content-between align-items-center">
-					<h3 className="text-capitalize">{appName}</h3>
-					<div className="actions d-flex align-items-center">
-						<Button variant="icon" onClick={() => setReload(true)}>
-							<Icon name="redo" size="3" />
-						</Button>
-						<Button variant="icon">
-							<Icon name="plus" size="3" />
-						</Button>
-					</div>
-				</div>
-				<div className="table-wrapper pe-2">
-					<Table striped bordered hover size="sm">
-						<THead selectable fields={context.apps[appName].display_fields} />
-						<TBody
-							setItemsInfo={setItemsInfo}
-							reload={reload}
-							setReload={setReload}
-							appName={appName}
-							selectable
-							fields={fields}
-							fieldLink={context.apps[appName].display_link}
-							endPointTable={urlTable}
-						/>
-					</Table>
-				</div>
-				<div className="d-flex align-items-center justify-content-between">
-					<div className="">
-						{itemsInfo.count > 0 && (
-							<p className="text-muted">All: {itemsInfo.count}</p>
-						)}
-					</div>
-					<div className="d-flex align-items-center">
-						{currentPage && pagesCount ? (
-							<>
-								<p>Page: {currentPage}</p>
-								<Button variant="icon">
-									<Icon name="left" size="3" />
-								</Button>
-								<Button variant="icon">
-									<Icon name="right" size="3" />
-								</Button>
-								<p>pages: {pagesCount}</p>
-							</>
-						) : (
-							""
-						)}
-					</div>
-					<div className=""></div>
-				</div>
-			</div>
-		);
-	}
-	// loading
-	else if (!context.apps || Object.keys(context.apps).length === 0) {
-		return (
-			<div className="d-flex justify-content-center align-items-center w-100 h-100">
-				<Spinner variant="primary" />
-			</div>
-		);
-	}
-	// not found
-	else if (!appName && Object.keys(context.apps).length > 0) {
-		return (
-			<div className="d-flex justify-content-center align-items-center w-100 h-100">
-				<h4>404 | Not Found</h4>
-			</div>
-		);
-	}
+	// if (appName && Object.keys(context.apps).length > 0) {
+	// 	const urlTable = context.api.url + context.apps[appName].get_objects.url;
+	// 	const urlForm = context.api.url + context.apps[appName].get_form_object.url;
+	// 	const fields = context.apps[appName].display_fields;
+	// 	return (
+	// 		<div className="w-100 h-100 d-flex flex-column gap-2">
+	// 			<div className="d-flex justify-content-between align-items-center">
+	// 				<h3 className="text-capitalize">{appName}</h3>
+	// 				<div className="actions d-flex align-items-center">
+	// 					<Button variant="icon" onClick={() => setReload(true)}>
+	// 						<Icon name="redo" size="3" />
+	// 					</Button>
+	// 					<Button variant="icon">
+	// 						<Icon name="plus" size="3" />
+	// 					</Button>
+	// 				</div>
+	// 			</div>
+	// 			<div className="table-wrapper pe-2">
+	// 				<Table striped bordered hover size="sm">
+	// 					<THead selectable fields={context.apps[appName].display_fields} />
+	// 					<TBody
+	// 						setItemsInfo={setItemsInfo}
+	// 						reload={reload}
+	// 						setReload={setReload}
+	// 						appName={appName}
+	// 						selectable
+	// 						fields={fields}
+	// 						fieldLink={context.apps[appName].display_link}
+	// 						endPointTable={urlTable}
+	// 					/>
+	// 				</Table>
+	// 			</div>
+	// 			<div className="d-flex align-items-center justify-content-between">
+	// 				<div className="">
+	// 					{itemsInfo.count > 0 && (
+	// 						<p className="text-muted">All: {itemsInfo.count}</p>
+	// 					)}
+	// 				</div>
+	// 				<div className="d-flex align-items-center">
+	// 					{currentPage && pagesCount ? (
+	// 						<>
+	// 							<p>Page: {currentPage}</p>
+	// 							<Button variant="icon">
+	// 								<Icon name="left" size="3" />
+	// 							</Button>
+	// 							<Button variant="icon">
+	// 								<Icon name="right" size="3" />
+	// 							</Button>
+	// 							<p>pages: {pagesCount}</p>
+	// 						</>
+	// 					) : (
+	// 						""
+	// 					)}
+	// 				</div>
+	// 				<div className=""></div>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
+	// // loading
+	// else if (!context.apps || Object.keys(context.apps).length === 0) {
+	// 	return (
+	// 		<div className="d-flex justify-content-center align-items-center w-100 h-100">
+	// 			<Spinner variant="primary" />
+	// 		</div>
+	// 	);
+	// }
+	// // not found
+	// else if (!appName && Object.keys(context.apps).length > 0) {
+	// 	return (
+	// 		<div className="d-flex justify-content-center align-items-center w-100 h-100">
+	// 			<h4>404 | Not Found</h4>
+	// 		</div>
+	// 	);
+	// }
 
 }

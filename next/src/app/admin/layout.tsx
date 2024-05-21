@@ -11,8 +11,11 @@ export default function AdminLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const style = {
+		'color-scheme': 'dark',
+	  } as React.CSSProperties & { [key: string]: string };
 	return (
-		<html lang="en" data-bs-theme="dark">
+		<html lang="en" data-bs-theme="dark"  style={style}>
 			<body>
 				<ThemeProvider>
 					<ContextProvider>
