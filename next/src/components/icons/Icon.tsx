@@ -23,6 +23,7 @@ import {
 	CiCirclePlus,
 	CiSquareChevRight,
 	CiSquareChevLeft,
+	CiCircleAlert 
 } from "react-icons/ci";
 
 
@@ -52,7 +53,8 @@ const IUI = {
 	link: CiLink,
 	plus: CiCirclePlus,
 	left: CiSquareChevLeft,
-	right: CiSquareChevRight
+	right: CiSquareChevRight,
+	alert: CiCircleAlert 
 };
 
 const Apps = {
@@ -68,7 +70,7 @@ export const IBundle = {
 };
 
 type TVariant = "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark";
-type TSize = "6" | "5" | "4" | "3" | "2" | "1";
+type TSize = 6 | 5 | 4 | 3 | 2 | 1;
 
 export interface PropsIcon {
 	name: string;

@@ -41,7 +41,7 @@ export default function AsideNav() {
 		return (
 			<li className="aside__item">
 				<Link href={app_url} className={`aside__link ${active ? "active" : ""}`}>
-					<Icon name={icon} size="2" />
+					<Icon name={icon} size={2} />
 				</Link>
 			</li>
 		);
