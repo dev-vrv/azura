@@ -135,7 +135,7 @@ export default function AppTable({ appName, selectable }: PropsAppTable) {
 	return (
 		<div className="app-table">
 			<div className="d-flex justify-content-between align-items-center">
-				<h5 className="text-capitalize">{appName}</h5>
+				<h4 className="text-capitalize">{appName}</h4>
 				<div className="d-flex">
 					<Button variant="icon" onClick={() => setLoading(true)}>
 						<Icon name="redo" size={3} />
