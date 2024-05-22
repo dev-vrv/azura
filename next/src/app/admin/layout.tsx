@@ -18,35 +18,24 @@ export default function AdminLayout({
 	const [loading, setLoading] = useState(false);
 	const [apps, setApps] = useState({});
 	const [error, setError] = useState(false);
-	const { context, setContext } = useContext(Context);
-
 	const FetchAdmin = useCallback(async () => {
 		setLoading(true);
-		const response = await fetch("http://127.0.0.1:8000/admin/api-root/")
-			.then((response) => response.json())
-			.then((data) => {
-				setApps(data);
-				setContext((prev) => ({
-					...prev,
-					apps: data,
-				}));
-			})
-			.catch((error) => {
-				setError(true);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [setContext]);
+		try {
+			const res = await fetch(`http://127.0.0.1:8000/admin/api-root/`);
+			const data = await res.json();
+			setApps(data);
+		}
+		catch (error) {
+			setError(true);
+		}
+		finally {
+			setLoading(false);
+		}
+	}, []);
 
 	useEffect(() => {
 		FetchAdmin();
 	}, [FetchAdmin]);
-
-	useEffect(() => {
-		console.log(context);
-	}, [context]);
-
 
 	return (
 		<ThemeProvider>
@@ -60,10 +49,10 @@ export default function AdminLayout({
 							</div>
 						</div>
 					)}
-					{Object.keys(apps).length > 0 && (
+					{apps && Object.keys(apps).length > 0 && (
 						<Row className="h-100">
 							<Col xs={1}>
-								<Aside appsKeys={Object.keys(apps)} />
+								<Aside apps={apps} />
 							</Col>
 							<Col xs={11}>
 								<Header />

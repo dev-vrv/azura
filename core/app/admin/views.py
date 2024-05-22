@@ -1,8 +1,6 @@
-# views.py
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .api_router import urls
+from .admin_router import urls
 import re
 
 class APIRootView(APIView):
@@ -19,23 +17,26 @@ class APIRootRout:
         for url in urls:
             if not self.__is_app__(url):
                 continue
-            
+
             app_name = self.__get_app_name__(url)
             route_name = self.__get_route_name__(url).replace('-', '_')
             serializer_instance = self.__get_serializer__(url)
-            
+
             self.__routes__[app_name] = self.__routes__.get(app_name, {})
-            self.__set_app_params__(serializer_instance, self.__routes__[app_name])           
             self.__routes__[app_name][route_name] = {
-                'url': self.__get_endpoint__(url),
+                'action': self.__get_action_name__(url),
+                'method': self.__get_method__(url),
             }
+
+            if route_name == 'retrieve_form':
+                self.__set_app_params__(serializer_instance, self.__routes__[app_name])
+            
         return self.__routes__
 
     def __is_app__(self, url):
         if url.name == 'api-root':
             return False
-        else:
-            return True
+        return True
         
     def __get_serializer__(self, url):
         serializer_instance = None
@@ -50,6 +51,16 @@ class APIRootRout:
     def __get_route_name__(self, url):
         return '-'.join(url.name.split('-')[1:]) if '-' in url.name else url.name
 
+    def __get_action_name__(self, url):
+        if hasattr(url.callback, 'actions'):
+            return list(url.callback.actions.values())[0]
+        return None
+
+    def __get_method__(self, url):
+        if hasattr(url.callback, 'actions'):
+            return list(url.callback.actions.keys())[0]
+        return None
+
     def __set_app_params__(self, serializer_instance, app):
         if serializer_instance:
             if 'fields_display' not in app:
@@ -58,12 +69,3 @@ class APIRootRout:
                 app['fields_groups'] = serializer_instance.get_form_groups()
             if 'display_link' not in app:
                 app['display_link'] = serializer_instance.display_link
-                
-    def __get_endpoint__(self, url):
-        pattern = url.pattern.regex.pattern
-        clean_url = re.sub(r'\^|\$|\\', '', pattern)
-        clean_url = re.sub(r'\(\?P<\w+>[^)]+\)', '', clean_url)
-        clean_url = re.sub(r'\./', '/', clean_url)
-        clean_url = re.sub(r'//+', '/', clean_url)
-        clean_url = re.sub(r'\?+', '', clean_url)
-        return clean_url

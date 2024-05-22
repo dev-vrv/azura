@@ -11,14 +11,8 @@ class BaseAdminController(viewsets.ViewSet):
     model = None
     serializer_class = BaseAdminSerializer
 
-    @action(detail=False, methods=['get'], url_path='form')
-    def get_form(self, request):
-        serializer = self.serializer_class()
-        return Response(serializer.get_form_fields(), status=status.HTTP_200_OK)
-
-
-    @action(detail=True, methods=['get'], url_path='form')
-    def get_form_object(self, request, pk=None):
+    @action(detail=True, methods=['get'], url_path='retrieve_form')
+    def retrieve_form(self, request, pk=None):
         try:
             serializer = self.serializer_class(self.model.objects.get(pk=pk))
         except self.model.DoesNotExist:
@@ -27,16 +21,14 @@ class BaseAdminController(viewsets.ViewSet):
             return Response({'error': 'Anв error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.get_form_fields(), status=status.HTTP_200_OK)
 
-
-    @action(detail=True, methods=['get'], url_path='retrieve')
-    def get_object(self, request, pk=None):
+    @action(detail=True, methods=['get'], url_path='retrieve_object')
+    def retrieve_object(self, request, pk=None):
         obj = get_object_or_404(self.model, pk=pk)
         serializer = self.serializer_class(obj, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
         
-        
-    @action(detail=False, methods=['get'], url_path='retrieve')
-    def get_objects(self, request):
+    @action(detail=False, methods=['get'], url_path='retrieve_list')
+    def retrieve_list(self, request):
         paginator = PageNumberPagination()
         paginator.page_size = 50
         context = paginator.paginate_queryset(self.model.objects.all(), request)

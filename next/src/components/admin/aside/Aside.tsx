@@ -3,10 +3,9 @@
 import Icon from "@/components/icons/Icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useContext, useEffect } from "react";
+import { Context } from "@/context/context";
 import './Aside.scss';
-
-
-
 
 function AsideNav({appsKeys}: {appsKeys: string[]}) {
 	const pathname = usePathname();
@@ -40,13 +39,20 @@ function AsideNav({appsKeys}: {appsKeys: string[]}) {
 	);
 }
 
-export default function Aside({appsKeys}: {appsKeys: string[]}) {
+export default function Aside({apps}: {apps: { [key: string]: any }}) {
+
+	const { context, setContext } = useContext(Context);
+
+	useEffect(() => {
+		setContext((prev) => ({ ...prev, apps }));
+	}, [setContext, apps]);
+
     return (
 		<aside className="aside d-flex flex-column align-items-center justify-content-between h-100 py-3">
 			<h5 className="d-flex">
 				<Icon name="logo" size={1}/>
 			</h5>
-			<AsideNav appsKeys={appsKeys} />
+			<AsideNav appsKeys={Object.keys(apps)} />
 			<div className="aside__footer"></div>
 		</aside>
 	);

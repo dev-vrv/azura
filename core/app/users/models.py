@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import Group, Permission
 
 
@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
     
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     STATUS_CHOICES = (

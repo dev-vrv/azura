@@ -2,7 +2,7 @@
 
 from django.urls import path, include
 from .views import APIRootView
-from .api_router import router
+from .admin_router import router
 
 urlpatterns = [
     path('', include(router.urls)),

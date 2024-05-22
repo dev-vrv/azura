@@ -23,7 +23,9 @@ import {
 	CiCirclePlus,
 	CiSquareChevRight,
 	CiSquareChevLeft,
-	CiCircleAlert 
+	CiCircleAlert,
+	CiCircleCheck,
+	CiCircleRemove
 } from "react-icons/ci";
 
 
@@ -37,6 +39,7 @@ const IElse = {
 	at: CiAt,
 	
 };
+
 
 const IUI = {
 	filter: CiFilter,
@@ -54,7 +57,9 @@ const IUI = {
 	plus: CiCirclePlus,
 	left: CiSquareChevLeft,
 	right: CiSquareChevRight,
-	alert: CiCircleAlert 
+	alert: CiCircleAlert,
+	check: CiCircleCheck, 
+	checkNo: CiCircleRemove
 };
 
 const Apps = {

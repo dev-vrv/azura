@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 
 export interface IContext {
     [key: string]: {
@@ -20,15 +20,12 @@ export const Context = createContext<ContextType>({
 
 const ContextProvider = ({ children }: {children: React.ReactNode}) => {
     const [context, setContext] = useState<IContext>({
-        api: {
-            url: 'http://127.0.0.1:8000/admin/',
-            headers: {}
-        },
-    });
-
-    useEffect(() => {
-        console.log("Context updated:", context);
-    }, [context]);
+		api: {
+			url: "http://127.0.0.1:8000/admin/",
+			headers: {},
+		},
+		apps: {},
+	});
 
     return (
         <Context.Provider value={{ context, setContext }}>
