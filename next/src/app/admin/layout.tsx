@@ -2,14 +2,13 @@
 
 import "@/assets/scss/style.scss";
 import { useState, useEffect, useContext, useCallback } from "react";
-import { Spinner } from "react-bootstrap";
-import { usePathname } from "next/navigation";;
+import { Spinner } from "react-bootstrap";;
 import { Context } from "@/context/context";
-import { Container, Row, Col, Button, Alert } from "react-bootstrap";
-import Icon from "@/components/icons/Icon";
+import { Container, Row, Col } from "react-bootstrap";
 import Header from "@/components/admin/header/Header";
 import Aside from "@/components/admin/aside/Aside";
 import ThemeProvider from "@/context/theme";
+import ContextProvider from "@/context/context";
 
 export default function AdminLayout({
 	children,
@@ -19,7 +18,7 @@ export default function AdminLayout({
 	const [loading, setLoading] = useState(false);
 	const [apps, setApps] = useState({});
 	const [error, setError] = useState(false);
-	const { setContext } = useContext(Context);
+	const { context, setContext } = useContext(Context);
 
 	const FetchAdmin = useCallback(async () => {
 		setLoading(true);
@@ -27,6 +26,10 @@ export default function AdminLayout({
 			.then((response) => response.json())
 			.then((data) => {
 				setApps(data);
+				setContext((prev) => ({
+					...prev,
+					apps: data,
+				}));
 			})
 			.catch((error) => {
 				setError(true);
@@ -34,15 +37,20 @@ export default function AdminLayout({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, []);
+	}, [setContext]);
 
 	useEffect(() => {
 		FetchAdmin();
 	}, [FetchAdmin]);
 
+	useEffect(() => {
+		console.log(context);
+	}, [context]);
+
+
 	return (
-		<html lang="en" data-bs-theme="dark">
-			<body>
+		<ThemeProvider>
+			<ContextProvider>
 				<Container fluid className="h-100">
 					{loading && (
 						<div className="d-flex justify-content-center align-items-center w-100 h-100">
@@ -53,17 +61,13 @@ export default function AdminLayout({
 						</div>
 					)}
 					{Object.keys(apps).length > 0 && (
-						<Row>
+						<Row className="h-100">
 							<Col xs={1}>
-								<Aside apps={apps} />
+								<Aside appsKeys={Object.keys(apps)} />
 							</Col>
 							<Col xs={11}>
-								<Row>
-									<Col xs={12}>
-										<Header />
-									</Col>
-									<Col xs={12}>{children}</Col>
-								</Row>
+								<Header />
+								{children}
 							</Col>
 						</Row>
 					)}
@@ -75,7 +79,8 @@ export default function AdminLayout({
 						</Row>
 					)}
 				</Container>
-			</body>
-		</html>
+			</ContextProvider>
+		</ThemeProvider>
 	);
 }
+

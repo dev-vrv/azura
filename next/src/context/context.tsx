@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export interface IContext {
     [key: string]: {
@@ -13,12 +13,10 @@ interface ContextType {
     setContext: React.Dispatch<React.SetStateAction<IContext>>;
 }
 
-
 export const Context = createContext<ContextType>({
     context: {},
     setContext: () => {},
 });
-
 
 const ContextProvider = ({ children }: {children: React.ReactNode}) => {
     const [context, setContext] = useState<IContext>({
@@ -27,6 +25,10 @@ const ContextProvider = ({ children }: {children: React.ReactNode}) => {
             headers: {}
         },
     });
+
+    useEffect(() => {
+        console.log("Context updated:", context);
+    }, [context]);
 
     return (
         <Context.Provider value={{ context, setContext }}>
