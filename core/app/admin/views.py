@@ -65,7 +65,7 @@ class APIRootRout:
         if serializer_instance:
             if 'fields_display' not in app:
                 app['display_fields'] = serializer_instance.get_fields_display()
-            if 'fields_groups' not in app:
-                app['fields_groups'] = serializer_instance.get_form_groups()
+            if 'form_groups' not in app:
+                app['form_groups'] = serializer_instance.get_form_groups()
             if 'display_link' not in app:
                 app['display_link'] = serializer_instance.display_link

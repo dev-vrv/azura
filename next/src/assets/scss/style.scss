@@ -2,6 +2,7 @@
 @import './animations';
 @import './null';
 @import './ui/section';
+@import './ui/form-control';
 @import '~/node_modules/bootstrap/scss/bootstrap';
 
 html,
@@ -50,7 +51,8 @@ html[data-bs-theme="light"] > body {
 }
 
 .main {
-    height: calc(100% - #{$header-height});
+    height: calc(100% - #{$header-height}) !important;
+    max-height: calc(100% - #{$header-height}) !important;
     padding: $p-md;
     padding-top: 0;
     padding-left: 0;
@@ -83,6 +85,8 @@ html[data-bs-theme="light"] > body {
         color: $primary;
     }
 }
+
+
 .i {
     display: flex;
     align-items: center;

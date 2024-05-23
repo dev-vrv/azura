@@ -18,18 +18,6 @@ FIELDS_TYPES = {
         ],
 }
 
-FIELDS_SYSTEM = [
-    'id',
-    'created_at',
-    'updated_at',
-    'is_active',
-    'is_staff',
-    'is_superuser',
-    'last_login',
-    'groups',
-    'user_permissions', 
-    'last_session',   
-]
 
 class BaseAdminSerializer(serializers.ModelSerializer):
     exclude_list = []
@@ -37,7 +25,6 @@ class BaseAdminSerializer(serializers.ModelSerializer):
     display_fields = ['id', 'created_at', 'updated_at']
     form_groups = []
     display_link = 'id'
-    
     
     def __init__(self, *args, **kwargs):
         super(BaseAdminSerializer, self).__init__(*args, **kwargs)
@@ -72,7 +59,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
     def get_form_fields(self):
         fields = []
         for field in self.Meta.model._meta.get_fields():
-            if field.name in FIELDS_SYSTEM or field.name in self.exclude_list:
+            if field.name in field.name in self.exclude_list:
                 continue
             if not isinstance(field, models.fields.reverse_related.ManyToOneRel):
                 value = None
@@ -95,6 +82,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                     'help_text': field.help_text,
                     'value': value,
                     'options': field.choices if hasattr(field, 'choices') else [],
+                    'readonly': field.name in self.readonly_fields,
                 })
         return fields
     

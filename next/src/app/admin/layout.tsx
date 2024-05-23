@@ -51,10 +51,10 @@ export default function AdminLayout({
 					)}
 					{apps && Object.keys(apps).length > 0 && (
 						<Row className="h-100">
-							<Col xs={1}>
+							<Col xs={1} className="h-100">
 								<Aside apps={apps} />
 							</Col>
-							<Col xs={11}>
+							<Col xs={11} className="h-100">
 								<Header />
 								{children}
 							</Col>

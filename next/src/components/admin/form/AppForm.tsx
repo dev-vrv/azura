@@ -2,9 +2,9 @@
 
 import { Context } from "@/context/context";
 import { Spinner } from "react-bootstrap";
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Button, FormControl } from "react-bootstrap";
+import { Button, FormControl, Row, Col, Container } from "react-bootstrap";
 import Link from "next/link";
 import Icon from "@/components/icons/Icon";
 import Form from "react-bootstrap/Form";
@@ -26,13 +26,50 @@ interface IField {
 	help_text: string;
 	value: any;
 	options: any;
+	readonly: boolean;
 }
+
+const FieldView = ({ field }: { field: IField }) => {
+	const inputRef = useRef(null);
+	const handleChange = (e: any) => {
+		e.target.focus();
+	};
+
+	const props = {
+		id: field.name,
+		name: field.name,
+		label: field.label,
+		readOnly: field.readonly,
+		disabled: field.readonly,
+	};
+
+	if (field.type === "boolean") {
+		return (
+			<Form.Check type="switch" ref={inputRef} onChange={handleChange} defaultChecked={field.value} {...props} />
+		);
+	} else if (field.type === "select") {
+	} else {
+		return (
+			<>
+				<Form.Label className="text-capitalize text-muted" htmlFor={field.name}>{field.label}</Form.Label>
+				<Form.Control
+					type={field.type}
+					ref={inputRef}
+					onChange={handleChange}
+					defaultValue={field.value}
+					{...props}
+				/>
+			</>
+		);
+	}
+};
 
 export default function AppForm({ appName, id }: PropsAppForm) {
 	const { context } = useContext(Context);
+	const [inputsValues, setInputsValues] = useState<{ [key: string]: any }>({});
 	const [data, setData] = useState<IResponse | null>(null);
-	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 	const router = useRouter();
 
 	const FetchData = useCallback(async () => {
@@ -51,22 +88,31 @@ export default function AppForm({ appName, id }: PropsAppForm) {
 	}, [appName, context, id]);
 
 	useEffect(() => {
-		if (loading && context.apps && Object.keys(context.apps).length > 0) {
-			FetchData();
-		}
+		loading && FetchData();
 	}, [context, FetchData, loading]);
 
-	const FieldView = ({ field }: { field: IField }) => {
-		if (field.type === "boolean") {
-			return (
-				<Form.Check id={field.name} name={field.name} type="switch" label={field.label} checked={field.value} />
-			);
-		} else if (field.type === "text") {
-			return <FormControl type="text" placeholder={field.label} value={field.value} />;
+	useEffect(() => {
+		if (data) {
+			const inputs: { [key: string]: any } = {};
+			data.forEach((field: IField) => {
+				inputs[field.name] = field.value || undefined;
+			});
+			setInputsValues(inputs);
 		}
-		return <div className=""></div>;
-	};
+	}, [data]);
 
+	const makeGroups = (): { [key: string]: any }[] => {
+		const formGroups = context.apps[appName]["form_groups"];
+		const groups: any = {};
+		if (formGroups && data) {
+			formGroups.forEach((group: any) => {
+				groups[group.name] = data.filter((field: IField) => group.fields.includes(field.name));
+			});
+		}
+		return groups;
+	};
+	const groups = makeGroups();
+	console.log(context.apps[appName]);
 	return (
 		<div className="app-form h-100 d-flex justify-content-center align-items-center">
 			{data && (
@@ -79,15 +125,32 @@ export default function AppForm({ appName, id }: PropsAppForm) {
 							<h4 className="text-capitalize">{appName}</h4>
 						</div>
 					</div>
-					<div className="h-100 d-flex flex-column gap-2">
-						{data.map((field: IField, index: number) => {
-							return <FieldView field={field} key={index} />;
-						})}
-					</div>
-					<div className="d-flex gap-2">
-						<Button variant="secondary" type="submit">
-							Cancel
-						</Button>
+					<Container fluid className="h-100 d-flex flex-wrap gap-2 overflow-y-scroll">
+						<Row className="w-100 g-2">
+							{Object.keys(groups).map((groupName: any, index: number) => (
+								<Col
+									xs={6}
+									className="d-flex flex-column justify-content-start h-auto gap-2"
+									key={index}
+								>
+									<h5 className="text-capitalize">{groupName.replace('_', ' ')}</h5>
+									{context.apps[appName]['form_groups'].map((group: any) => {
+										if (group.name === groupName) {
+											return (
+												<p key={group.name} className="text-capitalize text-muted">{group.description}</p>
+											);
+										}
+									})}
+									{groups[groupName].map((field: IField, index: number) => (
+										<div className="w-100 py-1 px-1" key={index}>
+											<FieldView field={field} />
+										</div>
+									))}
+								</Col>
+							))}
+						</Row>
+					</Container>
+					<div className="d-flex justify-content-end gap-2">
 						<Button variant="primary" type="submit">
 							Save
 						</Button>
