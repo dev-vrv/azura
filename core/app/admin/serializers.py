@@ -38,11 +38,11 @@ class BaseAdminSerializer(serializers.ModelSerializer):
     def delete(self, instance):
         return instance.delete()
     
-    def get_field_type(self, field):
+    def __get_field_type__(self, field):
         field_type = field.__class__.__name__
         field_type_display = None
-        
         is_choice = hasattr(field, 'choices') and bool(field.choices)
+
         if is_choice:
             field_type_display = 'select'
         else:
@@ -53,8 +53,13 @@ class BaseAdminSerializer(serializers.ModelSerializer):
 
         if not field_type_display:
             field_type_display = 'text'
-            
+        
         return field_type_display
+    
+    def __set_options__(self, field):
+        if hasattr(field, 'choices') and bool(field.choices):
+            pass
+       
     
     def get_form_fields(self):
         fields = []
@@ -74,14 +79,18 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                     else:
                         value = getattr(self.instance, field.name)
                 
+                options = []
+                if hasattr(field, 'choices') and field.choices:
+                    options = [{'value': choice[0], 'label': choice[1]} for choice in field.choices]
+
                 fields.append({
                     'name': field.name,
-                    'type': self.get_field_type(field),
+                    'type': self.__get_field_type__(field),
                     'required': not all([field.null, field.blank]),
                     'label': field.verbose_name,
                     'help_text': field.help_text,
                     'value': value,
-                    'options': field.choices if hasattr(field, 'choices') else [],
+                    'options': options,
                     'readonly': field.name in self.readonly_fields,
                 })
         return fields

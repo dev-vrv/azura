@@ -2,7 +2,7 @@
 @import './animations';
 @import './null';
 @import './ui/section';
-@import './ui/form-control';
+@import './ui/_ui';
 @import '~/node_modules/bootstrap/scss/bootstrap';
 
 html,
@@ -12,7 +12,6 @@ body {
     overflow: hidden;
 
 }
-
 
 [data-overlay-container] {
     height: 100%;
@@ -49,7 +48,6 @@ html[data-bs-theme="light"] > body {
     overflow-y: scroll;
  
 }
-
 .main {
     height: calc(100% - #{$header-height}) !important;
     max-height: calc(100% - #{$header-height}) !important;
@@ -57,36 +55,9 @@ html[data-bs-theme="light"] > body {
     padding-top: 0;
     padding-left: 0;
 }
-
-.row {
-    padding: 0 !important;
-}
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
-    padding: 0 !important;
-}
-
 .h-fit {
     height: fit-content !important;
 }
-
-
-.btn-icon {
-    padding: $p-xs;
-    border: none;
-    transition: color 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &:active {
-        outline: none;
-        transform: scale(0.9);
-    }
-    &:hover {
-        color: $primary;
-    }
-}
-
-
 .i {
     display: flex;
     align-items: center;
@@ -94,7 +65,4 @@ html[data-bs-theme="light"] > body {
 }
 
 
-p, h1, h2, h3, h4, h5, h6, ul, ol {
-    margin: 0;
-}
 

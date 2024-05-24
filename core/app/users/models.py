@@ -52,7 +52,6 @@ class User(AbstractUser):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    last_session = models.DateTimeField(blank=True, null=True)
     
     email = models.EmailField(unique=True, verbose_name='Email')
     phone = models.CharField(max_length=20, null=True, blank=True)

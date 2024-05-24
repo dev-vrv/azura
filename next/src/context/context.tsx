@@ -3,9 +3,12 @@
 import { createContext, useState } from 'react';
 
 export interface IContext {
-    [key: string]: {
-        [key: string]: any
-    }
+    api?: {
+        url: string;
+        headers: { [key: string]: string };
+        endPoints: { [key: string]: any };
+    };
+    apps?: { [key: string]: any };
 }
 
 interface ContextType {
@@ -23,6 +26,7 @@ const ContextProvider = ({ children }: {children: React.ReactNode}) => {
 		api: {
 			url: "http://127.0.0.1:8000/admin/",
 			headers: {},
+            endPoints: {}
 		},
 		apps: {},
 	});

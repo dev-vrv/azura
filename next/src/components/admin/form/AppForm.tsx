@@ -2,72 +2,43 @@
 
 import { Context } from "@/context/context";
 import { Spinner } from "react-bootstrap";
-import { useState, useEffect, useContext, useCallback, useRef } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { Button, FormControl, Row, Col, Container } from "react-bootstrap";
-import Link from "next/link";
+import { useState, useEffect, useContext, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { Button, Row, Col, Container } from "react-bootstrap";
 import Icon from "@/components/icons/Icon";
 import Form from "react-bootstrap/Form";
+import FieldView, { IField } from "./AppField";
+
+type TypeEndpoint = { method: string; url: string };
 
 interface PropsAppForm {
 	appName: string;
 	id: string;
+	endpoint: TypeEndpoint;
 }
 
-interface IResponse {
-	[key: string]: any;
-}
+const FormSubmit = (e: React.FormEvent<HTMLFormElement>, endpoint: TypeEndpoint) => {
+	e.preventDefault();
 
-interface IField {
-	name: string;
-	type: string;
-	required: boolean;
-	label: string;
-	help_text: string;
-	value: any;
-	options: any;
-	readonly: boolean;
-}
+	const form = e.currentTarget;
+	const formData = new FormData(form);
 
-const FieldView = ({ field }: { field: IField }) => {
-	const inputRef = useRef(null);
-	const handleChange = (e: any) => {
-		e.target.focus();
-	};
-
-	const props = {
-		id: field.name,
-		name: field.name,
-		label: field.label,
-		readOnly: field.readonly,
-		disabled: field.readonly,
-	};
-
-	if (field.type === "boolean") {
-		return (
-			<Form.Check type="switch" ref={inputRef} onChange={handleChange} defaultChecked={field.value} {...props} />
-		);
-	} else if (field.type === "select") {
-	} else {
-		return (
-			<>
-				<Form.Label className="text-capitalize text-muted" htmlFor={field.name}>{field.label}</Form.Label>
-				<Form.Control
-					type={field.type}
-					ref={inputRef}
-					onChange={handleChange}
-					defaultValue={field.value}
-					{...props}
-				/>
-			</>
-		);
-	}
+	const data: { [key: string]: any } = {};
+	formData.forEach((value, key) => {
+		if (value === "on") {
+			data[key] = true;
+		} else if (value === "off") {
+			data[key] = false;
+		} else {
+			data[key] = value;
+		}
+	});
 };
 
-export default function AppForm({ appName, id }: PropsAppForm) {
+const AppForm = ({ appName, id }: PropsAppForm) => {
 	const { context } = useContext(Context);
 	const [inputsValues, setInputsValues] = useState<{ [key: string]: any }>({});
-	const [data, setData] = useState<IResponse | null>(null);
+	const [data, setData] = useState<{ [key: string]: any } | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const router = useRouter();
@@ -106,17 +77,28 @@ export default function AppForm({ appName, id }: PropsAppForm) {
 		const groups: any = {};
 		if (formGroups && data) {
 			formGroups.forEach((group: any) => {
-				groups[group.name] = data.filter((field: IField) => group.fields.includes(field.name));
+				group.fields.forEach((field: any) => {
+					if (!groups[group.name]) {
+						groups[group.name] = [];
+					}
+					data.forEach((dataField: IField) => {
+						if (field === dataField.name) {
+							groups[group.name].push(dataField);
+						}
+					});
+				});
 			});
 		}
 		return groups;
 	};
 	const groups = makeGroups();
-	console.log(context.apps[appName]);
 	return (
 		<div className="app-form h-100 d-flex justify-content-center align-items-center">
 			{data && (
-				<Form className="w-100 h-100 d-flex flex-column justify-content-between gap-2">
+				<Form
+					className="w-100 h-100 d-flex flex-column justify-content-between gap-2"
+					onSubmit={(e: any) => FormSubmit(e)}
+				>
 					<div className="d-flex justify-content-between">
 						<div className="d-flex align-items-center">
 							<Button variant="icon" onClick={() => router.push(`/admin/${appName}`)}>
@@ -133,11 +115,13 @@ export default function AppForm({ appName, id }: PropsAppForm) {
 									className="d-flex flex-column justify-content-start h-auto gap-2"
 									key={index}
 								>
-									<h5 className="text-capitalize">{groupName.replace('_', ' ')}</h5>
-									{context.apps[appName]['form_groups'].map((group: any) => {
+									<h5 className="text-capitalize">{groupName.replace("_", " ")}</h5>
+									{context.apps[appName]["form_groups"].map((group: any) => {
 										if (group.name === groupName) {
 											return (
-												<p key={group.name} className="text-capitalize text-muted">{group.description}</p>
+												<p key={group.name} className="text-capitalize text-muted">
+													{group.description}
+												</p>
 											);
 										}
 									})}
@@ -161,4 +145,6 @@ export default function AppForm({ appName, id }: PropsAppForm) {
 			{error && <div>Error</div>}
 		</div>
 	);
-}
+};
+
+export default AppForm;

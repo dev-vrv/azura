@@ -1,0 +1,28 @@
+label {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.btn-icon {
+    padding: $p-xs;
+    border: none;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:active {
+        outline: none;
+        transform: scale(0.9);
+    }
+    &:hover {
+        color: $primary;
+    }
+}

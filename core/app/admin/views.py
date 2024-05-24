@@ -30,7 +30,7 @@ class APIRootRout:
 
             if route_name == 'retrieve_form':
                 self.__set_app_params__(serializer_instance, self.__routes__[app_name])
-            
+                
         return self.__routes__
 
     def __is_app__(self, url):

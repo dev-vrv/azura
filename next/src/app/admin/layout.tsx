@@ -1,14 +1,13 @@
 "use client";
 
 import "@/assets/scss/style.scss";
-import { useState, useEffect, useContext, useCallback } from "react";
-import { Spinner } from "react-bootstrap";;
-import { Context } from "@/context/context";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { Spinner } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "@/components/admin/header/Header";
 import Aside from "@/components/admin/aside/Aside";
 import ThemeProvider from "@/context/theme";
-import ContextProvider from "@/context/context";
+import ContextProvider, { Context } from "@/context/context";
 
 export default function AdminLayout({
 	children,
@@ -16,14 +15,15 @@ export default function AdminLayout({
 	children: React.ReactNode;
 }>) {
 	const [loading, setLoading] = useState(false);
-	const [apps, setApps] = useState({});
+	const [endpoints, setEndpoints] = useState({});
 	const [error, setError] = useState(false);
+
 	const FetchAdmin = useCallback(async () => {
 		setLoading(true);
 		try {
 			const res = await fetch(`http://127.0.0.1:8000/admin/api-root/`);
 			const data = await res.json();
-			setApps(data);
+			setEndpoints(data);
 		}
 		catch (error) {
 			setError(true);
@@ -36,7 +36,7 @@ export default function AdminLayout({
 	useEffect(() => {
 		FetchAdmin();
 	}, [FetchAdmin]);
-
+	
 	return (
 		<ThemeProvider>
 			<ContextProvider>
@@ -49,10 +49,10 @@ export default function AdminLayout({
 							</div>
 						</div>
 					)}
-					{apps && Object.keys(apps).length > 0 && (
+					{endpoints && Object.keys(endpoints).length > 0 && (
 						<Row className="h-100">
 							<Col xs={1} className="h-100">
-								<Aside apps={apps} />
+								<Aside endpoints={endpoints} />
 							</Col>
 							<Col xs={11} className="h-100">
 								<Header />
