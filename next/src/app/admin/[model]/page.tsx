@@ -25,7 +25,6 @@ export default function PageModelList() {
 	}, [appName, context, setAppExists]);
 
 	const Content = () => {
-
 			if (appExists === null) {
 				return (
 					<div className="h-100 w-100 d-flex justify-content-center align-items-center">

@@ -16,7 +16,10 @@ const useAdminApi = (appName: string, action: TypeApiActions): IEndPoint => {
     
     useEffect(() => {
         if (context.apps && context.apps[appName]) {
-            
+            setEndPoint({
+                method: '',
+                url: ''
+            } as IEndPoint);
         }
     }, [context, appName, action]);
 

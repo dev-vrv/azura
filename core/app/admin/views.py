@@ -5,33 +5,54 @@ import re
 
 class APIRootView(APIView):
     def get(self, request, *args, **kwargs):
-        routes = APIRootRout().make_api_root(urls)
-        return Response(routes)
+        info = APIRootRout().create_api_info(urls)
+        return Response(info)
 
 class APIRootRout:
     def __init__(self) -> None:
         pass
     
-    def make_api_root(self, urls):
-        self.__routes__ = {}
-        for url in urls:
-            if not self.__is_app__(url):
-                continue
+    def create_api_info(self, urls):
+        self.api_info = {
+            'endpoints': self.__get_endpoints__(urls),
 
+        }
+        
+
+
+            # app_name = self.__get_app_name__(url)
+            # route_name = self.__get_route_name__(url).replace('-', '_')
+            # serializer_instance = self.__get_serializer__(url)
+
+            # self.__routes__[app_name] = self.__routes__.get(app_name, {})
+            # self.__routes__[app_name][route_name] = {
+            #     'action': self.__get_action_name__(url),
+            #     'method': self.__get_method__(url),
+            # }
+
+            # if route_name == 'retrieve_form':
+            #     self.__set_app_params__(serializer_instance, self.__routes__[app_name])
+                
+        return self.api_info
+
+    def __get_endpoints__(self, urls):
+        endpoints = {}
+        for url in urls:
             app_name = self.__get_app_name__(url)
             route_name = self.__get_route_name__(url).replace('-', '_')
-            serializer_instance = self.__get_serializer__(url)
-
-            self.__routes__[app_name] = self.__routes__.get(app_name, {})
-            self.__routes__[app_name][route_name] = {
-                'action': self.__get_action_name__(url),
-                'method': self.__get_method__(url),
-            }
-
-            if route_name == 'retrieve_form':
-                self.__set_app_params__(serializer_instance, self.__routes__[app_name])
-                
-        return self.__routes__
+            method = self.__get_method__(url)
+            action = self.__get_action_name__(url)
+            
+            if self.__is_app__(url):
+                if app_name not in endpoints:
+                    endpoints[app_name] = {}
+                endpoints[app_name][route_name] = {
+                    'action': action,
+                    'method': method,
+                }
+            
+            
+        return endpoints
 
     def __is_app__(self, url):
         if url.name == 'api-root':

@@ -6,7 +6,7 @@ export interface IContext {
     api?: {
         url: string;
         headers: { [key: string]: string };
-        endPoints: { [key: string]: any };
+        endpoints: { [key: string]: any };
     };
     apps?: { [key: string]: any };
 }
@@ -26,11 +26,10 @@ const ContextProvider = ({ children }: {children: React.ReactNode}) => {
 		api: {
 			url: "http://127.0.0.1:8000/admin/",
 			headers: {},
-            endPoints: {}
+            endpoints: {}
 		},
 		apps: {},
 	});
-
     return (
         <Context.Provider value={{ context, setContext }}>
             {children}

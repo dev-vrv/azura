@@ -23,6 +23,7 @@ export default function AdminLayout({
 		try {
 			const res = await fetch(`http://127.0.0.1:8000/admin/api-root/`);
 			const data = await res.json();
+			console.log(data);
 			setEndpoints(data);
 		}
 		catch (error) {
