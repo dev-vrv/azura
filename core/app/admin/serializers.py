@@ -21,10 +21,10 @@ FIELDS_TYPES = {
 
 class BaseAdminSerializer(serializers.ModelSerializer):
     exclude_list = []
-    readonly_fields = ['id', 'created_at', 'updated_at']
-    display_fields = ['id', 'created_at', 'updated_at']
     form_groups = []
-    display_link = 'id'
+    readonly_fields = ['id', 'created_at', 'updated_at']
+    fields_display = ['id', 'created_at', 'updated_at']
+    fields_link = ['id']
     
     def __init__(self, *args, **kwargs):
         super(BaseAdminSerializer, self).__init__(*args, **kwargs)
@@ -99,7 +99,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
         return self.form_groups
     
     def get_fields_display(self):
-        return self.display_fields
+        return self.fields_display
     
     class Meta:
         abstract = True

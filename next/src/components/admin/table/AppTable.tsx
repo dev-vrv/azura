@@ -6,7 +6,7 @@ import { Spinner } from "react-bootstrap";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { Button, Form, FormControl, Table } from "react-bootstrap";
-
+import Link from "next/link";
 import Icon from "@/components/icons/Icon";
 
 interface IRestPaginationList {
@@ -21,7 +21,7 @@ export interface ITableEndpoint {
 	url: string;
 	method: string;
 	fields_display: string[];
-	field_links: string[];
+	fields_link: string[];
 }
 
 export interface ITable {
@@ -63,7 +63,6 @@ export default function AppTable({ appName, endPoint }: ITable) {
 	}
 
 	const TBody = () => {
-
 		const TR = ({row}: {row: {[key:string]: string | number | boolean}}) => {
 			return (
 				<tr>
@@ -76,8 +75,8 @@ export default function AppTable({ appName, endPoint }: ITable) {
 								return (
 									<td key={index}>
 										<Icon 
-											name={!row[field] ? 'check' : 'notCheck'}
-											variant={!row[field] ? 'success' : 'danger'}
+											name={row[field] ? 'check' : 'notCheck'}
+											variant={row[field] ? 'success' : 'danger'}
 											size={5}
 										/>
 									</td>
@@ -86,7 +85,9 @@ export default function AppTable({ appName, endPoint }: ITable) {
 							else {
 								return (
 									<td key={index}>
-										{row[field]}
+										{endPoint.fields_link.includes(field) ? (
+											<Link href={`/admin/${appName}/retrieve/${row['id']}/`}>{row[field]}</Link>
+										) : row[field]}
 									</td>
 								)
 							}

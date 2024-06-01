@@ -117,7 +117,7 @@ class Endpoints:
             if 'fields_display' not in endpoint:
                 endpoint['fields_display'] = serializer.get_fields_display()
             if 'display_link' not in endpoint:
-                endpoint['field_link'] = serializer.display_link
+                endpoint['fields_link'] = serializer.fields_link
         elif action == APPS_ACTIONS['change_form'] or action == APPS_ACTIONS['creation_form']:
             if 'form_groups' not in endpoint:
                 endpoint['form_groups'] = serializer.get_form_groups()

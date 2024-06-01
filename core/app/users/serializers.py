@@ -3,8 +3,8 @@ from .models import User
 from rest_framework import serializers
 
 class UserAdminSerializer(BaseAdminSerializer):
-    display_fields = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'last_login']
-    display_link = 'email'
+    fields_display = ['id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'last_login']
+    fields_link = ['id', 'email']
     readonly_fields = ['id', 'last_login', 'created_at', 'updated_at', 'password', 'email']
     exclude_list = ['password']
     form_groups = (
