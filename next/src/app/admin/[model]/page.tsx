@@ -16,10 +16,10 @@ export default function PageModelList() {
 	
 
 	useEffect(() => {
-		if (context.apps && Object.keys(context.apps).length > 0 && context.apps[appName]) {
+		if (context.endpoints && Object.keys(context.endpoints).length > 0 && context.endpoints[appName]) {
 			setAppExists(true)
 		}
-		else if (context.apps && Object.keys(context.apps).length > 0 && !context.apps[appName]) {
+		else if (context.endpoints && Object.keys(context.endpoints).length > 0 && !context.endpoints[appName]) {
 			setAppExists(false)
 		}
 	}, [appName, context, setAppExists]);

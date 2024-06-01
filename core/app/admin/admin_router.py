@@ -8,4 +8,4 @@ router = DefaultRouter()
 router.register(r'users', UserAdminController, basename='Users')
 router.register(r'mails', MailsAdminController, basename='Mails')
 
-urls = router.urls
+routes = router.urls

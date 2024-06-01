@@ -17,7 +17,7 @@ interface PropsAppTable {
 	selectable?: boolean;
 }
 
-interface IResponse {
+interface IRestPaginationList {
 	count: number;
 	next: string;
 	previous: string;
@@ -26,35 +26,38 @@ interface IResponse {
 
 export default function AppTable({ appName, selectable }: PropsAppTable) {
 	const { context } = useContext(Context);
-	const [data, setData] = useState<IResponse | null>(null);
+
+	const [data, setData] = useState<IRestPaginationList | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	
+
+	const [displayFields, setDisplayFields] = useState<string[]>([]);
 
 	const FetchData = useCallback(async () => {
 		setError(false);
-		const action = context.apps[appName]['retrieve_list']['action'];
-		try {
-			const url = `${context.api.url}${appName}/${action}/`;
-			const res = await fetch(url);
-			const data = await res.json();
-			setData(data);
-		} catch (error) {
-			setError(true);
-		} finally {
-			setLoading(false);
+		if (context.endpoints) {
+			const action = context.endpoints[appName]['items'];
+			try {
+				const url = `${context.api?.url}${appName}/${action}/`;
+				const res = await fetch(url);
+				console.log(res);
+				const data = await res.json();
+				setData(data);
+			} catch (error) {
+				setError(true);
+			} finally {
+				setLoading(false);
+			}
 		}
 	}, [appName, context]);
 
 	useEffect(() => {
-		if (loading && context.apps && Object.keys(context.apps).length > 0) {
-			FetchData();
+		if (loading) {
+			// FetchData();
 		}
 	}, [context, FetchData, loading]);
 
-	const displayFields: string[] = context.apps[appName].display_fields;
-	const displayLink: string = context.apps[appName].display_link;
-	
+
 	const THead = () => {
 		return (
 			<thead>
@@ -64,74 +67,24 @@ export default function AppTable({ appName, selectable }: PropsAppTable) {
 						<Form.Check />
 					</th>
 				)}
-				{displayFields.map((field, index) => (
+				{/* {displayFields.map((field, index) => (
 					<th className="text-capitalize" key={index}>
 						<span>{field.replace('_', ' ')}</span>
 					</th>
-				))}
+				))} */}
 				</tr>
 			</thead>
 		);
 	};
 
 	const TBody = () => {
-		const DisplayValue = ({value}:{value: string | boolean}) => {
-			if (typeof value === 'boolean') {
-				return <Icon name={`${value === true? 'check' : 'checkNo'}`} variant={`${value === true? 'success' : 'danger'}`} />;
-			}
-			else {
-				return value || '-';
-			}
-		}
-
 		return (
 			<tbody>
-				{data && data.results.length > 0 && !loading && !error && data.results.map((item, index) => (
-					<tr key={index}>
-						{selectable && (
-							<td>
-								<Form.Check />
-							</td>
-						)}
-						{displayFields.map((field, index) => (
-							<td key={index}>
-								{displayLink === field ? (
-									<Link href={`/admin/${appName}/${item.id}`}>
-										<DisplayValue value={item[field]} />
-									</Link>
-								) : <DisplayValue value={item[field]} />}
-							</td>
-						))}
-					</tr>
-				))}
-				{data && data.results.length === 0 && !loading && !error && (
-					<tr>
-						<td colSpan={100} className="text-center">
-							<p>No data available</p>
-						</td>
-					</tr>
-				)}
-				{loading && (
-					<tr>
-						<td colSpan={100} className="text-center">
-							<Spinner animation="grow" />
-						</td>
-					</tr>
-				)}
-				{error && (
-					<tr>
-						<td colSpan={100} className="text-center">
-							<p className="d-inline-flex align-items-center gap-1">
-								<Icon name="alert" variant="danger" size={5} />
-								<span>Error loading data</span>
-							</p>
-						</td>
-					</tr>
-				)}
+
 			</tbody>
 		);
-	};
- 
+	}
+
 	return (
 		<div className="app-table">
 			<div className="d-flex justify-content-between align-items-center">
