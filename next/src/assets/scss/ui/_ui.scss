@@ -13,13 +13,13 @@ input[type="checkbox"] {
 
 .btn-icon {
     padding: $p-xs;
-    border: none;
+    border: none !important;
+    outline: none !important;
     transition: color 0.2s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
     &:active {
-        outline: none;
         transform: scale(0.9);
     }
     &:hover {

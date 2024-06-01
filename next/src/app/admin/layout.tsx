@@ -64,7 +64,7 @@ export default function AdminLayout({
 				</Col>
 				<Col xs={11} className="h-100">
 					<Header />
-					{/* {children} */}
+					{children}
 				</Col>
 			</Row>
 		);

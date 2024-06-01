@@ -59,7 +59,7 @@ const IUI = {
 	right: CiSquareChevRight,
 	alert: CiCircleAlert,
 	check: CiCircleCheck, 
-	checkNo: CiCircleRemove
+	notCheck: CiCircleRemove
 };
 
 const Apps = {

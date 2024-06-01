@@ -4,13 +4,13 @@ from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 from .serializers import BaseAdminSerializer
-from .api import apps_actions_urls
+from .api import APPS_ACTIONS
 
 class BaseAdminController(viewsets.ViewSet):
     model = None
     serializer_class = BaseAdminSerializer
 
-    @action(detail=True, methods=['get'], url_path=apps_actions_urls['change_form'])
+    @action(detail=True, methods=['get'], url_path=APPS_ACTIONS['change_form'])
     def retrieve_item_form(self, request, pk=None):
         try:
             serializer = self.serializer_class(self.model.objects.get(pk=pk))
@@ -20,13 +20,13 @@ class BaseAdminController(viewsets.ViewSet):
             return Response({'error': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.get_form_fields(), status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get'], url_path=apps_actions_urls['detail'])
+    @action(detail=True, methods=['get'], url_path=APPS_ACTIONS['detail'])
     def retrieve_item(self, request, pk=None):
         obj = get_object_or_404(self.model, pk=pk)
         serializer = self.serializer_class(obj, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    @action(detail=False, methods=['get'], url_path=apps_actions_urls['list'])
+    @action(detail=False, methods=['get'], url_path=APPS_ACTIONS['list'])
     def retrieve_items(self, request):
         paginator = PageNumberPagination()
         paginator.page_size = 50

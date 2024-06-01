@@ -5,17 +5,9 @@ import { Context } from "@/context/context";
 import { Spinner } from "react-bootstrap";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { Button, FormControl } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
-import Link from "next/link";
+import { Button, Form, FormControl, Table } from "react-bootstrap";
+
 import Icon from "@/components/icons/Icon";
-import Form from 'react-bootstrap/Form';
-
-
-interface PropsAppTable {
-	appName: string;
-	selectable?: boolean;
-}
 
 interface IRestPaginationList {
 	count: number;
@@ -24,73 +16,122 @@ interface IRestPaginationList {
 	results: any[];
 }
 
-export default function AppTable({ appName, selectable }: PropsAppTable) {
-	const { context } = useContext(Context);
 
-	const [data, setData] = useState<IRestPaginationList | null>(null);
+export interface ITableEndpoint {
+	url: string;
+	method: string;
+	fields_display: string[];
+	field_links: string[];
+}
+
+export interface ITable {
+	appName: string;
+	endPoint: ITableEndpoint;
+}
+
+export default function AppTable({ appName, endPoint }: ITable) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-
-	const [displayFields, setDisplayFields] = useState<string[]>([]);
-
-	const FetchData = useCallback(async () => {
-		setError(false);
-		if (context.endpoints) {
-			const action = context.endpoints[appName]['items'];
-			try {
-				const url = `${context.api?.url}${appName}/${action}/`;
-				const res = await fetch(url);
-				console.log(res);
-				const data = await res.json();
-				setData(data);
-			} catch (error) {
-				setError(true);
-			} finally {
-				setLoading(false);
-			}
-		}
-	}, [appName, context]);
+	const [data, setData] = useState<IRestPaginationList | null>(null);
 
 	useEffect(() => {
-		if (loading) {
-			// FetchData();
-		}
-	}, [context, FetchData, loading]);
-
+		fetch(endPoint.url)
+		.then((res) => res.json())
+		.then((data) => {
+			setData(data);
+			setLoading(false);
+		})
+		.catch((err) => {
+			setError(true);
+			setLoading(false);
+		});
+	}, [appName, endPoint]);
 
 	const THead = () => {
 		return (
 			<thead>
 				<tr>
-				{selectable && (
 					<th>
 						<Form.Check />
 					</th>
-				)}
-				{/* {displayFields.map((field, index) => (
-					<th className="text-capitalize" key={index}>
-						<span>{field.replace('_', ' ')}</span>
-					</th>
-				))} */}
+					{endPoint.fields_display.map((field, index) => (
+						<th key={index}>{field.replace('_', ' ')}</th>
+					))}
 				</tr>
 			</thead>
-		);
-	};
+		)
+	}
 
 	const TBody = () => {
+
+		const TR = ({row}: {row: {[key:string]: string | number | boolean}}) => {
+			return (
+				<tr>
+					<td>
+						<Form.Check />
+					</td>
+					{
+						endPoint.fields_display.map((field, index) => {
+							if (typeof row[field] === 'boolean') {
+								return (
+									<td key={index}>
+										<Icon 
+											name={!row[field] ? 'check' : 'notCheck'}
+											variant={!row[field] ? 'success' : 'danger'}
+											size={5}
+										/>
+									</td>
+								)
+							}
+							else {
+								return (
+									<td key={index}>
+										{row[field]}
+									</td>
+								)
+							}
+						})
+					}
+				</tr>
+			)
+		}
+
 		return (
 			<tbody>
-
+				{data && data.results.length && data.results.map((row, index) => (
+					<TR key={index} row={row} />
+				))}
+				{data && !data.results.length && (
+					<tr>
+						<td colSpan={endPoint.fields_display.length + 1}>
+							<p>No data</p>
+						</td>
+					</tr>
+				)}
+				{loading && (
+					<tr>
+						<td colSpan={endPoint.fields_display.length + 1}>
+							<Spinner animation="grow" role="status" />
+						</td>
+					</tr>
+				)}
+				{error && (
+					<tr>
+						<td colSpan={endPoint.fields_display.length + 1}>
+							<p>Error</p>
+						</td>
+					</tr>
+				)}
 			</tbody>
-		);
+		)
 	}
 
 	return (
 		<div className="app-table">
 			<div className="d-flex justify-content-between align-items-center">
-				<h4 className="text-capitalize">{appName}</h4>
+				<h4 className="text-capitalize">{''}</h4>
 				<div className="d-flex">
-					<Button variant="icon" onClick={() => setLoading(true)}>
+					<Button variant="icon" onClick={() => {}}>
 						<Icon name="redo" size={3} />
 					</Button>
 					<Button variant="icon">
@@ -98,10 +139,12 @@ export default function AppTable({ appName, selectable }: PropsAppTable) {
 					</Button>
 				</div>
 			</div>
-			<Table striped bordered hover responsive>
-				<THead />
-				<TBody />
-			</Table>
+			<div className="">
+				<Table>
+					<THead />
+					<TBody />
+				</Table>
+			</div>
 		</div>
 	);
 }
