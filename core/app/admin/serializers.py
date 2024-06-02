@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.db import models
+from rest_framework import serializers
+from django.utils.dateformat import format
 
 FIELDS_TYPES = {
     'date': ['DateField'],
@@ -18,53 +20,39 @@ FIELDS_TYPES = {
         ],
 }
 
-
 class BaseAdminSerializer(serializers.ModelSerializer):
     exclude_list = []
     form_groups = []
     readonly_fields = ['id', 'created_at', 'updated_at']
     fields_display = ['id', 'created_at', 'updated_at']
     fields_link = ['id']
-    
+
     def __init__(self, *args, **kwargs):
         super(BaseAdminSerializer, self).__init__(*args, **kwargs)
         
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        for field in self.Meta.model._meta.get_fields():
+            if isinstance(field, models.DateTimeField):
+                if field.name in representation and representation[field.name] is not None:
+                    representation[field.name] = format(instance.__dict__[field.name], 'd.m.y H:i')
+        return representation
+
     def create(self, validated_data):
         return self.Meta.model.objects.create(**validated_data)
-    
+
     def update(self, instance, validated_data):
         return instance.update(**validated_data)
-    
+
     def delete(self, instance):
         return instance.delete()
-    
-    def __get_field_type__(self, field):
-        field_type = field.__class__.__name__
-        field_type_display = None
-        is_choice = hasattr(field, 'choices') and bool(field.choices)
 
-        if is_choice:
-            field_type_display = 'select'
-        else:
-            for key, value in FIELDS_TYPES.items():
-                if field_type in value:
-                    field_type_display = key
-                    break
-
-        if not field_type_display:
-            field_type_display = 'text'
-        
-        return field_type_display
-    
-    def __set_options__(self, field):
-        if hasattr(field, 'choices') and bool(field.choices):
-            pass
-       
+    # public getters
     
     def get_form_fields(self):
         fields = []
         for field in self.Meta.model._meta.get_fields():
-            if field.name in field.name in self.exclude_list:
+            if field.name in self.exclude_list:
                 continue
             if not isinstance(field, models.fields.reverse_related.ManyToOneRel):
                 value = None
@@ -78,7 +66,7 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                         value = list(getattr(self.instance, field.name).values_list('id', flat=True))
                     else:
                         value = getattr(self.instance, field.name)
-                
+
                 options = []
                 if hasattr(field, 'choices') and field.choices:
                     options = [{'value': choice[0], 'label': choice[1]} for choice in field.choices]
@@ -94,12 +82,37 @@ class BaseAdminSerializer(serializers.ModelSerializer):
                     'readonly': field.name in self.readonly_fields,
                 })
         return fields
-    
+
     def get_form_groups(self):
         return self.form_groups
-    
+
     def get_fields_display(self):
         return self.fields_display
+
+    # private methods
     
+    def __set_options__(self, field):
+        if hasattr(field, 'choices') and bool(field.choices):
+            pass
+
+    def __get_field_type__(self, field):
+        field_type = field.__class__.__name__
+        field_type_display = None
+        is_choice = hasattr(field, 'choices') and bool(field.choices)
+
+        if is_choice:
+            field_type_display = 'select'
+        else:
+            for key, value in FIELDS_TYPES.items():
+                if field_type in value:
+                    field_type_display = key
+                    break
+
+        if not field_type_display:
+            field_type_display = 'text'
+
+        return field_type_display
+
+
     class Meta:
         abstract = True

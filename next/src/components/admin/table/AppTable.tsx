@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { Button, Form, FormControl, Table } from "react-bootstrap";
 import Link from "next/link";
 import Icon from "@/components/icons/Icon";
+import context from "react-bootstrap/esm/AccordionContext";
 
 interface IRestPaginationList {
 	count: number;
@@ -15,7 +16,6 @@ interface IRestPaginationList {
 	previous: string;
 	results: any[];
 }
-
 
 export interface ITableEndpoint {
 	url: string;
@@ -36,101 +36,99 @@ export default function AppTable({ appName, endPoint }: ITable) {
 
 	useEffect(() => {
 		fetch(endPoint.url)
-		.then((res) => res.json())
-		.then((data) => {
-			setData(data);
-			setLoading(false);
-		})
-		.catch((err) => {
-			setError(true);
-			setLoading(false);
-		});
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data);
+				setLoading(false);
+			})
+			.catch((err) => {
+				setError(true);
+				setLoading(false);
+			});
 	}, [appName, endPoint]);
 
-	const THead = () => {
+	const THead = useCallback(() => {
 		return (
 			<thead>
 				<tr>
 					<th>
 						<Form.Check />
 					</th>
-					{endPoint.fields_display.map((field, index) => (
-						<th key={index}>{field.replace('_', ' ')}</th>
-					))}
+					{endPoint.fields_display.map((field, index) => {
+						return <th key={index}>{field.replace("_", " ")}</th>;
+					})}
 				</tr>
 			</thead>
-		)
-	}
+		);
+	}, [endPoint]);
 
-	const TBody = () => {
-		const TR = ({row}: {row: {[key:string]: string | number | boolean}}) => {
+	const TData = () => {
+		return data?.results.map((result, index) => {
 			return (
-				<tr>
+				<tr key={index}>
 					<td>
 						<Form.Check />
 					</td>
-					{
-						endPoint.fields_display.map((field, index) => {
-							if (typeof row[field] === 'boolean') {
+					{endPoint.fields_display.map((field, index) => {
+						{
+							if (endPoint.fields_link.includes(field)) {
 								return (
 									<td key={index}>
-										<Icon 
-											name={row[field] ? 'check' : 'notCheck'}
-											variant={row[field] ? 'success' : 'danger'}
-											size={5}
-										/>
+										<Link href={`/admin/${appName}/${result.id}`}>{result[field]}</Link>
 									</td>
-								)
-							}
-							else {
+								);
+							} else if (typeof result[field] === "boolean") {
 								return (
 									<td key={index}>
-										{endPoint.fields_link.includes(field) ? (
-											<Link href={`/admin/${appName}/retrieve/${row['id']}/`}>{row[field]}</Link>
-										) : row[field]}
+										{result[field] ? (
+											<Icon name="check" variant="success" size={5} />
+										) : (
+											<Icon name="notCheck" variant="danger" size={5} />
+										)}
 									</td>
-								)
+								);
+							} else if (typeof result[field] === "number" || typeof result[field] === "string") {
+								return <td key={index}>{result[field]}</td>;
+							} else {
+								return <td key={index}>{"--"}</td>;
 							}
-						})
-					}
+						}
+					})}
 				</tr>
-			)
-		}
+			);
+		});
+	};
 
+	const TBody = () => {
 		return (
 			<tbody>
-				{data && data.results.length && data.results.map((row, index) => (
-					<TR key={index} row={row} />
-				))}
-				{data && !data.results.length && (
-					<tr>
-						<td colSpan={endPoint.fields_display.length + 1}>
-							<p>No data</p>
-						</td>
-					</tr>
-				)}
+				{!loading && !error && data ? <TData /> : null}
 				{loading && (
 					<tr>
 						<td colSpan={endPoint.fields_display.length + 1}>
-							<Spinner animation="grow" role="status" />
+							<div className="d-flex justify-content-center align-items-center">
+								<Spinner animation="grow" role="status" />
+							</div>
 						</td>
 					</tr>
 				)}
 				{error && (
 					<tr>
 						<td colSpan={endPoint.fields_display.length + 1}>
-							<p>Error</p>
+							<div className="d-flex justify-content-center align-items-center">
+								<p>Error</p>
+							</div>
 						</td>
 					</tr>
 				)}
 			</tbody>
-		)
-	}
+		);
+	};
 
 	return (
 		<div className="app-table">
 			<div className="d-flex justify-content-between align-items-center">
-				<h4 className="text-capitalize">{''}</h4>
+				<h4 className="text-capitalize">{""}</h4>
 				<div className="d-flex">
 					<Button variant="icon" onClick={() => {}}>
 						<Icon name="redo" size={3} />
