@@ -73,8 +73,6 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         self.username = self.email
-        if self.last_session:
-            status = 'approved'
         super().save(*args, **kwargs)
 
     def __str__(self):

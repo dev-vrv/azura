@@ -8,18 +8,47 @@ td, th {
     vertical-align: middle;
 }
 
-thead {
-    & th:last-child {
-        border-radius: 0 $r-sm 0 0;
-    }
-    & th:first-child {
-        border-radius: $r-sm 0 0 0;
-    }
-}
+// thead {
+//     & th:last-child {
+//         border-radius: 0 $r-sm 0 0;
+//     }
+//     & th:first-child {
+//         border-radius: $r-sm 0 0 0;
+//     }
+// }
 
-.table-wrapper {
+.app-table {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    flex: 1 1 500px;
-    overflow-y: scroll;
+    position: relative;
+
+    
+    &__table-header {
+        height: fit-content;
+    }
+
+    &__table-content {
+        overflow-y: scroll;
+        padding-right: $p-xs;
+        flex: 1;
+
+        & thead {
+            position: sticky;
+            & th {
+                text-wrap: nowrap;
+            }
+        }
+
+        & tbody {
+            & tr {
+                &:nth-child(even) {
+                    background-color: $grey !important;
+                }
+                &:hover {
+                    background-color: $body-bg-dark;
+                }
+            }
+        }
+    }
 }
