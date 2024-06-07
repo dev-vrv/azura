@@ -25,7 +25,9 @@ import {
 	CiSquareChevLeft,
 	CiCircleAlert,
 	CiCircleCheck,
-	CiCircleRemove
+	CiCircleRemove,
+	CiCircleChevDown,
+	CiCircleChevUp  
 } from "react-icons/ci";
 
 
@@ -55,6 +57,8 @@ const IUI = {
 	import: CiImport,
 	link: CiLink,
 	plus: CiCirclePlus,
+	down: CiCircleChevDown,
+	up: CiCircleChevUp,
 	left: CiSquareChevLeft,
 	right: CiSquareChevRight,
 	alert: CiCircleAlert,
@@ -82,9 +86,10 @@ export interface PropsIcon {
 	inline?: boolean;
 	size?: TSize;
 	variant?: TVariant;
+	className?: string;
 }
 
-export default function Icon({ variant, size, inline, name }: PropsIcon) {
+export default function Icon({ variant, size, inline, name, className }: PropsIcon) {
 	const classNames = `i ${variant ? `text-${variant}` : ""} ${size ? `fs-${size}` : ""} ${inline ? "d-inline" : ""}`;
 	let SvgIcon;
 	if (Object.keys(IBundle).includes(name)) {
@@ -94,7 +99,7 @@ export default function Icon({ variant, size, inline, name }: PropsIcon) {
 		SvgIcon = IBundle['at'];
 	}
 	return (
-        <i className={classNames}>
+        <i className={`${classNames} ${className && className}`}>
 			<SvgIcon />
 		</i>
     );

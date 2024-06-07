@@ -14,6 +14,8 @@ interface IRestPaginationList {
 	count: number;
 	next: string;
 	previous: string;
+	page_count: number;
+	page_size: number;
 	results: any[];
 }
 
@@ -35,24 +37,21 @@ export default function AppTable({ appName, endPoint }: ITable) {
 	const [data, setData] = useState<IRestPaginationList | null>(null);
 	const [selected, setSelected] = useState<number[]>([]);
 	const [allSelected, setAllSelected] = useState(false);
+	const [page, setPage] = useState(1);
+	const [sort, setSort] = useState<string[]>([]);
 
 	const fetchData = useCallback(async () => {
 		try {
-			const response = await fetch(endPoint.url);
+			const response = await fetch(`${endPoint.url}?page=${page}`);
 			const data = await response.json();
 			setData(data);
+			console.log(data);
 		} catch (error) {
 			setError(true);
 		} finally {
 			setLoading(false);
 		}
-	}, [endPoint, setLoading, setError, setData]);
-
-	useEffect(() => {
-		if (loading) {
-			fetchData();
-		}
-	}, [loading, fetchData]);
+	}, [endPoint, page, setLoading, setError, setData]);
 
 	const handleSelectAll = useCallback(() => {
 		if (allSelected) {
@@ -88,7 +87,21 @@ export default function AppTable({ appName, endPoint }: ITable) {
 						<Form.Check name="all" checked={allSelected} onChange={handleSelectAll} />
 					</th>
 					{endPoint.fields_display.map((field, index) => {
-						return <th key={index}>{field.replace("_", " ")}</th>;
+						return (
+							<th key={index}>
+								<p className="d-inline-flex align-items-center gap-1">
+									<span>{field.replace("_", " ")}</span>
+									<p className="d-inline-flex align-items-center gap-1">
+										<Button variant="icon-sm" onClick={() => {}}>
+											<Icon className="d-inline-flex" name="up" size={5} />
+										</Button>
+										<Button variant="icon-sm" onClick={() => {}}>
+											<Icon className="d-inline-flex" name="down" size={5} />
+										</Button>
+									</p>
+								</p>
+							</th>
+						);
 					})}
 				</tr>
 			</thead>
@@ -171,9 +184,15 @@ export default function AppTable({ appName, endPoint }: ITable) {
 		);
 	};
 
+	useEffect(() => {
+		if (loading) {
+			fetchData();
+		}
+	}, [loading, fetchData]);
+
 	return (
 		<div className="app-table">
-			<div className="app-table__table-header d-flex justify-content-between align-items-center py-1">
+			<div className="app-table__table-header d-flex justify-content-between align-items-center pb-2">
 				<h4 className="text-capitalize">{""}</h4>
 				<div className="d-flex">
 					<Button variant="icon" onClick={() => setLoading(true)}>
@@ -189,6 +208,27 @@ export default function AppTable({ appName, endPoint }: ITable) {
 					<THead />
 					<TBody />
 				</Table>
+			</div>
+			<div className="app-table__footer d-flex justify-content-center pt-2">
+				<div className="">
+					<Button disabled={loading || !data?.previous} variant="icon" onClick={() => {
+						if (data?.previous && !loading) {
+							setPage(prevPage => prevPage - 1);
+							setLoading(true);
+						}
+					}}>
+						<Icon name="left" size={3} />
+					</Button>
+					<span>{data?.page_count ? `${page}/${data.page_count}` : '--'}</span>
+					<Button disabled={loading || !data?.next} variant="icon" onClick={() => {
+						if (data?.next && !loading) {
+							setPage(prevPage => prevPage + 1);
+							setLoading(true);
+						}
+					}}>
+						<Icon name="right" size={3} />
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
