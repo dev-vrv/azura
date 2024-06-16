@@ -18,14 +18,14 @@ export default async function AdminLayout({
 	children: React.ReactNode;
 }>) {
 
-
 	const params = await fetchApps();
-	console.log(params);
 
 	return (
 		<ThemeProvider>
 			<ContextProvider>
-				<div className="">Admin</div>
+				<div className="d-flex w-100 h-100">
+					
+				</div>
 			</ContextProvider>
 		</ThemeProvider>
 	);
