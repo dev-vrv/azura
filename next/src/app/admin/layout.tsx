@@ -1,12 +1,23 @@
 import "@/assets/scss/style.scss";
-import { Container, Row, Col } from "react-bootstrap";
+
 import Header from "@/components/admin/header/Header";
 import Aside from "@/components/admin/aside/Aside";
 import ThemeProvider from "@/context/theme";
 import ContextProvider from "@/context/context";
 
 
-export default function AdminLayout({
+async function FetchApi() {
+	const response = await fetch("http://127.0.0.1:8000/api/api-root/");
+	try {
+		const data = await response.json();
+		console.log(data);
+	}
+	catch (error) {
+		
+	}
+}
+
+export default async function AdminLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
@@ -14,6 +25,9 @@ export default function AdminLayout({
 	const style = {
 		'color-scheme': 'dark',
 	  } as React.CSSProperties & { [key: string]: string };
+
+	FetchApi();
+
 	return (
 		<html lang="en" data-bs-theme="dark"  style={style}>
 			<body>

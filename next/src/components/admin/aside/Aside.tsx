@@ -1,5 +1,4 @@
 import Icon from "@/components/icons/Icon";
-import AsideNav from "@/components/admin/aside/AsideNav";
 import './Aside.scss';
 
 interface PropsAside {}
@@ -10,7 +9,7 @@ export default function Aside({}: PropsAside) {
 			<h5 className="d-flex">
 				<Icon name="logo" size="1"/>
 			</h5>
-			<AsideNav />
+
 			<div className="aside__footer"></div>
 		</aside>
 	);
